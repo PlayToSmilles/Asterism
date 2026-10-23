@@ -1,0 +1,57 @@
+# Dependencies, build output and caches
+node_modules/
+dist/
+dist-ssr/
+.vite/
+coverage/
+*.tsbuildinfo
+
+# Local environment and credentials (no environment file is required today)
+.env
+.env.*
+*.local
+.npmrc
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+secrets/
+credentials/
+
+# User universes, reference documents and local backups
+# Only the required JSON configuration/manifests are versioned by default.
+*.json
+*.jsonl
+*.ndjson
+!/package.json
+!/package-lock.json
+!/tsconfig*.json
+*.pdf
+*.bak
+*.backup
+*.zip
+*.7z
+*.sqlite
+*.sqlite3
+*.db
+backups/
+exports/
+private/
+local-data/
+
+# QA captures may contain private universe content
+/docs/prints_test/
+/test-results/
+
+# Machine-specific files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.log
+*.swp
+*.swo
+*.tmp
+*.temp

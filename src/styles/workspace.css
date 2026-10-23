@@ -1,0 +1,795 @@
+/* Desktop composition only. Mobile keeps its existing navigation and editors. */
+.workspace-wordmark,
+.workspace-navigation,
+.workspace-documents,
+.inspector-switch {
+  display: none;
+}
+@media (min-width: 901px) {
+  /* Media queries apply before React removes the mobile presentation layers.
+     Keep those transient siblings out of flex layout while crossing the boundary. */
+  .studio-browser-layer,
+  .studio-details,
+  .studio-navigation {
+    display: none;
+  }
+  .editor {
+    --workspace-border: #d6c6ef21;
+    --workspace-panel: #22232eea;
+    padding: 12px;
+    background: #10121a;
+    gap: 10px;
+  }
+  .editor > .toolbar {
+    min-height: 66px;
+    padding: 10px 18px;
+    gap: 13px;
+    border: 1px solid var(--workspace-border);
+    border-radius: 19px;
+    background: #1b1d28e8;
+    box-shadow: inset 0 1px 0 #ffffff06;
+  }
+  .editor .back-button {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    border: 1px solid #d6c6ef18;
+    background: #ffffff04;
+    border-radius: 12px;
+    font-size: 18px;
+  }
+  .editor .asterism-toolbar-mark {
+    width: 30px;
+    flex: 0 0 30px;
+  }
+  .editor .asterism-toolbar-mark .asterism-mark {
+    width: 30px;
+    height: 34px;
+  }
+  .workspace-wordmark {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-right: 6px;
+  }
+  .workspace-wordmark small {
+    display: block;
+    font-size: 6px;
+    letter-spacing: 1.4px;
+    color: #9e93ac;
+    margin-top: 5px;
+  }
+  .editor .project-heading {
+    border-left: 1px solid var(--workspace-border);
+    padding-left: 19px;
+    gap: 3px;
+    flex: 1;
+    min-width: 100px;
+  }
+  .editor .project-heading input {
+    font-size: 14px;
+    font-weight: 550;
+    max-width: 320px;
+  }
+  .editor .project-heading span {
+    font-size: 9px;
+    color: #aaa1b8;
+  }
+  .editor .project-heading .save-error {
+    color: #ffc59f;
+  }
+  .editor .toolbar-actions {
+    gap: 10px;
+    align-items: center;
+    margin-left: 0;
+    flex: 0 0 auto;
+  }
+  .editor .toolbar-actions > button[aria-controls="reference-library"] {
+    display: none;
+  }
+  .editor .toolbar-actions button {
+    font-size: 11px;
+    padding: 11px 14px;
+    border-radius: 12px;
+    border-color: #d6c6ef1c;
+    background: #ffffff04;
+  }
+  .editor .toolbar-actions .primary {
+    background: #c2aeed;
+    color: #241b34;
+    border-color: #d0bdf2;
+    padding: 11px 17px;
+    box-shadow: inset 0 1px 0 #ffffff33;
+  }
+  .editor .desktop-file-actions {
+    gap: 6px;
+  }
+  .editor .editor-body {
+    position: relative;
+    border: 1px solid var(--workspace-border);
+    border-radius: 24px;
+    overflow: hidden;
+    isolation: isolate;
+    background: #13151f;
+  }
+  .editor .canvas {
+    background:
+      radial-gradient(ellipse at 48% 30%, #332d452b, transparent 70%), #141620;
+  }
+  .workspace-navigation {
+    position: absolute;
+    left: 17px;
+    top: 23px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 66px;
+    padding: 7px;
+    border: 1px solid #dcc9ef25;
+    background: #252531e8;
+    border-radius: 23px;
+    box-shadow:
+      0 8px 25px #0003,
+      inset 0 1px 0 #ffffff08;
+  }
+  .workspace-navigation button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    width: 50px;
+    height: 59px;
+    border-radius: 16px;
+    border: 1px solid transparent;
+    background: transparent;
+    padding: 8px 3px;
+    color: #b6abca;
+    font-size: 9px;
+    font-weight: 500;
+  }
+  .workspace-navigation svg {
+    width: 19px;
+    height: 19px;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .workspace-navigation button[aria-current="page"] {
+    color: #e3cafb;
+    background: #c5a6ed20;
+    border-color: #d5baee23;
+    box-shadow: inset 0 1px 0 #ffffff09;
+  }
+  .workspace-navigation button:hover {
+    background: #d5bbff15;
+  }
+  .editor .canvas-heading {
+    top: 18px;
+    left: 112px;
+    gap: 7px;
+    padding: 11px 14px;
+    background: #23232ee8;
+    border: 1px solid #d6c2ec1c;
+    border-radius: 15px;
+  }
+  .editor .canvas-heading .eyebrow {
+    color: #aa9bbb;
+    font-size: 8px;
+    letter-spacing: 1.8px;
+  }
+  .editor .canvas-heading > span:nth-child(2) {
+    font-size: 11px;
+    color: #c9bfd7;
+  }
+  .editor .canvas-heading b {
+    color: #8e7ca1;
+    padding: 0 5px;
+  }
+  .editor .canvas-hint {
+    bottom: 24px;
+    font-size: 9px;
+    border-radius: 18px;
+    padding: 10px 14px;
+    background: #222330dd;
+    border-color: #d5c6ed16;
+    color: #aea2bd;
+  }
+  .editor .editor-body:has(> .inspector) .canvas-hint,
+  .editor .editor-body:has(> .reference-library) .canvas-hint,
+  .editor .editor-body:has(> .workspace-documents) .canvas-hint {
+    display: none;
+  }
+  .editor .canvas-empty {
+    padding: 100px 100px 70px;
+  }
+  .editor .workspace-empty-mark {
+    width: 86px;
+    height: 86px;
+    display: grid;
+    place-items: center;
+    background: #b08bd70b;
+    border: 1px solid #d6b5f129;
+    border-radius: 27px;
+  }
+  .editor .workspace-empty-mark .asterism-mark {
+    width: 46px;
+    height: 58px;
+  }
+  .editor .canvas-empty h2 {
+    font-size: 27px;
+    letter-spacing: -0.8px;
+    font-weight: 500;
+    margin: 24px 0 12px;
+  }
+  .editor .canvas-empty p {
+    color: #aaa0b8;
+  }
+  .editor .canvas-empty button {
+    border-radius: 15px;
+  }
+  .editor .universe-card .card-frame {
+    background: linear-gradient(140deg, #ccc0e57a, #8b8eae33);
+  }
+  .editor .universe-card.selected .card-frame {
+    background: linear-gradient(145deg, #f1ddff, #b69edc);
+  }
+  .editor .card-surface {
+    background-color: #272536;
+    box-shadow: inset 0 1px 0 #ffffff0d;
+  }
+  .editor .card-shade {
+    background: linear-gradient(
+      180deg,
+      #0f101900 24%,
+      #11111b33 40%,
+      #11111be6 75%,
+      #11111bfa 100%
+    );
+  }
+  .editor .card-content {
+    padding: 23px;
+  }
+  .editor .card-content .eyebrow {
+    color: #e0d0ef;
+    font-size: 9px;
+    letter-spacing: 1.3px;
+    padding: 5px 9px;
+    border-radius: 11px;
+    background: #1c1b29d9;
+    border-color: #dec6f42a;
+  }
+  .editor .card-content h3 {
+    font-size: 22px;
+    letter-spacing: -0.65px;
+    line-height: 1.18;
+    font-weight: 550;
+    margin-top: 10px;
+  }
+  .editor .card-Personagem h3 {
+    font-size: 25px;
+  }
+  .editor .card-Documento h3 {
+    font-size: 20px;
+  }
+  .editor .artwork-caption {
+    display: none;
+  }
+  .editor .artwork-orbit {
+    opacity: 0.6;
+  }
+  .editor .react-flow__handle {
+    background-color: #d1b9ed;
+  }
+  .editor .react-flow__handle:hover {
+    background-color: #f1e1ff;
+  }
+  .editor .react-flow__edge-text {
+    font-size: 11px;
+    fill: #e1d4ef;
+  }
+  .editor .react-flow__edge-textbg {
+    fill: #272433;
+  }
+  .editor .react-flow__controls {
+    display: flex;
+    flex-direction: row;
+    left: 99px !important;
+    bottom: 20px !important;
+    border-radius: 15px;
+    border-color: #c9b8e32e;
+    background: #242432;
+    box-shadow: 0 5px 18px #0002 !important;
+  }
+  .editor .react-flow__controls-button {
+    width: 38px !important;
+    height: 38px !important;
+    padding: 11px !important;
+    background: #272733 !important;
+    border-color: #d6c4ed1a !important;
+    border-right: 1px solid #d6c4ed1a;
+  }
+  .editor .react-flow__minimap {
+    right: 10px;
+    bottom: 12px;
+    width: 150px;
+    height: 100px;
+    border-radius: 18px;
+    border-color: #c9b8e32e;
+    background: #262532e8 !important;
+    box-shadow: 0 5px 18px #0002;
+  }
+  .editor .react-flow__minimap svg {
+    width: 150px;
+    height: 100px;
+  }
+  .editor .editor-body:has(> .inspector) .react-flow__minimap,
+  .editor .editor-body:has(> .workspace-documents) .react-flow__minimap {
+    right: 376px;
+  }
+  .editor .editor-body:has(> .reference-library) .react-flow__minimap {
+    display: none;
+  }
+  .editor .react-flow__attribution {
+    right: 8px;
+    bottom: 2px;
+    font-size: 8px !important;
+    background: transparent !important;
+  }
+  .editor .inspector,
+  .editor .reference-library,
+  .workspace-documents {
+    position: absolute;
+    top: 17px;
+    bottom: 17px;
+    right: 17px;
+    z-index: 7;
+    width: 344px;
+    max-width: calc(100% - 115px);
+    border: 1px solid #d6c2ec2b;
+    border-radius: 24px;
+    padding: 22px;
+    background: var(--workspace-panel);
+    box-shadow:
+      0 18px 50px #0004,
+      inset 0 1px 0 #ffffff08;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .editor .inspector > header {
+    position: sticky;
+    top: -22px;
+    margin: -22px -22px 0;
+    padding: 17px 22px;
+    background: #24242ff5;
+    border-bottom: 1px solid var(--workspace-border);
+    z-index: 2;
+    border-radius: 24px 24px 0 0;
+  }
+  .editor .inspector > header .eyebrow {
+    font-size: 8px;
+    letter-spacing: 1.4px;
+    color: #b5a2c9;
+  }
+  .editor .inspector .icon-button,
+  .editor .reference-library .icon-button,
+  .workspace-documents .icon-button {
+    display: grid;
+    place-items: center;
+    min-width: 30px;
+    min-height: 30px;
+    border-radius: 50%;
+    background: #ffffff06;
+    font-size: 20px;
+    color: #cebbdd;
+    padding: 0;
+  }
+  .editor .inspector h2 {
+    font-size: 25px;
+    line-height: 1.2;
+    font-weight: 550;
+    letter-spacing: -0.8px;
+    margin: 22px 0 11px;
+  }
+  .editor .inspector-category {
+    display: inline-block;
+    border-radius: 10px;
+    color: #c8addf;
+    font-size: 8px;
+    letter-spacing: 1.2px;
+    margin-top: 0;
+    padding: 5px 8px;
+    background: #b492de12;
+  }
+  .editor .inspector > p.muted {
+    display: none;
+  }
+  .editor .inspector-switch {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 4px;
+    gap: 4px;
+    border: 1px solid #dac6ef17;
+    background: #10121c66;
+    border-radius: 14px;
+    margin: 22px 0 18px;
+  }
+  .editor .inspector-switch button {
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 10px 6px;
+    font-size: 11px;
+    font-weight: 500;
+    background: transparent;
+    color: #b0a2c0;
+  }
+  .editor .inspector-switch button[aria-pressed="true"] {
+    color: #e4d5f3;
+    background: #d0b1ef17;
+    border-color: #d9bdf224;
+    box-shadow: inset 0 1px 0 #ffffff0b;
+  }
+  .editor .inspector-switch button span {
+    font-size: 9px;
+    margin-left: 4px;
+    opacity: 0.8;
+  }
+  .editor .inspector[data-section="information"] .inspector-connections,
+  .editor .inspector[data-section="connections"] .inspector-information {
+    display: none;
+  }
+  .editor .inspector label {
+    margin-top: 18px;
+    gap: 8px;
+    font-size: 10px;
+    color: #c7b9d4;
+  }
+  .editor .inspector-information {
+    display: block;
+  }
+  .editor .inspector-title-field {
+    margin-top: 0 !important;
+  }
+  .editor .inspector-information > .inspector-artwork {
+    margin: 20px 0 0;
+  }
+  .editor .card-Documento:has(img) .card-shade {
+    display: block;
+  }
+  .editor .inspector input,
+  .editor .inspector select,
+  .editor .inspector textarea {
+    font-size: 12px;
+    padding: 12px;
+    border-radius: 13px;
+    border-color: #d4c2e726;
+    background: #11131c59;
+  }
+  .editor .inspector textarea {
+    line-height: 1.85;
+    min-height: 145px;
+  }
+  .editor .inspector-artwork {
+    margin: 0 0 20px;
+    height: 132px;
+    border-radius: 17px;
+  }
+  .editor .inspector .field-note {
+    font-size: 9px;
+    color: #afa1bc;
+  }
+  .editor .inspector .image-help {
+    line-height: 1.6;
+    font-size: 9px;
+  }
+  .editor .inspector .linked-documents {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    margin: 22px 0;
+  }
+  .editor .inspector .document-link {
+    background: #ffffff05;
+    border-color: #d7c4ed24;
+    border-radius: 15px;
+  }
+  .editor .inspector .relation-list {
+    margin-top: 22px;
+    padding-top: 22px;
+  }
+  .editor .inspector .relation-list > div {
+    padding: 14px;
+    border-radius: 14px;
+    border-color: #d7c4ed24;
+    background: #ffffff03;
+  }
+  .editor .inspector .relation-list small {
+    font-size: 11px;
+    color: #c4afd6;
+    line-height: 1.6;
+  }
+  .editor .inspector > .primary {
+    width: 100%;
+    border-radius: 14px;
+    margin: 0 0 4px;
+  }
+  .editor .inspector .connection-path {
+    margin-top: 24px;
+    background: #bd9bdf08;
+    border: 1px solid #d7c4ed24;
+    line-height: 1.6;
+    border-radius: 18px;
+  }
+  .editor .inspector .delete-area {
+    margin-top: 25px;
+    padding-top: 18px;
+  }
+  .editor .inspector .delete-area > button {
+    font-size: 11px;
+  }
+  .editor .reference-library {
+    width: min(620px, calc(100% - 115px));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .editor .reference-header h2,
+  .workspace-documents h2 {
+    font-size: 25px;
+    font-weight: 550;
+    letter-spacing: -0.7px;
+    margin: 8px 0 0;
+  }
+  .editor .reference-header .eyebrow,
+  .workspace-documents header .eyebrow {
+    font-size: 8px;
+    color: #b5a2c9;
+  }
+  .editor .reference-toolbar {
+    padding-top: 6px;
+  }
+  .editor .reference-toolbar button {
+    border-radius: 13px;
+  }
+  .editor .reference-backup {
+    background: #bc9bd70a;
+    border: 1px solid #d7c4ed18;
+    border-radius: 14px;
+    padding: 12px;
+    font-size: 10px;
+  }
+  .editor .reference-item {
+    border-radius: 14px;
+    background: #ffffff05;
+    border-color: #d7c4ed20;
+  }
+  .editor .reference-item.active {
+    border-color: #b6a0d6;
+    background: #bba2db19;
+  }
+  .editor .pdf-object,
+  .editor .pdf-placeholder {
+    border-radius: 15px;
+  }
+  .editor .pdf-actions a {
+    border: 1px solid #d7c4ed24;
+    background: #ffffff04;
+    padding: 10px 14px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 11px;
+  }
+  .workspace-documents {
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .workspace-documents > header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+  .workspace-documents h2 span {
+    font-size: 11px;
+    margin-left: 12px;
+    color: #c3acd5;
+    border: 1px solid #d7c4ed24;
+    padding: 3px 7px;
+    border-radius: 20px;
+    vertical-align: middle;
+  }
+  .workspace-documents > .muted {
+    font-size: 11px;
+    line-height: 1.7;
+    margin: 17px 0 24px;
+  }
+  .workspace-document-list {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+  }
+  .workspace-document-list:empty {
+    display: none;
+  }
+  .workspace-document-list button {
+    display: flex;
+    align-items: center;
+    text-align: left;
+    gap: 12px;
+    width: 100%;
+    background: #ffffff05;
+    border: 1px solid #d7c4ed24;
+    padding: 16px 13px;
+    border-radius: 17px;
+    margin-bottom: 9px;
+  }
+  .workspace-document-list button > span:first-child {
+    font-size: 26px;
+    color: #c7a6e0;
+  }
+  .workspace-document-list button > span:nth-child(2) {
+    min-width: 0;
+    flex: 1;
+  }
+  .workspace-document-list strong {
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 550;
+    overflow-wrap: anywhere;
+    display: block;
+  }
+  .workspace-document-list small {
+    color: #ada0ba;
+    font-size: 10px;
+    line-height: 1.7;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-top: 5px;
+  }
+  .workspace-documents-empty {
+    flex: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 5px;
+  }
+  .workspace-documents-empty > span {
+    font-size: 45px;
+    color: #b395cf;
+  }
+  .workspace-documents-empty h3 {
+    font-size: 19px;
+    font-weight: 500;
+    letter-spacing: -0.5px;
+  }
+  .workspace-documents-empty p {
+    font-size: 12px;
+    line-height: 1.8;
+    color: #b5a7c2;
+  }
+  .workspace-document-create {
+    flex-shrink: 0;
+    margin-top: 18px;
+    border-radius: 14px;
+  }
+  .editor .document-workspace {
+    top: 17px;
+    bottom: 17px;
+    left: 101px;
+    right: 17px;
+    border: 1px solid #d7c4ed28;
+    border-radius: 24px;
+    overflow: hidden;
+    background: #1b1c26;
+    box-shadow: 0 15px 50px #0003;
+  }
+  .editor .document-header {
+    padding: 14px 25px;
+    gap: 17px;
+    background: #262431;
+  }
+  .editor .document-header > button {
+    border: 0;
+    background: transparent;
+    color: #d5bcec;
+    padding: 8px 0;
+    font-size: 12px;
+  }
+  .editor .document-header .eyebrow {
+    font-size: 8px;
+  }
+  .editor .document-save {
+    font-size: 10px;
+  }
+  .editor .document-tools {
+    justify-content: center;
+    gap: 7px;
+    background: #ffffff02;
+    padding: 10px;
+  }
+  .editor .document-tools button {
+    font-size: 11px;
+    padding: 9px 13px;
+    border-radius: 11px;
+    background: #ffffff03;
+    border-color: #d7c4ed20;
+  }
+  .editor .document-tools button[aria-pressed="true"] {
+    background: #a484cc28;
+    border-color: #b89bd752;
+  }
+  .editor .document-page {
+    max-width: 820px;
+    margin: 32px auto;
+    padding: 26px 55px 100px;
+  }
+  .editor .document-title {
+    font-size: 34px;
+    letter-spacing: -1px;
+  }
+  .editor .document-caption {
+    font-size: 11px;
+    color: #a296b0;
+    margin: 8px 0 36px;
+  }
+  .editor .document-page .tiptap {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 18px;
+    line-height: 1.95;
+    color: #ded6e6;
+  }
+  .editor .creation-dialog {
+    border-radius: 27px;
+    background: #262431ed;
+    border-color: #d7c4ed35;
+    box-shadow: 0 20px 80px #0006;
+    padding: 28px;
+  }
+  .editor .creation-dialog input,
+  .editor .creation-dialog select {
+    border-radius: 14px;
+  }
+}
+@media (min-width: 901px) and (max-width: 1100px) {
+  .workspace-wordmark {
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+  .workspace-wordmark small {
+    display: none;
+  }
+  .editor > .toolbar {
+    gap: 10px;
+    padding-left: 13px;
+    padding-right: 13px;
+  }
+  .editor .project-heading {
+    padding-left: 13px;
+  }
+  .editor .toolbar-actions button {
+    padding-left: 11px;
+    padding-right: 11px;
+  }
+  .editor .react-flow__minimap {
+    display: none;
+  }
+}
+@media (min-width: 901px) and (prefers-reduced-transparency: reduce) {
+  .workspace-navigation,
+  .editor .inspector,
+  .editor .reference-library,
+  .workspace-documents {
+    background: #22232e;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}

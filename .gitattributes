@@ -1,0 +1,10 @@
+# Keep text consistent across Windows, macOS and Linux.
+* text=auto eol=lf
+
+# Preserve original artwork bytes.
+*.png binary
+*.gif binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary

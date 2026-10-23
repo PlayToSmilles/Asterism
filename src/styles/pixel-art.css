@@ -1,0 +1,56 @@
+/* Original grids: Tree 22×29, Player 14×26, Local/Event 32×32, settings 22×22.
+   Keep sampling rules together; do not apply them to user cover images. */
+.asterism-mark,
+.category-pixel-icon,
+.canvas-settings-trigger img {
+  display: block;
+  flex-shrink: 0;
+  object-fit: contain;
+  image-rendering: pixelated;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* The Player's size must not inherit arbitrary font sizes. */
+.category-pixel-icon { width: 28px; height: 52px; }
+.universe-card[data-detail='full'] .category-pixel-icon,
+.universe-card[data-detail='symbol'] .category-pixel-icon { width: 42px; height: 78px; }
+.category-pixel-icon--local { width: 64px; height: 64px; }
+.constellation-orb .category-pixel-icon--local,
+.constellation-orb .category-pixel-icon--event {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+}
+.universe-card[data-detail='full'] .category-pixel-icon--local,
+.universe-card[data-detail='symbol'] .category-pixel-icon--local { width: 96px; height: 96px; }
+.category-pixel-icon--event { width: 96px; height: 96px; }
+.universe-card[data-detail='full'] .category-pixel-icon--event,
+.universe-card[data-detail='symbol'] .category-pixel-icon--event { width: 128px; height: 128px; }
+.canvas-settings-trigger img { width: 22px; height: 22px; }
+.asterism-demo > .asterism-mark,
+.asterism-dialog-mark .asterism-mark { width: 22px; height: 29px; }
+.asterism-empty .asterism-mark { width: 44px; height: 58px; }
+
+@media (min-width: 901px) {
+  /* Native-size tree in a compact version of the home logo frame. */
+  .editor .asterism-toolbar-mark {
+    display: grid; place-items: center; align-self: center;
+    width: 40px; height: 40px; flex: 0 0 40px;
+    border: 1px solid #d5b8ff32; border-radius: 12px;
+    background: linear-gradient(145deg, #3d334e, #262331);
+    box-shadow: inset 0 1px 0 #ffffff13;
+  }
+  .editor .asterism-toolbar-mark .asterism-mark {
+    width: 22px; height: 29px;
+  }
+  .editor .workspace-empty-mark .asterism-mark { width: 44px; height: 58px; }
+}
+
+@media (max-width: 700px) {
+  /* These existing 40px slots cannot fit the 58px double-size tree. Use
+     the native grid inside them instead of resampling it to 40px. */
+  .asterism-logo .asterism-mark,
+  .asterism-project-cover > .asterism-mark { object-fit: none; }
+}
+
+/* Canvas camera scaling can still land on fractional device pixels. Keep
+   nearest-neighbour sampling, without snapping the camera or node positions. */

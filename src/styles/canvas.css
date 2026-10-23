@@ -1,0 +1,372 @@
+/* Focus changes paint only: never transform, filter or resize moving nodes. */
+.canvas-explorer { position: relative; width: 100%; height: 100%; }
+.exploration-chrome {
+  position: absolute; z-index: 9; top: 18px; left: 112px; right: 24px;
+  width: fit-content; max-width: calc(100% - 140px);
+}
+.exploration-chrome .exploration-toolbar { position: static; max-width: 100%; }
+.exploration-chrome .layout-preview-bar,
+.exploration-chrome .external-constellations,
+.exploration-chrome .layout-error { position: static; margin: 12px 0 0; max-width: 100%; }
+.flow-layer { width: 100%; height: 100%; }
+.flow-concealed { opacity: 0; pointer-events: none; }
+.constellation-portal {
+  position: absolute; inset: 0; z-index: 20; pointer-events: none;
+  overflow: hidden;
+}
+.constellation-portal > svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.canvas-explorer[data-portal-transition] .flow-layer { animation: none; }
+.canvas-explorer .flow-layer.portal-managed { animation: none; }
+.flow-layer:focus { outline: none; }
+.semantic-caption {
+  position: absolute; z-index: 4; left: 50%; top: calc(50% + 56px); transform-origin: top center;
+  width: max-content; max-width: 100px; font-size: 11px; text-align: center; line-height: 1.35;
+  color: #ece2f7; text-shadow: 0 1px 3px #10121b; pointer-events: none;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+}
+.constellation-overview {
+  position: absolute; inset: 0; z-index: 4; padding: 90px 30px 20px 110px; overflow-y: auto;
+  background: radial-gradient(ellipse at 50% 50%, #35304644, transparent 65%), #141620;
+}
+.constellation-overview > header { text-align: center; padding-bottom: 12px; }
+.constellation-overview .constellation-label {
+  margin: 0; font-size: 10px; font-weight: 500; line-height: 1.5;
+  letter-spacing: .18em; color: #c5b8d8; opacity: .65;
+}
+.constellation-overview p { color: #a99eb7; font-size: 11px; line-height: 1.7; }
+.constellation-map {
+  user-select: none;
+  position: relative; height: max(360px, calc(100% - 64px)); min-height: 360px;
+  background: radial-gradient(ellipse at 50% 42%, #9782cf0b, transparent 65%);
+}
+.constellation-map > svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.constellation-map path { fill: none; stroke-linecap: round; }
+.aggregate-base { stroke: var(--link-color); opacity: .2; transition: opacity .22s ease; }
+.constellation-map.has-highlight .aggregate-link:not(.aggregate-active) > .aggregate-base { opacity: .06; }
+.connection-trail { opacity: 0; pointer-events: none; }
+.connection-aura { stroke: currentColor; opacity: .16; }
+.connection-light { stroke: color-mix(in srgb, currentColor 82%, white); opacity: .95; }
+.orbital-count-content { opacity: 0; transform-box: fill-box; transform-origin: center; }
+.orbital-count rect { fill: #242333; stroke: currentColor; stroke-opacity: .5; }
+.constellation-map .orbital-count text { fill: #f1ecfa; font-size: 11px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.constellation-hub {
+  /* The anchor is the orb center: padding 8px + half its 62px diameter. */
+  position: absolute; transform: translate(-50%, -39px); width: 170px; border: 0; padding: 8px;
+  display: flex; flex-direction: column; align-items: center; gap: 6px; background: transparent;
+}
+.constellation-hub strong { font-size: 15px; font-weight: 600; letter-spacing: -.15px; color: #f2edf9; }
+.constellation-reveal {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  opacity: 0; visibility: hidden; transform: translateY(-12px); pointer-events: none;
+  transition: opacity .23s ease, transform .23s cubic-bezier(.22,.8,.3,1), visibility 0s .23s;
+}
+.constellation-hub[data-active='true'] .constellation-reveal {
+  opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0s;
+}
+.constellation-touch-hint { display: none; }
+.constellation-reveal > .constellation-total {
+  display: flex; align-items: baseline; gap: 5px; font-size: 11px; color: #c1b7cf;
+  font-variant-numeric: tabular-nums;
+}
+.constellation-total b { font-size: 16px; font-weight: 650; color: var(--category-color); }
+.constellation-stats { display: flex; align-items: center; gap: 7px; color: #ada5bb; font-size: 10px; white-space: nowrap; }
+.constellation-stats > span { display: flex; gap: 4px; align-items: baseline; }
+.constellation-stats > span + span::before { content: '·'; margin-right: 3px; opacity: .65; }
+.constellation-stats b { font-variant-numeric: tabular-nums; font-weight: 550; color: #d7cfe3; }
+.constellation-orb {
+  position: relative; display: grid; place-items: center; width: 62px; height: 62px; margin-bottom: 8px;
+  font-size: 32px; color: var(--category-color); border: 1px solid var(--category-color); border-radius: 50%;
+  background: radial-gradient(circle at 35% 22%, color-mix(in srgb, var(--category-color) 23%, #22212f), #1a1b29 78%);
+  box-shadow: 0 0 22px color-mix(in srgb, var(--category-color) 10%, transparent), inset 0 1px 0 #ffffff20;
+  transition: box-shadow .22s ease, background-color .22s ease;
+}
+.constellation-orb::before { content: ''; position: absolute; inset: -7px; border: 1px solid color-mix(in srgb, var(--category-color) 23%, transparent); border-radius: 50%; transition: border-color .22s ease; }
+.constellation-particles { position: absolute; inset: 0; pointer-events: none; }
+.constellation-arrival {
+  position: absolute; inset: -6px; border: 1px solid currentColor; border-radius: 50%;
+  opacity: 0; pointer-events: none; box-shadow: 0 0 14px currentColor, inset 0 0 8px currentColor;
+}
+.constellation-orb i { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: var(--category-color); left: -7px; top: 21px; box-shadow: 0 0 6px var(--category-color); pointer-events: none; }
+.constellation-orb i:nth-of-type(2) { left: 45px; top: -5px; width: 3px; height: 3px; }
+.constellation-orb i:nth-of-type(3) { left: 55px; top: 54px; }
+.constellation-hub:hover, .constellation-hub:focus-visible { background: transparent; outline: none; }
+.constellation-hub[data-selected='true'] .constellation-orb {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--category-color) 15%, transparent),
+    0 0 22px color-mix(in srgb, var(--category-color) 20%, transparent), inset 0 1px 0 #ffffff30;
+}
+.constellation-hub[data-selected='true'] .constellation-orb::before { border-color: var(--category-color); }
+.constellation-hub[data-active='true'] .constellation-orb,
+.constellation-hub:focus-visible .constellation-orb {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--category-color) 12%, transparent),
+    0 0 32px color-mix(in srgb, var(--category-color) 28%, transparent), inset 0 1px 0 #ffffff40;
+}
+.constellation-hub[data-active='true'] .constellation-orb::before { border-color: var(--category-color); }
+.constellation-hub:focus-visible .constellation-orb { outline: 2px solid var(--category-color); outline-offset: 10px; }
+/* Shared category colors carry into the inner reading layer; only paint changes. */
+.canvas-explorer:not(.panoramic-canvas) .universe-card.selected .card-surface {
+  box-shadow: inset 0 0 0 2px var(--category-color);
+}
+@media (prefers-reduced-motion: reduce) {
+  .constellation-map path, .constellation-orb, .constellation-orb::before, .constellation-reveal { transition: none; }
+  .constellation-reveal { transform: none; }
+}
+@media (hover: none), (pointer: coarse) {
+  .constellation-touch-hint { display: block; text-align: center; }
+}
+.aggregate-counts { font-size: 11px; color: #b5a7c6; max-width: 900px; margin: 6px auto 0; }
+.aggregate-counts summary { cursor: pointer; padding: 14px; text-align: center; }
+.aggregate-counts > div { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 8px; }
+.aggregate-counts button { display: grid; grid-template-columns: 1fr auto; text-align: left; gap: 8px; padding: 14px; font-size: 11px; }
+.aggregate-counts button small { grid-column: 1 / -1; font-size: 9px; color: #aaa0b8; }
+.external-constellations { position: absolute; z-index: 6; left: 112px; top: 90px; max-width: 280px; font-size: 11px; background: #232331ee; border: 1px solid #d9c3f229; border-radius: 16px; padding: 12px; }
+.external-constellations summary { cursor: pointer; }
+.external-constellations button { display: flex; justify-content: space-between; gap: 15px; width: 100%; margin-top: 8px; font-size: 11px; }
+.external-constellations button span { color: #baa5d0; }
+.external-constellations p { font-size: 10px; line-height: 1.6; color: #aaa0b8; }
+@media (max-width: 900px) {
+  .constellation-overview { padding: 105px 18px 90px; }
+  .constellation-map { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 6px; height: auto; min-height: 0; padding: 25px 0; }
+  .constellation-map > svg { display: none; }
+  .constellation-hub { position: static; transform: none; width: 100%; min-height: 170px; padding-inline: 0; }
+  .external-constellations { left: 14px; top: 110px; }
+}
+.canvas:has(.canvas-explorer) > .canvas-heading { display: none; }
+.canvas:has(.constellation-overview) > .canvas-hint,
+.canvas:has(.layout-preview-bar) > .canvas-hint { display: none; }
+.exploration-toolbar {
+  position: absolute; z-index: 6; top: 18px; left: 112px; right: 24px;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+  width: fit-content; max-width: calc(100% - 140px); padding: 8px;
+  border: 1px solid #d9c3f229; border-radius: 18px; background: #232331ee;
+}
+.exploration-title { padding: 0 10px; font-size: 12px; color: #d9c7ee; }
+.exploration-toolbar button { font-size: 11px; padding: 10px 12px; border-radius: 11px; }
+.explore-neighborhood { width: 100%; margin-top: 16px; color: #e2d0f5; }
+.layout-preview-bar {
+  position: absolute; z-index: 9; top: 85px; left: 112px; right: 30px; width: fit-content;
+  display: flex; gap: 10px; flex-wrap: wrap; align-items: center; padding: 16px;
+  border: 1px solid #ccb4ec70; border-radius: 20px; background: #292438f5; box-shadow: 0 16px 48px #0005;
+}
+.layout-preview-bar strong, .layout-preview-bar span { display: block; font-size: 12px; }
+.layout-preview-bar span { color: #b8a8cb; font-size: 10px; margin-top: 6px; }
+.layout-preview-bar button { padding: 12px; border-radius: 12px; font-size: 11px; }
+.layout-error { position: absolute; z-index: 9; top: 80px; left: 112px; background: #292438; padding: 16px; }
+.inspector[inert] { opacity: .55; }
+@media (max-width: 900px) {
+  .layout-preview-bar { top: 90px; left: 14px; right: 14px; }
+}
+.editor .universe-card:not([data-detail="full"]) { --card-shape: inset(0 round 28px); }
+.editor .universe-card[data-detail="symbol"] { --card-shape: circle(50%); }
+.editor .universe-card:not([data-detail="full"]) .card-frame {
+  left: 50%; top: 50%; width: 224px; height: 102px; margin: -51px 0 0 -112px;
+  background: var(--category-color);
+}
+.editor .universe-card:not([data-detail="full"]) .card-surface {
+  inset: auto; left: 50%; top: 50%; width: 220px; height: 98px; margin: -49px 0 0 -110px;
+}
+.editor .universe-card[data-detail="symbol"] .card-frame { width: 96px; height: 96px; margin: -48px 0 0 -48px; }
+.editor .universe-card[data-detail="symbol"] .card-surface { width: 92px; height: 92px; margin: -46px 0 0 -46px; }
+.editor .universe-card:not([data-detail="full"]) .card-shade { display: none; }
+.editor .universe-card:not([data-detail="full"]) .artwork-orbit,
+.editor .universe-card:not([data-detail="full"]) .artwork-caption { display: none; }
+.editor .universe-card:not([data-detail="full"]) .artwork-symbol {
+  left: 50%; top: 50%; font-size: 44px; transform: translate(-50%, -50%); color: var(--category-color);
+}
+.editor .universe-card[data-detail="symbol"] .card-content { display: none; }
+.editor .universe-card[data-detail="compact"] .entity-artwork {
+  inset: 13px auto 13px 12px; width: 72px; border-radius: 50%;
+}
+.editor .universe-card[data-detail="compact"] .card-content {
+  inset: 0 0 0 88px; padding: 13px 12px 10px 0; display: flex; flex-direction: column; justify-content: center;
+}
+.editor .universe-card[data-detail="compact"] .eyebrow { font-size: 12px; padding: 0; border: 0; background: transparent; }
+.editor .universe-card[data-detail="compact"] h3 { font-size: 23px; margin: 5px 0 0; line-height: 1.15; -webkit-line-clamp: 2; }
+.editor .universe-card[data-detail="symbol"] .react-flow__handle-left { left: calc(50% - 48px); }
+.editor .universe-card[data-detail="symbol"] .react-flow__handle-right { right: calc(50% - 48px); }
+.editor .universe-card[data-detail="compact"] .react-flow__handle-left { left: calc(50% - 112px); }
+.editor .universe-card[data-detail="compact"] .react-flow__handle-right { right: calc(50% - 112px); }
+@media (min-width: 901px) {
+  .editor-body:has(> .inspector) .exploration-chrome { max-width: calc(100% - 495px); }
+}
+@media (max-width: 900px) {
+  .exploration-chrome { left: 14px; right: 14px; top: 12px; max-width: calc(100% - 28px); }
+  .exploration-toolbar { left: 14px; right: 14px; top: 12px; max-width: calc(100% - 28px); }
+  .exploration-toolbar button { min-height: 44px; }
+}
+.universe-card[data-emphasis="muted"] { opacity: .48; }
+.editor .universe-card[data-emphasis="related"] .card-frame {
+  background: linear-gradient(140deg, #dfc8fa, #90bbaeaa);
+}
+.editor .universe-card.selected .card-frame { background: #f1ddff; }
+.editor .universe-card.selected .card-content h3 { color: #fff; }
+.editor .card-shade {
+  background: linear-gradient(180deg, #10111b00 30%, #10111b30 48%, #10111beb 90%);
+}
+.editor .card-content h3 { text-wrap: balance; }
+.lightweight-symbol {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  color: var(--category-color); font-size: 40px; line-height: 1; pointer-events: none;
+}
+.panoramic-canvas .universe-card[data-detail="compact"] .lightweight-symbol { left: 44px; font-size: 36px; }
+.react-flow__node:has(.universe-card:not([data-detail="full"])) { pointer-events: none; }
+.universe-card:not([data-detail="full"]) { pointer-events: none; }
+.universe-card:not([data-detail="full"]) .card-surface,
+.universe-card:not([data-detail="full"]) .react-flow__handle { pointer-events: all; }
+.panoramic-canvas .floating-relation.emphasis-normal { opacity: .4; }
+.panoramic-canvas .floating-relation.emphasis-muted { opacity: .14; }
+.panoramic-canvas .react-flow__edge:hover .floating-relation { opacity: 1; }
+.exploration-toolbar button[aria-pressed="true"] { color: #e4d2ff; background: #ad8ed32b; border-color: #b99cdb; }
+.floating-relation { opacity: .85; }
+.floating-relation.emphasis-muted { opacity: .22; }
+.floating-relation.emphasis-related,
+.floating-relation.emphasis-focused,
+.react-flow__edge:hover .floating-relation,
+.react-flow__edge:focus-visible .floating-relation { opacity: 1; }
+.floating-relation .react-flow__edge-path { stroke-linecap: round; }
+.floating-relation.emphasis-focused .react-flow__edge-path { stroke-width: 3; }
+.floating-relation.is-distant:not(.emphasis-focused) .react-flow__edge-textwrapper,
+.floating-relation.emphasis-muted .react-flow__edge-textwrapper { visibility: hidden; }
+.react-flow__edge:hover .react-flow__edge-textwrapper,
+.react-flow__edge:focus-visible .react-flow__edge-textwrapper { visibility: visible !important; }
+.editor .floating-relation.emphasis-focused .react-flow__edge-textbg { fill: #453851; stroke: #d3b5ed; stroke-width: 1; }
+.editor .floating-relation.emphasis-focused .react-flow__edge-text { fill: #fff; font-weight: 600; }
+.focused-relation-label {
+  position: absolute; pointer-events: none; padding: 6px 10px;
+  border: 1px solid #d3b5ed; border-radius: 9px; background: #352c43;
+  color: #fff; font-size: 12px; line-height: 1.4; max-width: 240px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.canvas-focus-bar {
+  position: absolute; z-index: 6; bottom: 28px; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 12px; border: 1px solid #d9bdef40;
+  border-radius: 18px; padding: 7px 8px 7px 16px; background: #282333f5;
+  color: #d8c6e9; font-size: 11px; box-shadow: 0 8px 25px #0003;
+}
+.canvas-focus-bar button { border-radius: 12px; padding: 10px; font-size: 11px; }
+.editor .inspector .inspector-relation { padding: 0; overflow: hidden; }
+.inspector-relation button { width: 100%; text-align: left; background: transparent; border: 0; border-radius: 0; }
+.relation-focus-action { display: grid; gap: 7px; padding: 14px; }
+.relation-focus-action > span:first-child { font-weight: 600; }
+.relation-action-caption { font-size: 10px; color: #bba5ce; }
+.editor .inspector .relation-visit-action { border-top: 1px solid #d7c4ed20; padding: 12px 14px; font-size: 11px; color: #d5bcec; }
+.inspector-relation[data-focused="true"] { outline: 1px solid #c5a4e6; }
+.inspector-relation button:hover { background: #d6b5ef10; }
+@media (min-width: 901px) {
+  .editor-body:has(> .inspector) .canvas-focus-bar { left: calc((100% - 280px) / 2); }
+}
+@media (max-width: 900px) {
+  .canvas-focus-bar { bottom: 90px; max-width: calc(100% - 24px); width: max-content; }
+  .canvas-focus-bar button { min-height: 44px; }
+}
+/* One command surface: application areas and canvas views share an edge. */
+.exploration-chrome { left: 17px; top: 17px; right: 17px; max-width: calc(100% - 34px); }
+.workspace-command-bar {
+  border: 1px solid #d6c6ef29; border-radius: 20px; padding: 7px;
+  background: #242530f2; box-shadow: 0 8px 26px #0003, inset 0 1px #ffffff09;
+}
+.workspace-command-bar .exploration-toolbar {
+  border: 0; border-radius: 0; background: transparent; padding: 0; box-shadow: none; gap: 7px;
+}
+.canvas-view-switch { display: flex; gap: 3px; padding: 3px; border-radius: 13px; background: #10121b66; }
+.canvas-view-switch button { border-color: transparent; background: transparent; white-space: nowrap; }
+.workspace-command-bar button {
+  transition: background-color .22s ease, border-color .22s ease, color .22s ease, box-shadow .22s ease;
+}
+.canvas-view-switch button[aria-pressed='true'] {
+  background: #bda6e52b; border-color: #dac6f536; box-shadow: 0 2px 7px #0002, inset 0 1px #ffffff12; color: #f4eaff;
+  animation: command-selection .24s ease-out;
+}
+.canvas-settings-trigger { margin-left: auto; }
+.canvas-settings { padding: 14px 8px 6px; max-width: 410px; animation: command-reveal .2s ease-out; }
+.canvas-settings header, .canvas-settings label { display: flex; flex-direction: row; text-align: left; align-items: center; justify-content: space-between; gap: 20px; }
+.canvas-settings header { margin-bottom: 16px; font-size: 12px; }
+.canvas-settings header button { padding: 4px 10px; font-size: 19px; background: transparent; border: 0; }
+.canvas-settings label { font-size: 13px; cursor: pointer; }
+.canvas-settings small { display: block; color: #afa3bf; font-size: 10px; margin-top: 5px; }
+.canvas-settings input { appearance: none; width: 42px; height: 26px; border-radius: 20px; background: #5d5966; position: relative; flex-shrink: 0; cursor: pointer; transition: background-color .2s; }
+.canvas-settings input::after { content: ''; position: absolute; width: 20px; height: 20px; top: 3px; left: 3px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px #0004; transition: transform .2s; }
+.canvas-settings input:checked { background: #9980c7; }
+.canvas-settings input:checked::after { transform: translateX(16px); }
+.canvas-settings input:focus-visible { outline: 2px solid #e0c9ff; outline-offset: 4px; }
+.canvas-settings p { color: #b5aac5; font-size: 11px; line-height: 1.6; max-width: 370px; }
+@keyframes command-selection { from { box-shadow: 0 0 0 #0000; } to { box-shadow: 0 2px 7px #0002, inset 0 1px #ffffff12; } }
+@keyframes command-reveal { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+@media (min-width: 901px) {
+  .workspace-command-bar .workspace-navigation {
+    position: static; width: auto; display: flex; flex-direction: row; gap: 4px; padding: 0 0 7px;
+    border: 0; border-bottom: 1px solid #d6c6ef1c; margin-bottom: 7px; border-radius: 0; background: transparent; box-shadow: none;
+  }
+  .workspace-command-bar .workspace-navigation button { flex-direction: row; width: auto; height: 36px; padding: 8px 14px; border-radius: 12px; font-size: 11px; gap: 8px; }
+  .workspace-command-bar .workspace-navigation svg { width: 16px; height: 16px; }
+  .workspace-command-bar .workspace-navigation button[aria-current='page'] { animation: command-selection .24s ease-out; }
+  .editor .react-flow__controls { left: 17px !important; bottom: 17px !important; margin: 0; }
+  .editor .react-flow__minimap { right: 17px; bottom: 17px; margin: 0; }
+  .constellation-overview { padding: 150px 30px 20px; }
+}
+@media (max-width: 900px) {
+  .canvas-settings label { min-height: 44px; }
+  .editor .canvas-settings header button { min-width: 44px; min-height: 44px; }
+  .canvas-settings-trigger span { display: none; }
+  .workspace-command-bar .exploration-toolbar button { min-height: 44px; }
+  .canvas-view-switch { max-width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .workspace-command-bar *, .workspace-command-bar *::after { animation: none !important; transition: none !important; }
+}
+
+.workspace-command-bar .layout-preview-bar { margin: 7px 0 0; border: 0; border-top: 1px solid #d6c6ef1c; border-radius: 0; padding: 12px 6px 5px; background: transparent; box-shadow: none; }
+
+.workspace-command-bar .workspace-navigation .canvas-settings-trigger { margin-left: 4px; }
+/* Settings remain owned by the canvas; desktop renders them in the header. */
+.header-settings-slot { position: relative; flex: 0 0 auto; }
+.canvas-settings-control { position: relative; flex: 0 0 auto; }
+.canvas-settings-control > .canvas-settings-trigger { display: grid; place-items: center; margin: 0; padding: 8px; min-width: 38px; min-height: 38px; }
+.canvas-settings-trigger img { filter: grayscale(1) brightness(1.08); }
+.canvas-settings-control .canvas-settings {
+  position: absolute; z-index: 30; top: calc(100% + 12px); right: 0;
+  width: 320px; max-width: calc(100vw - 32px); max-height: 65dvh; overflow-y: auto;
+  padding: 18px; border: 1px solid #d6c6ef36; border-radius: 19px;
+  background: #262532f5; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 16px 45px #0006, inset 0 1px 0 #ffffff0c;
+  color: #efe5fa; white-space: normal;
+}
+.editor .canvas-settings header button { width: 28px; height: 28px; padding: 0; border: 0; background: transparent; }
+.canvas-settings p { margin-bottom: 0; }
+@media (min-width: 901px) {
+  .workspace-command-bar { padding: 6px; border-radius: 17px; }
+  .workspace-command-bar .workspace-navigation { gap: 2px; padding-bottom: 6px; margin-bottom: 6px; }
+  .workspace-command-bar .workspace-navigation button { padding: 7px 11px; height: 34px; }
+  .workspace-command-bar .exploration-toolbar { gap: 5px; }
+  .workspace-command-bar .exploration-toolbar button { padding: 9px 10px; }
+  .editor .toolbar-actions .canvas-settings-trigger { width: 38px; height: 38px; padding: 7px; }
+  .header-settings-slot .canvas-settings-trigger[aria-expanded='true'] { background: #c3a9ed20; border-color: #d6c6ef50; }
+}
+@media (max-width: 900px) {
+  .canvas-settings-control { margin-left: auto; }
+  .canvas-settings-control > .canvas-settings-trigger { min-width: 44px; min-height: 44px; }
+  .editor .canvas-settings header button { min-width: 44px; min-height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) { .canvas-settings-control .canvas-settings { animation: none; } }
+
+/* One moving surface across each group of navigation buttons. */
+.workspace-command-bar .sliding-selection { position: relative; isolation: isolate; }
+.workspace-command-bar .workspace-navigation.sliding-selection { inset: auto; }
+.sliding-selection > .selection-indicator {
+  position: absolute; top: 0; left: 0; z-index: -1; pointer-events: none;
+  width: var(--selection-width, 0px); height: var(--selection-height, 0px);
+  transform: translate(var(--selection-x, 0px), var(--selection-y, 0px));
+  border: 1px solid #dac6f536; border-radius: 11px; background: #bda6e52b;
+  box-shadow: 0 2px 7px #0002, inset 0 1px #ffffff12;
+}
+.sliding-selection[data-selection-ready='true'] > .selection-indicator {
+  transition: transform .28s cubic-bezier(.22,.8,.25,1), width .28s ease, height .28s ease;
+}
+.workspace-command-bar .sliding-selection > button[aria-current='page'],
+.workspace-command-bar .sliding-selection > button[aria-pressed='true'] {
+  background: transparent; border-color: transparent; box-shadow: none; animation: none;
+}
+.flow-layer:not(.flow-concealed), .editor { animation: scene-arrive .22s ease-out; }
+@keyframes scene-arrive { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .flow-layer:not(.flow-concealed), .editor { animation: none; }
+}
