@@ -3,6 +3,14 @@
 Estado atualizado em 2026-10-23, na iteração ASTERISM — Worldbuilding for Anything. As etapas anteriores foram preservadas. Esta página distingue implementação, evidência anterior e verificações atuais; não é garantia de funcionamento em todos os navegadores.
 
 
+## README público — 2026-10-23
+
+Endereço publicado informado pelo usuário e conferido no navegador: [asterism-164.pages.dev](https://asterism-164.pages.dev/). README reformulado como apresentação pública, sem anunciar instalação PWA; instruções operacionais, desenvolvimento e instalação experimental foram preservadas em [USER_GUIDE](USER_GUIDE.md).
+
+Quatro capturas novas em `docs/readme/`, feitas no Chromium local a 1440×900. Somente conteúdo sintético: Atlas de Aurora (11 elementos/15 relações), Jardim das Luas e Caderno de Campanhas; nenhum projeto pessoal, PDF ou captura antiga de QA foi utilizado. Biblioteca, constelações, categoria Personagem e editor de Documentos conferidos visualmente. WebP sem perdas adicionais sobre os pixels fornecidos pelo navegador; quatro imagens somam cerca de 645 KiB. Logo e demais recursos oficiais preservados.
+
+Links locais e imagens conferidos, endereço público aberto e prévia GFM local revisada em claro/escuro e em 390 px sem overflow horizontal. Essa prévia aproxima a apresentação do GitHub; não foi publicada para testar no servidor do GitHub. Sem repetição de testes/lint/build por ser alteração exclusivamente documental. Sem commit, staging, push, licença nova, dependências, mudança de versão ou deploy.
+
 ## Preparação para GitHub — 2026-10-23
 
 Não havia repositório nesta pasta nem nos diretórios superiores. Inicializado `main`, sem commit, staging, tag ou remote. Revisados `.gitignore`, normalização textual em `.gitattributes` e README; versão v0.1.0 preservada. Código e recursos oficiais não foram modificados.

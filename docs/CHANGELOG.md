@@ -4,6 +4,8 @@ Registra somente evolução comprovada. Datas de lançamento, tags e versões an
 
 ## Unreleased
 
+- README como apresentação pública do ASTERISM, com endereço web, quatro capturas reais de conteúdo sintético e explicação local-first. Instruções detalhadas de uso, desenvolvimento e instalação experimental preservadas em USER_GUIDE. Sem alterações no aplicativo, versão, licença ou dependências.
+
 - Preparação para GitHub: regras de exclusão para ambientes/credenciais, dados pessoais, artefatos gerados e capturas de QA; normalização de texto e preservação binária das artes. README revisado para desenvolvimento, armazenamento local-first e limites de distribuição. Git local em main sem commit/remote; sem mudança de versão, código ou dependências.
 
 - Home 1.0: biblioteca centralizada, capas ampliadas e grid responsivo para coleções pequenas ou numerosas; ações junto ao título, assinatura centralizada e aviso local discreto. Removidos barra lateral, Todos os universos e atalho fixo Explorar Nyvorn; demonstração disponível na biblioteca vazia.
