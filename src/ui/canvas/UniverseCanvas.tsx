@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import { memo, createContext, useCallback, useContext, useEffect, useId, useMemo, useRef, useState } from "react";
 import type { ReactNode, RefObject } from "react";
 import { createPortal } from "react-dom";

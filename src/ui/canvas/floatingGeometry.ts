@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MPL-2.0 AND MIT
+// ASTERISM additions: MPL-2.0; upstream example material: MIT.
+// See THIRD_PARTY_NOTICES.md (xyflow) and docs/LICENSING.md.
 import type { Category, Relation } from "../../domain/model";
 type Point = { x: number; y: number };
 export type NodeBox = Point & {

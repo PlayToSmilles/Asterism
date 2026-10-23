@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import type { Project } from "../../domain/model";
 import type { Exploration } from "../canvas/exploration";
 import type { SearchResult } from "./search";

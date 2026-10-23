@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import { useEffect, useState } from "react";
 import type { ReferenceSummary } from "../../domain/reference";
 import { getReference, referenceError } from "../../persistence/referenceStore";

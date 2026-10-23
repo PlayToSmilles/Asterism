@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import { useEffect, useRef, useState } from "react";
 import type { Project } from "../../domain/model";
 import { PwaStatus } from "../PwaStatus";
@@ -195,7 +196,7 @@ export function ProjectHome({
         <span>
           Um projeto <strong>PlayToSmilles</strong>
         </span>
-        <span>Armazenamento local · Exporte backups</span>
+        <span>Armazenamento local · Exporte backups · <a href={`${import.meta.env.BASE_URL}legal/`} target="_blank" rel="noopener noreferrer">Código-fonte e licenças</a></span>
       </footer>
       </div>
       {creating && (

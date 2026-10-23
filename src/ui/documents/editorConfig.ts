@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import StarterKit from "@tiptap/starter-kit";
 export const documentExtensions = [
   StarterKit.configure({

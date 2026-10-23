@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import { getViewportForBounds, type Rect } from "@xyflow/react";
 import type { Project } from "../../domain/model";
 

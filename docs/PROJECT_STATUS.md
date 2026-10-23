@@ -1,9 +1,25 @@
 # Estado do projeto
 
+> Prosa original: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), com [escopo e exclusões](DOCUMENTATION_LICENSE.md).
+
 Estado atualizado em 2026-10-23, na iteração ASTERISM — Worldbuilding for Anything. As etapas anteriores foram preservadas. Esta página distingue implementação, evidência anterior e verificações atuais; não é garantia de funcionamento em todos os navegadores.
 
 
+## Preparação da licença — 2026-10-23
+
+Finalização aprovada pelo autor: autoria e autorização limitada da narrativa confirmadas; crédito público da documentação fixado em “Projeto ASTERISM”, sem divulgar nome civil. Nenhuma cessão de titularidade à organização foi presumida. O autor também informou a conclusão da validação visual e offline; trata-se de evidência relatada, sem especificação de dispositivo/navegador e sem nova execução pelo agente. Código, dependências e versão não mudaram nesta atualização documental; os resultados técnicos de 165 testes/lint/TypeScript/build abaixo são da etapa anterior.
+
+Acesso público ao fonte ainda pendente: consulta sem autenticação ao repositório, à API pública e ao commit-base retornou 404. Não se confirmou acesso público à versão correspondente ao build; antes de distribuir, disponibilizar uma revisão ou snapshot correspondente e conferir os links. Visibilidade, push e deploy não foram alterados.
+
+Código próprio preparado para MPL 2.0, com texto oficial, avisos SPDX e metadados do pacote; versão v0.1.0 e `private: true` preservados. Revisados os dois commits existentes e os avisos instalados de dependências de runtime/Workbox. A adaptação documentada do React Flow conserva MIT. Decisões posteriores do autor: artes/logotipos próprios com direitos reservados, marcas preservadas e materiais dos usuários com seus titulares, registrados em [ASSETS_LICENSE](../ASSETS_LICENSE.md). O autor confirmou expressamente a autoria das dez artes, incluindo wallpaper; termos limitados de distribuição no aplicativo original e de compartilhamento das quatro capturas oficiais foram preparados conforme suas decisões. CC BY 4.0 aplicada à prosa original dos sete documentos aprovados; fábrica MPL e JSON narrativo reservado separados, com autorização narrativa confirmada. Não há cessão presumida à organização. A separação de `demo.ts` está descrita em [LICENSING](LICENSING.md), com igualdade da saída protegida por teste. [Avisos de terceiros](../THIRD_PARTY_NOTICES.md) preservados. Histórico limitado não comprova toda a titularidade. Sem commit, push, deploy ou alteração de visibilidade nesta preparação.
+
+Validação da finalização técnica: 165 testes em 25 arquivos, lint e build TypeScript/Vite/PWA aprovados; continua o aviso de chunk principal acima de 500 kB. Três novos testes cobrem equivalência integral da demonstração anterior, isolamento mutável e serialização. Página legal, textos e identificação do fonte gerados no build e incluídos no precache; checkout alterado identificado sem correspondência falsa com o commit-base. Preview HTTP conferiu a página, os seis arquivos legais e quatro caminhos de ícones, comparando os arquivos servidos aos originais. Inventário: 97 avisos de código (92 anteriores mais cinco novos), dez artes e quatro capturas intactas, sete documentos com aviso CC BY. O rodapé abre a página legal em nova aba. Sem validação visual/Safari/iPhone ou ensaio offline real nesta etapa. As verificações abaixo de 162 testes pertencem à preparação anterior.
+
+Validação desta preparação: 162 testes/24 arquivos, lint e build TypeScript/Vite/PWA aprovados; permanece o aviso de chunk acima de 500 kB. Conferência byte a byte do LICENSE com o texto oficial, links locais e diff sem erros. Nos 92 arquivos com cabeçalhos, o conteúdo anterior foi verificado por hash após retirar somente os comentários adicionados; artes e demonstração inalteradas. Metadados dos pacotes diferem somente pelo campo de licença. Não houve validação visual, pois não há mudança de interface.
+
 ## README público — 2026-10-23
+
+Revisão de preparação do commit: dois commits e 129 arquivos atuais examinados (114 arquivos de licenciamento/integração no conjunto preparado). Busca por padrões de credenciais e caminhos pessoais sem ocorrências nos textos atuais e no histórico; PDFs/ambientes/backups privados não identificados no conjunto. As 14 imagens permaneceram intactas; SHA-256 do LICENSE confere com o texto oficial obtido na preparação anterior. Essa busca é limitada aos padrões examinados, não uma garantia universal. 114 arquivos preparados no staging e conferidos, sem criação de commit nesta etapa.
 
 Endereço publicado informado pelo usuário e conferido no navegador: [asterism-164.pages.dev](https://asterism-164.pages.dev/). README reformulado como apresentação pública, sem anunciar instalação PWA; instruções operacionais, desenvolvimento e instalação experimental foram preservadas em [USER_GUIDE](USER_GUIDE.md).
 
@@ -19,7 +35,7 @@ Inventário local sem PDFs pessoais, exportações JSON de usuários, ambientes 
 
 Verificações desta preparação: Node 24.21.0/npm 11.19.0, 162 testes em 24 arquivos, lint sem avisos e build com typecheck/PWA aprovados. Mantido o aviso de chunk principal (~516 kB / 167 kB gzip); não houve refatoração de bundles. Revisados 114 arquivos candidatos (104 textuais), com varredura sem padrões de segredos encontrados; 18 casos de exclusão e 17 arquivos essenciais conferidos. `git add --dry-run .` confirmou o conjunto sem efetuar staging. Não houve nova rodada visual, por não existir mudança de interface.
 
-As capturas históricas abaixo são **evidências locais não versionadas**. Seus caminhos permanecem como texto para consulta local, sem links quebrados no GitHub. A escolha de licença para uma futura abertura do código continua pendente.
+As capturas históricas abaixo são **evidências locais não versionadas**. Seus caminhos permanecem como texto para consulta local, sem links quebrados no GitHub. A preparação de licenciamento posterior está descrita no início desta página.
 
 ## Home 1.0 — 2026-10-23
 

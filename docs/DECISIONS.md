@@ -1,5 +1,15 @@
 # Decisões arquiteturais
 
+> Prosa original: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), com [escopo e exclusões](DOCUMENTATION_LICENSE.md).
+
+## D21 — Separação de conteúdo reservado e avisos no build
+
+**Problema:** a fábrica de demonstração misturava lógica e narrativa sob termos distintos; somente documentos na raiz do Git não garantiam avisos disponíveis no aplicativo estático distribuído.
+
+**Escolha:** manter a fábrica MPL com sua assinatura e extrair os dados para um JSON explicitamente reservado; copiar objetos mutáveis por criação. Emitir os avisos diretamente de seus arquivos-fonte via Vite e oferecer página legal estática, sem dependências ou dados pessoais. Identificação Git informa alterações locais em vez de atribuir um build alterado ao commit-base.
+
+**Consequências:** narrativa depende de autorização própria, separada da aprovação técnica. Código pode ser reutilizado sob MPL, mas artes reservadas precisam ser substituídas/autorizadas em forks. Documentação original tem escopo CC BY explícito. Página e avisos entram no precache; disponibilizar efetivamente a revisão correspondente ainda é responsabilidade do distribuidor. A preparação não abre o repositório nem publica o aplicativo.
+
 ## D20 — Biblioteca retida e passagem pela capa
 
 **Problema:** desmontar a home após apenas ampliar/apagar a cena impedia continuidade espacial e perdia seu contexto de rolagem.

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import { useState } from "react";
 import type { Entity } from "../domain/model";
 

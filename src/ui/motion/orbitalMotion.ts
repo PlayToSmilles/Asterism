@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 export type OrbitalStage = "rest" | "dispersing" | "orbiting" | "returning";
 interface Point { x: number; y: number }
 interface Sample { point: Point; velocity: Point }

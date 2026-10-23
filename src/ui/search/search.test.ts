@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import { describe, expect, it } from "vitest";
 import { createProject, type Category, type Entity, type Project } from "../../domain/model";
 import { buildSearchIndex, fold, highlightRanges, searchUniverse } from "./search";

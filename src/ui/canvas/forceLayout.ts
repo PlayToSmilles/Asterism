@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import { forceCollide, forceLink, forceManyBody, forceSimulation, forceX, forceY, type SimulationNodeDatum, type SimulationLinkDatum } from "d3-force";
 import type { Category, Position, Relation } from "../../domain/model";
 import type { CardNode } from "./canvasState";

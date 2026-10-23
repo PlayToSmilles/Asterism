@@ -1,61 +1,16 @@
-import { createProject, type Project } from "./model";
+// SPDX-License-Identifier: MPL-2.0
+import data from "../content/demo/nyvorn.json";
+import { categories, createProject, type Project } from "./model";
+
 export function createDemo(): Project {
   return {
-    ...createProject("Nyvorn", "demo"),
-    viewport: { x: 60, y: 90, zoom: 0.9 },
-    entities: [
-      {
-        id: "nyvorn-ekko",
-        title: "Ekko",
-        category: "Personagem",
-        description:
-          "Um nome no centro de muitas histórias. Que escolhas definirão seu caminho por Nyvorn?",
-        position: { x: 50, y: 80 },
-      },
-      {
-        id: "nyvorn-smiley",
-        title: "Smiley",
-        category: "Personagem",
-        description:
-          "Todo encontro deixa uma marca. Sua ligação com Ekko ainda está por ser escrita.",
-        position: { x: 440, y: 0 },
-      },
-      {
-        id: "nyvorn-tissue",
-        title: "Tissue",
-        category: "Personagem",
-        description:
-          "Uma presença que conecta caminhos. Seus segredos aguardam a próxima página.",
-        position: { x: 440, y: 290 },
-      },
-      {
-        id: "nyvorn-agulha",
-        title: "Agulha do Retorno",
-        category: "Artefato",
-        description:
-          "Um artefato cercado de perguntas. O que significa retornar — e qual seria o preço?",
-        position: { x: 830, y: 150 },
-      },
-    ],
-    relations: [
-      {
-        id: "nyvorn-r1",
-        sourceId: "nyvorn-ekko",
-        targetId: "nyvorn-smiley",
-        label: "cruza o caminho de",
-      },
-      {
-        id: "nyvorn-r2",
-        sourceId: "nyvorn-ekko",
-        targetId: "nyvorn-tissue",
-        label: "tem uma ligação com",
-      },
-      {
-        id: "nyvorn-r3",
-        sourceId: "nyvorn-tissue",
-        targetId: "nyvorn-agulha",
-        label: "investiga",
-      },
-    ],
+    ...createProject(data.name, "demo"),
+    viewport: { ...data.viewport },
+    entities: data.entities.map((entity) => {
+      const category = categories.find((value) => value === entity.category);
+      if (!category) throw new Error("Categoria inválida na demonstração.");
+      return { ...entity, category, position: { ...entity.position } };
+    }),
+    relations: data.relations.map((relation) => ({ ...relation })),
   };
 }

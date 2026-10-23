@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import { useSelectionIndicator } from "../motion/useSelectionIndicator";
 
 export function DesktopNavigation({

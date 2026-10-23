@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import type { CSSProperties, ReactNode } from "react";
 import type { Entity } from "../../domain/model";
 import { EntityArtwork } from "../EntityArtwork";

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import { useState, type ReactNode } from "react";
 import { EditorContent, useEditor, useEditorState } from "@tiptap/react";
 import { Plugin } from "@tiptap/pm/state";

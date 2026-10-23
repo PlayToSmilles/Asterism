@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import { saveLibrary, type Library } from "./persistence";
 
 // One canonical in-memory snapshot. React subscribes; timers only defer disk I/O.

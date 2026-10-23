@@ -1,5 +1,7 @@
 # Arquitetura
 
+> Prosa original: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), com [escopo e exclusões](DOCUMENTATION_LICENSE.md).
+
 Aplicação cliente React + TypeScript strict, servida por Vite. React Flow (`@xyflow/react`) fornece o canvas; CSS e símbolos tipográficos compõem a interface. Não há servidor de aplicação ou banco remoto.
 
 ## Módulos reais
@@ -14,6 +16,7 @@ O código é agrupado por responsabilidade em `app/`, `domain/`, `persistence/`,
 | `src/domain/imageUrl.ts`           | Validação compartilhada de referências de imagem HTTP/HTTPS, sem lógica de apresentação.                                                                           |
 | `src/persistence/persistence.ts`   | Validação em runtime, serialização JSON e leitura/gravação da biblioteca local.                                                                                    |
 | `src/domain/demo.ts`               | Fábrica do projeto demonstrativo, com ID próprio a cada criação.                                                                                                   |
+| `src/content/demo/nyvorn.json`      | Dados demonstrativos reservados, separados da fábrica MPL; cópias profundas dos objetos mutáveis por criação. |
 | `src/ui/canvas/UniverseCanvas.tsx` | Cards customizados, nodes controlados, edges derivados e eventos do React Flow. `nodeTypes` é definido no escopo do módulo.                                        |
 | `src/ui/canvas/canvasState.ts`     | Adaptação entre modelo e nodes, preservação dos metadados visuais e confirmação das mudanças persistentes. Depende de tipos do React Flow, ao contrário do modelo. |
 | `src/ui/Inspector.tsx`             | Edição de card/relação e confirmação de exclusão.                                                                                                                  |
@@ -23,6 +26,8 @@ O código é agrupado por responsabilidade em `app/`, `domain/`, `persistence/`,
 | `src/**/*.test.ts`                 | Testes Vitest de modelo, persistência e regras de estado do canvas.                                                                                                |
 
 ## Home e gestão de projetos
+
+Avisos de distribuição: `public/legal/index.html` é uma página estática acessível pelo rodapé. `scripts/legalAssets.mjs`, integrado ao Vite, serve/emite os textos locais e a identificação Git do fonte, sem alterar persistência. O precache PWA inclui a página e os textos; não há consulta a dados de usuários para compor os avisos.
 
 `ui/home/ProjectHome.tsx` substitui as duas homes anteriores por uma composição responsiva compartilhada, com biblioteca, criação, importação, demonstração e confirmação de exclusão. `AsterismMark.tsx` renderiza a Tree_Logo fornecida pelo usuário, em `public/icons/tree-logo.png`, preservando proporção e pixel art; `styles/home.css` trata somente essa entrada e seus diálogos. `scripts/generate-icons.mjs` gera os ícones PNG a partir dessa fonte RGBA 8 bits, com escala inteira e fundo opaco para a PWA. `App` encaminha as operações para a sessão existente. A biblioteca é centralizada, sem barra lateral, com ações junto ao título e demonstração somente no estado vazio; não há campo confiável de última edição no modelo. A identidade visível e os metadados/ícones PWA usam ASTERISM; chaves de LocalStorage/IndexedDB, schema, ID e escopo da PWA permanecem iguais.
 

@@ -27,6 +27,7 @@ credentials/
 !/package.json
 !/package-lock.json
 !/tsconfig*.json
+!/src/content/demo/nyvorn.json
 *.pdf
 *.bak
 *.backup

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import { describe, expect, it } from "vitest";
 import { MarkerType } from "@xyflow/react";
 import { relationAppearance } from "./relationPresentation";

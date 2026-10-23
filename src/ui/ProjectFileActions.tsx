@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import { useRef } from "react";
 export function ProjectFileActions({
   importFile,

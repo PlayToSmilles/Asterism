@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 export const MAX_PDF_SIZE = 20 * 1024 * 1024;
 
 export interface ReferenceSummary {

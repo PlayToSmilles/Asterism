@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import type { DocumentNode } from "../../domain/document";
 import type { Category, Project } from "../../domain/model";
 import type { ReferenceSummary } from "../../domain/reference";

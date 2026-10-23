@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 interface Point { x: number; y: number }
 
 // SVG coordinates are CSS pixels, matching the fixed-size category circles.

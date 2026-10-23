@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import { useEffect, useMemo, useState, type RefObject } from "react";
 import { flushSync } from "react-dom";
 import type { Category } from "../../domain/model";

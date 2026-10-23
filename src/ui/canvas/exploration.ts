@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import { categories, type Category, type Position, type Project, type RelationKind } from "../../domain/model";
 import { getRelationKind } from "../../domain/relations";
 export type LayoutActivity = "idle" | "preview" | "dynamic";

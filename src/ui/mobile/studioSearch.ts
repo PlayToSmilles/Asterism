@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import type { Entity, Category } from "../../domain/model";
 
 const normalize = (text: string) =>

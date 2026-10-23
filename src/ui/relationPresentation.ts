@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import { MarkerType, type EdgeMarker } from "@xyflow/react";
 import type { RelationKind } from "../domain/model";
 

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 const key = "asterism.canvas.dynamic";
 
 // A browser preference, deliberately excluded from universe JSON/backups.

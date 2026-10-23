@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import { useSyncExternalStore } from "react";
 
 const query = "(max-width: 900px)";

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import type { Position, Relation } from "../../domain/model";
 import type { CardNode } from "./canvasState";
 import { semanticBox, type Detail } from "./cardPresentation";

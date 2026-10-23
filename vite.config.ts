@@ -1,9 +1,12 @@
+// SPDX-License-Identifier: MPL-2.0
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
+import { legalAssets } from "./scripts/legalAssets.mjs";
 export default defineConfig({
   plugins: [
     react(),
+    legalAssets(),
     VitePWA({
       registerType: "prompt",
       injectRegister: false,
@@ -46,6 +49,7 @@ export default defineConfig({
           "assets/home-wallpaper-*.png",
           "icons/apple-touch-icon.png",
           "icons/tree-logo.png",
+          "legal/*.{html,txt,md,json}",
         ],
         navigateFallback: "index.html",
         cleanupOutdatedCaches: true,

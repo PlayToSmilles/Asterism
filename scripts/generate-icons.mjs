@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 // Generate opaque PWA icons from the supplied RGBA pixel art, with integer nearest-neighbor scaling.
 import { Buffer } from "node:buffer";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";

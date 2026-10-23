@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 export const MAX_IMAGE_URL_LENGTH = 2048;
 
 export function isValidImageUrl(value: unknown): value is string {

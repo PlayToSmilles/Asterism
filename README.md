@@ -90,6 +90,16 @@ React, TypeScript strict e Vite na base da aplicação; React Flow no canvas e T
 - [Decisões arquiteturais](docs/DECISIONS.md)
 - [Regras para agentes e manutenção](AGENTS.md)
 
+## Licença
+
+> Prosa original: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), com [escopo e exclusões](docs/DOCUMENTATION_LICENSE.md).
+
+O código próprio identificado pelos avisos SPDX está preparado sob a **Mozilla Public License 2.0 (MPL-2.0)**; consulte o [texto integral](LICENSE) e o [escopo e pendências de licenciamento](docs/LICENSING.md). A MPL exige preservar seus termos e disponibilizar o fonte correspondente ao distribuir o código coberto, inclusive em forma executável.
+
+Dependências e material adaptado mantêm seus [avisos de terceiros](THIRD_PARTY_NOTICES.md). Pixel arts, wallpaper e logotipos originais têm direitos reservados, com permissão limitada para distribuição no ASTERISM original; forks modificados devem substituir as artes ou solicitar autorização. As quatro capturas oficiais podem ser compartilhadas inalteradas, com atribuição e sem endosso. Consulte [ASSETS_LICENSE](ASSETS_LICENSE.md) para a lista e os termos completos. Marcas e materiais dos usuários permanecem com seus titulares, sem cessão presumida a PlayToSmilles. A prosa original dos [sete documentos identificados](docs/DOCUMENTATION_LICENSE.md) é CC BY 4.0, com crédito público “Projeto ASTERISM”; imagens, marcas, código e narrativa estão excluídos. A fábrica MPL foi separada dos dados reservados de Ny’vorn; sua distribuição no aplicativo original e a consulta, edição e exportação em projetos pessoais estão autorizadas conforme ASSETS_LICENSE, sem licença geral para outros produtos ou forks.
+
+O [código-fonte do ASTERISM](https://github.com/PlayToSmilles/Asterism) e o [texto da MPL](LICENSE) são a referência para o código coberto. O aplicativo inclui “Código-fonte e licenças” no rodapé da biblioteca. Antes de distribuir um build, é necessário garantir acesso ao fonte da revisão correspondente e aos avisos; a preparação local não torna o repositório público nem garante que main corresponda à versão hospedada.
+
 ## PlayToSmilles
 
 Um produto **PlayToSmilles**. Um espaço para dar forma aos seus mundos.

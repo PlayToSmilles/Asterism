@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import { Fragment, useEffect, useId, useMemo, useRef, useState, type CSSProperties } from "react";
 import type { Project } from "../../domain/model";
 import type { ReferenceSummary } from "../../domain/reference";

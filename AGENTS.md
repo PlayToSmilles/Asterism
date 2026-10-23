@@ -1,5 +1,7 @@
 # Regras de desenvolvimento e documentação
 
+> Prosa original: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), com [escopo e exclusões](docs/DOCUMENTATION_LICENSE.md).
+
 ## Antes de alterar
 
 - Trabalhar somente neste projeto. Ler `README.md`, `docs/PROJECT_STATUS.md`, `docs/ARCHITECTURE.md`, `docs/CHANGELOG.md` e `docs/DECISIONS.md`; conferir o código envolvido antes de concluir como funciona.

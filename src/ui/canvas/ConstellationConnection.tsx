@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import { useEffect, useRef, type CSSProperties } from "react";
 import type { Category } from "../../domain/model";
 import { categoryPresentation } from "../categoryPresentation";

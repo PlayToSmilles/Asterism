@@ -1,8 +1,21 @@
 # Changelog
 
+> Prosa original: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), com [escopo e exclusões](DOCUMENTATION_LICENSE.md).
+
 Registra somente evolução comprovada. Datas de lançamento, tags e versões anteriores não são inferidas a partir de arquivos ou capturas. A versão declarada e as evidências de verificação estão em [PROJECT_STATUS](PROJECT_STATUS.md).
 
 ## Unreleased
+
+- Autor confirmou a autoria e autorizou o uso limitado da narrativa demonstrativa: distribuição no aplicativo original e consulta/edição/exportação em projetos pessoais, sem licença geral para outros produtos ou forks. Crédito da documentação definido como “Projeto ASTERISM”, sem nome civil. Validação visual/offline concluída conforme relato do autor; testes técnicos anteriores não repetidos nesta atualização documental.
+
+- Prosa original de sete documentos sob CC BY 4.0, com escopo/exclusões e crédito nominal ainda a indicar. Dados de Ny’vorn extraídos para JSON reservado, fábrica MPL preservada e três testes de equivalência/isolamento/serialização. Minuta narrativa separada, pendente de confirmação de poderes do titular.
+- Rodapé com acesso à página legal; Vite serve/emite licenças, avisos de terceiros e identificação Git do fonte, incluídos no precache. Sem publicação do código correspondente ou mudança de visibilidade automática; artes, versão e dependências preservadas.
+
+- Finalização documental: autoria das dez artes confirmada expressamente, incluindo wallpaper; direitos reservados com permissão limitada no aplicativo original e compartilhamento das quatro capturas oficiais inalteradas com atribuição/sem endosso. Propostas de CC BY 4.0 para a prosa e de separação/permissão da narrativa continuam para aprovação; sem cessão presumida à organização ou alteração funcional.
+
+- Decisões do autor registradas em ASSETS_LICENSE: artes/logotipos próprios com direitos reservados, marcas preservadas e conteúdo dos usuários com seus titulares. Inventário dos 14 arquivos visuais, dúvidas de origem, avaliação das capturas e proposta de separar código/narrativa da demonstração; sem mudança no aplicativo ou adoção de licença para material de terceiro.
+
+- Preparação local da MPL 2.0: texto oficial integral em LICENSE, avisos SPDX no código, metadados do pacote e avisos de terceiros preservados. Escopo, exceção da demonstração e proposta ainda não adotada para marcas/artes documentados em LICENSING. Sem publicação, mudança funcional, dependências ou versão.
 
 - README como apresentação pública do ASTERISM, com endereço web, quatro capturas reais de conteúdo sintético e explicação local-first. Instruções detalhadas de uso, desenvolvimento e instalação experimental preservadas em USER_GUIDE. Sem alterações no aplicativo, versão, licença ou dependências.
 

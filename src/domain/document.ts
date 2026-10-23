@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 // Portable subset of ProseMirror JSON. No React or editor-library types here.
 export interface DocumentNode {
   type:

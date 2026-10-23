@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 // User-supplied pixel art, shared by every brand placement.
 export function AsterismMark() {
   return (

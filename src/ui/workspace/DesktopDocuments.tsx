@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import type { Project } from "../../domain/model";
 
 export function DesktopDocuments({

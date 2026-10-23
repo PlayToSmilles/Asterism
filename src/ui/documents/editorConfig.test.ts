@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import { getSchema } from "@tiptap/react";
 import { describe, expect, it } from "vitest";
 import { documentExtensions } from "./editorConfig";

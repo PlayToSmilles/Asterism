@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import type { Entity, Project, Relation, RelationKind } from "./model";
 
 export const getRelationKind = (relation: Relation): RelationKind =>

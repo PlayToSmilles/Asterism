@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import { categories, relationKinds, type Project } from "../domain/model";
 import { isValidImageUrl } from "../domain/imageUrl";
 import { validateDocument } from "../domain/document";

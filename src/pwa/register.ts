@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 export type PwaState = "ready" | "update" | "error";
 
 // Deliberately never calls skipWaiting, clients.claim, postMessage or reload.

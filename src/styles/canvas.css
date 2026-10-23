@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: MPL-2.0 */
 /* Focus changes paint only: never transform, filter or resize moving nodes. */
 .canvas-explorer { position: relative; width: 100%; height: 100%; }
 .exploration-chrome {

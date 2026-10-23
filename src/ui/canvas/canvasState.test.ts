@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import { describe, expect, it, vi } from "vitest";
 import { applyNodeChanges, type NodeChange } from "@xyflow/react";
 import { createDemo } from "../../domain/demo";

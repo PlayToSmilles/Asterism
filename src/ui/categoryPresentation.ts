@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import type { Category } from "../domain/model";
 import { createElement, type ReactNode } from "react";
 import playerIcon from "../assets/icons/player.png";

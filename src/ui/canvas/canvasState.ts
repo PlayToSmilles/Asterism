@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import type { Node, NodeChange } from "@xyflow/react";
 import {
   moveEntities,

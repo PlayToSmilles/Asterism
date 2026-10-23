@@ -1,5 +1,7 @@
 # Guia de uso e desenvolvimento
 
+> Prosa original: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), com [escopo e exclusões](DOCUMENTATION_LICENSE.md).
+
 Detalhes operacionais do ASTERISM, separados da [apresentação pública](../README.md). Experimente em [asterism-164.pages.dev](https://asterism-164.pages.dev/).
 
 ## Biblioteca e edição

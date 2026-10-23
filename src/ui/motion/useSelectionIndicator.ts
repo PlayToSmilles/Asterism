@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import { useLayoutEffect, useRef } from "react";
 
 export function useSelectionIndicator<T extends HTMLElement>(active: string) {

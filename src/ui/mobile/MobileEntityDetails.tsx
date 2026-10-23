@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import { useEffect, useRef } from "react";
 import type { Entity, Project } from "../../domain/model";
 import { getRelationKind } from "../../domain/relations";

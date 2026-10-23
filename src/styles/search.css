@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: MPL-2.0 */
 .universe-search-trigger { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; min-width: 44px; min-height: 44px; }
 .universe-search-trigger svg, .universe-search-field svg { fill: none; stroke: currentColor; stroke-width: 1.7; flex-shrink: 0; }
 .universe-search {

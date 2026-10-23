@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import { useMemo, useState } from "react";
 import { categories, type Category, type Project } from "../../domain/model";
 import { EntityArtwork } from "../EntityArtwork";

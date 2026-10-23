@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import { useId, useState } from "react";
 import { isValidImageUrl, MAX_IMAGE_URL_LENGTH } from "../domain/imageUrl";
 import { EntityArtwork } from "./EntityArtwork";
