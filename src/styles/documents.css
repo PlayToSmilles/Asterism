@@ -1,4 +1,9 @@
 /* SPDX-License-Identifier: MPL-2.0 */
+/* Keep the canvas mounted and measured, but hide its chrome while writing. */
+.editor.is-writing .canvas {
+  opacity: 0;
+  visibility: hidden;
+}
 .document-workspace {
   position: absolute;
   inset: 0;

@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: MPL-2.0 */
-/* Original grids: Tree 22×29, Player 14×26, Local/Event 32×32, settings 22×22.
+/* Original grids: Tree 22×29, Player/Local/Event/Document 32×32, settings 22×22.
    Keep sampling rules together; do not apply them to user cover images. */
 .asterism-mark,
 .category-pixel-icon,
@@ -13,16 +13,18 @@
 }
 
 /* The Player's size must not inherit arbitrary font sizes. */
-.category-pixel-icon { width: 28px; height: 52px; }
+.category-pixel-icon { width: 64px; height: 64px; }
 .universe-card[data-detail='full'] .category-pixel-icon,
-.universe-card[data-detail='symbol'] .category-pixel-icon { width: 42px; height: 78px; }
-.category-pixel-icon--local { width: 64px; height: 64px; }
-.constellation-orb .category-pixel-icon--local,
-.constellation-orb .category-pixel-icon--event {
+.universe-card[data-detail='symbol'] .category-pixel-icon { width: 96px; height: 96px; }
+.category-pixel-icon--local,
+.category-pixel-icon--document { width: 64px; height: 64px; }
+.constellation-orb .category-pixel-icon {
   position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
 }
 .universe-card[data-detail='full'] .category-pixel-icon--local,
-.universe-card[data-detail='symbol'] .category-pixel-icon--local { width: 96px; height: 96px; }
+.universe-card[data-detail='symbol'] .category-pixel-icon--local,
+.universe-card[data-detail='full'] .category-pixel-icon--document,
+.universe-card[data-detail='symbol'] .category-pixel-icon--document { width: 96px; height: 96px; }
 .category-pixel-icon--event { width: 96px; height: 96px; }
 .universe-card[data-detail='full'] .category-pixel-icon--event,
 .universe-card[data-detail='symbol'] .category-pixel-icon--event { width: 128px; height: 128px; }

@@ -649,7 +649,7 @@
     background: #181821;
     gap: 12px;
   }
-  .mobile-studio .document-header button {
+  .mobile-studio .document-header button:not(.document-save-button) {
     border: 0;
     background: transparent;
     padding-left: 0;

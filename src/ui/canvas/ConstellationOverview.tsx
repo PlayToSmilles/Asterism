@@ -7,6 +7,31 @@ import { orbitalLink } from "./constellationGeometry";
 import { OrbitalParticles } from "./OrbitalParticles";
 import { ConstellationConnection } from "./ConstellationConnection";
 
+// Presentation anchors only: never written to the universe or React Flow nodes.
+const categoryAnchors: Record<Category, { x: number; y: number }> = {
+  Personagem: { x: 38, y: 40 },
+  Local: { x: 67, y: 22 },
+  Facção: { x: 85, y: 43 },
+  Magia: { x: 76, y: 73 },
+  Evento: { x: 47, y: 77 },
+  Ideia: { x: 17, y: 66 },
+  Artefato: { x: 52, y: 12 },
+  Documento: { x: 16, y: 27 },
+};
+const smallCompositions = [
+  [],
+  [{ x: 50, y: 42 }],
+  [{ x: 36, y: 34 }, { x: 66, y: 57 }],
+  [{ x: 30, y: 35 }, { x: 67, y: 28 }, { x: 55, y: 70 }],
+];
+// Deterministic decoration: no animation loop or random changes on hover.
+const stars = Array.from({ length: 94 }, (_, i) => ({
+  x: (i * 317 + 83) % 1600,
+  y: (i * 193 + i * i * 17 + 71) % 1000,
+  radius: i % 13 === 0 ? 2 : i % 4 === 0 ? 1.2 : .65,
+  opacity: .12 + (i % 5) * .08,
+}));
+
 export function ConstellationOverview({ project, enter, prepared }: { project: Project; enter: (category: Category) => void; prepared?: () => void }) {
   const { groups, links } = useMemo(() => categoryGroups(project), [project]);
   const [hovered, setHovered] = useState<Category | null>(null);
@@ -37,22 +62,34 @@ export function ConstellationOverview({ project, enter, prepared }: { project: P
     observer.observe(map.current);
     return () => observer.disconnect();
   }, [groups.length]);
-  const points = new Map(groups.map((g, i) => {
-    const angle = i / groups.length * Math.PI * 2 - Math.PI / 2;
-    return [g.category, { x: 50 + Math.cos(angle) * 35, y: 44 + Math.sin(angle) * 30 }];
-  }));
+  const points = useMemo(() => new Map(groups.map((g, i) => {
+    return [g.category, smallCompositions[groups.length]?.[i] ?? categoryAnchors[g.category]];
+  })), [groups]);
+  const routes = useMemo(() => {
+    if (!size) return [];
+    const centers = new Map([...points].map(([category, point]) => [category,
+      { x: point.x * size.width / 100, y: point.y * size.height / 100 }]));
+    return links.map((link, i) => ({ link, curve: orbitalLink(centers.get(link.source)!, centers.get(link.target)!,
+      33, i % 2 ? 1 : -1, [...centers.values()]) }));
+  }, [links, points, size]);
   return <section className="constellation-overview" aria-label="Constelações por categoria"
     onPointerDownCapture={event => {
       if (event.target instanceof Element && !event.target.closest(".constellation-hub")) setTouchDetails(null);
     }}>
+    <svg className="constellation-sky" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+      {stars.map((star, i) => <circle key={i} cx={star.x} cy={star.y} r={star.radius}
+        fill={i % 7 === 0 ? "#baa4e9" : "#c5d5ee"} opacity={star.opacity} />)}
+      <g className="constellation-sky-orbits" fill="none" stroke="#aaa0d1">
+        <ellipse cx="780" cy="580" rx="440" ry="155" transform="rotate(-23 780 580)" />
+        <ellipse cx="780" cy="580" rx="448" ry="162" transform="rotate(-23 780 580)" />
+        <path d="M180 760 Q650 180 1480 380" />
+      </g>
+    </svg>
     <header><h2 className="constellation-label">CONSTELAÇÕES DE CONHECIMENTO</h2></header>
     {groups.length === 0 ? <p className="muted">Adicione elementos no Canvas livre para começar.</p> : <div ref={map} className={`constellation-map${lineFocus ? " has-highlight" : ""}`}>
       {size && <svg viewBox={`0 0 ${size.width} ${size.height}`} aria-hidden="true">
-        {links.map((link, i) => {
-          const a = points.get(link.source)!, b = points.get(link.target)!;
+        {routes.map(({ link, curve }) => {
           const active = lineFocus === link.source || lineFocus === link.target;
-          const curve = orbitalLink({ x: a.x * size.width / 100, y: a.y * size.height / 100 },
-            { x: b.x * size.width / 100, y: b.y * size.height / 100 }, 33, i % 2 ? 1 : -1);
           if (!curve) return null;
           // Keep line counts out of the category icons and captions. If the
           // layout is too dense, the full counts remain in the details below.

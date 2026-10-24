@@ -85,6 +85,7 @@ React, TypeScript strict e Vite na base da aplicação; React Flow no canvas e T
 
 - [Guia de uso e desenvolvimento](docs/USER_GUIDE.md)
 - [Estado do projeto e limitações](docs/PROJECT_STATUS.md)
+- [Roadmap vivo até a v1.0.0](docs/ROADMAP.md) — `npm run roadmap:status` consulta; `npm run roadmap:sync` atualiza o resumo.
 - [Arquitetura e fluxo de dados](docs/ARCHITECTURE.md)
 - [Histórico de mudanças](docs/CHANGELOG.md)
 - [Decisões arquiteturais](docs/DECISIONS.md)

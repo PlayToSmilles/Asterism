@@ -2,6 +2,14 @@
 
 > Prosa original: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), com [escopo e exclusões](DOCUMENTATION_LICENSE.md).
 
+## D22 — Roadmap derivado de checkboxes
+
+**Problema:** acompanhar marcos sem duplicar tarefas em JSON ou manter percentuais manualmente.
+
+**Escolha:** ROADMAP contém o planejamento manual; um script Node sem dependências interpreta seus checkboxes e substitui somente o resumo delimitado. Estado e progresso derivam das tarefas, com peso igual. Status consulta sem gravar; sync é determinístico e rejeita estrutura inválida antes de escrever. Testes independentes usam o runner nativo do Node.
+
+**Consequências:** não é estimativa de esforço nem confirmação automática de qualidade; agentes só marcam tarefas após verificar critérios. Mudanças precisam de sync e revisão do diff. O script não publica, não altera versões e não faz parte do aplicativo; evidências e histórico continuam nos documentos próprios.
+
 ## D21 — Separação de conteúdo reservado e avisos no build
 
 **Problema:** a fábrica de demonstração misturava lógica e narrativa sob termos distintos; somente documentos na raiz do Git não garantiam avisos disponíveis no aplicativo estático distribuído.

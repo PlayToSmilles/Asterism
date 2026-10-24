@@ -6,13 +6,13 @@ Preparação local, sem publicação. Código próprio sob MPL 2.0; prosa origin
 
 [LICENSE](../LICENSE) contém o texto oficial integral da [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/), sem alterações, incluindo os anexos A e B. Reproduzir o anexo B no texto da licença não aplica seu aviso ao projeto. O campo license do pacote refere-se ao código coberto, não a todas as obras no repositório.
 
-Os 92 avisos SPDX da preparação anterior foram conservados. A fábrica `src/domain/demo.ts`, seu novo teste, `scripts/legalAssets.mjs`, sua declaração de tipos e a página legal HTML também têm MPL-2.0: total atual de 97 arquivos de código com aviso. Configurações JSON próprias seguem a MPL sem comentários inválidos para JSON. O arquivo narrativo `src/content/demo/nyvorn.json` é uma exceção expressa: não recebe MPL.
+Os 92 avisos SPDX da preparação anterior foram conservados. A fábrica `src/domain/demo.ts`, seu novo teste, `scripts/legalAssets.mjs`, sua declaração de tipos e a página legal HTML também têm MPL-2.0: total de 97 arquivos de código com aviso naquela preparação. Os novos `scripts/roadmap.mjs` e `scripts/roadmap-checks.mjs` também são MPL-2.0. Configurações JSON próprias seguem a MPL sem comentários inválidos para JSON. O arquivo narrativo `src/content/demo/nyvorn.json` é uma exceção expressa: não recebe MPL.
 
 `src/ui/canvas/FloatingEdge.tsx` e `src/ui/canvas/floatingGeometry.ts` preservam os avisos MPL-2.0 AND MIT: MPL para acréscimos próprios e MIT para material adaptado dos exemplos públicos do React Flow, conforme D08. Não é uma escolha alternativa de licença nem relicenciamento exclusivo de terceiros. Textos e créditos constam de [THIRD_PARTY_NOTICES](../THIRD_PARTY_NOTICES.md); dependências permanecem sob seus termos originais. A revisão de dois commits (`f433aa8`, `4f74744`) não constitui rastreamento de autoria de cada linha anterior à importação inicial.
 
 ## Artes, capturas e marcas
 
-[ASSETS_LICENSE](../ASSETS_LICENSE.md) lista individualmente dez artes cuja autoria foi confirmada expressamente, incluindo wallpaper, e quatro capturas oficiais. Não há aviso MPL nas imagens. Um componente MPL que referencia um PNG não licencia esse PNG; o gerador de ícones é código MPL e suas saídas continuam sob os direitos da árvore original.
+[ASSETS_LICENSE](../ASSETS_LICENSE.md) lista individualmente dez artes cuja autoria foi confirmada expressamente, incluindo wallpaper, quatro capturas oficiais e o sprite adicional de Documento fornecido em 2026-10-24, cuja origem/autoria ainda não recebeu declaração específica. Não há aviso MPL nas imagens. Um componente MPL que referencia um PNG não licencia esse PNG; o gerador de ícones é código MPL e suas saídas continuam sob os direitos da árvore original.
 
 As restrições visuais incidem somente sobre obras separadas não cobertas pela MPL; não limitam o uso/modificação/distribuição do código MPL. Forks podem substituir as artes ou solicitar autorização. Essa combinação observa a separação de obras prevista na seção 3.3 da MPL; marcas permanecem separadas conforme a seção 2.3. Nenhuma permissão daqui substitui termos de terceiros ou transfere direitos dos usuários.
 
@@ -29,6 +29,8 @@ O autor confirmou expressamente a criação original de toda a narrativa demonst
 ## Documentação textual: CC BY 4.0 aplicada
 
 A aprovação foi implementada nos sete documentos enumerados em [DOCUMENTATION_LICENSE](DOCUMENTATION_LICENSE.md), com avisos visíveis e referência à [licença oficial](https://creativecommons.org/licenses/by/4.0/). Somente a prosa original é abrangida; código, exemplos licenciados separadamente, imagens, capturas, marcas, narrativa e direitos de terceiros estão excluídos. O crédito público aprovado é “Projeto ASTERISM”; não divulgar o nome civil nem presumir titularidade de PlayToSmilles. Não há definição de crédito pendente.
+
+O novo `docs/ROADMAP.md` é documento de planejamento e não amplia automaticamente essa lista fechada; não se aplicou uma licença adicional à sua prosa nesta tarefa. Os scripts correspondentes são código MPL, conforme seus avisos próprios.
 
 ## Disponibilização de fonte e avisos
 

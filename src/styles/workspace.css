@@ -685,7 +685,7 @@
   .editor .document-workspace {
     top: 17px;
     bottom: 17px;
-    left: 101px;
+    left: 17px;
     right: 17px;
     border: 1px solid #d7c4ed28;
     border-radius: 24px;
@@ -698,7 +698,7 @@
     gap: 17px;
     background: #262431;
   }
-  .editor .document-header > button {
+  .editor .document-header > button:not(.document-save-button) {
     border: 0;
     background: transparent;
     color: #d5bcec;

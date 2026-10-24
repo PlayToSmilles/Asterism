@@ -6,6 +6,18 @@ Registra somente evolução comprovada. Datas de lançamento, tags e versões an
 
 ## Unreleased
 
+- Roadmap vivo até v1.0.0 em ROADMAP, com checkboxes como fonte única, resumo calculado e comandos Node `roadmap:status`/`roadmap:sync`, sem dependências. Integração nas regras dos agentes, README e estado do projeto; fundação reconhecida por decisão do autor, sem criar release ou alterar a versão.
+
+- Conexões das Constelações detectam círculos intermediários e escolhem curvas com desvio e margem de segurança. Rotas calculadas somente quando a geometria muda; pulsos e contagens seguem o mesmo caminho, sem alterar relações ou mover categorias.
+
+- Constelações com fundo espacial estático, estrelas suaves, névoas lilás/azul e arcos decorativos. Composição assimétrica por categoria, equilibrada para universos com até três categorias; conexões e transições continuam ancoradas nos círculos reais, sem alterar dados ou posições persistidas.
+
+- Editor de documentos oculta o canvas/menu sobreposto sem desmontá-lo e ocupa o espaço lateral disponível. Botão Salvar confirma imediatamente as alterações pela sessão existente, preservando autosave e mensagens de erro.
+
+- Player atualizado com o PNG 32×32 fornecido pelo autor; tamanhos em escalas inteiras e centralização explícita dos sprites dentro dos círculos, evitando deslocamento pelo tamanho mínimo do grid e preservando a renderização pixelated.
+
+- Documento usa o PNG document_sprite fornecido pelo usuário nas constelações e nos fallbacks dos elementos; renderização pixelated em escalas inteiras, sem mudar a arte ou a geometria do canvas.
+
 - Autor confirmou a autoria e autorizou o uso limitado da narrativa demonstrativa: distribuição no aplicativo original e consulta/edição/exportação em projetos pessoais, sem licença geral para outros produtos ou forks. Crédito da documentação definido como “Projeto ASTERISM”, sem nome civil. Validação visual/offline concluída conforme relato do autor; testes técnicos anteriores não repetidos nesta atualização documental.
 
 - Prosa original de sete documentos sob CC BY 4.0, com escopo/exclusões e crédito nominal ainda a indicar. Dados de Ny’vorn extraídos para JSON reservado, fábrica MPL preservada e três testes de equivalência/isolamento/serialização. Minuta narrativa separada, pendente de confirmação de poderes do titular.

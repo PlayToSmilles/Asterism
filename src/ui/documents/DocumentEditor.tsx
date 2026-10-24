@@ -11,6 +11,7 @@ export default function DocumentEditor({
   change,
   close,
   saveStatus,
+  save,
   searchAction,
   backLabel = "← Voltar ao canvas",
 }: {
@@ -21,6 +22,7 @@ export default function DocumentEditor({
   ) => void;
   close: () => void;
   saveStatus: string;
+  save: () => void;
   backLabel?: string;
   searchAction?: ReactNode;
 }) {
@@ -93,6 +95,9 @@ export default function DocumentEditor({
         >
           {saveStatus}
         </span>
+        <button type="button" className="primary document-save-button" onClick={save}>
+          Salvar
+        </button>
       </header>
       <div
         className="document-tools"

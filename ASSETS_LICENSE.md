@@ -34,6 +34,10 @@ Condições e limites:
 
 Direitos não concedidos permanecem reservados. Exceções legais e permissões anteriores efetivamente concedidas não são limitadas. Dependências e obras de terceiros preservam seus próprios termos. Esta autorização visual não licencia a narrativa Ny’vorn nem resolve, por si só, todas as condições para distribuir o aplicativo completo.
 
+## Recurso adicional fornecido em 2026-10-24
+
+`src/assets/icons/document-sprite.png` foi fornecido pelo usuário para representar Documento. Sua integração foi solicitada, mas ele não consta da declaração anterior de autoria dos dez recursos listados acima. Não recebe MPL nem uma nova licença por ser importado pelo código; autoria/origem e eventual aplicação dos termos autorais acima ainda precisam ser registradas. O arquivo original foi preservado.
+
 ## Capturas oficiais: compartilhamento autorizado
 
 | Arquivo | Conteúdo |

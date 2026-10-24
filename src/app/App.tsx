@@ -679,6 +679,7 @@ export default function App() {
                   entity={documentEntity}
                   change={change}
                   saveStatus={saveStatus}
+                  save={() => session.flush()}
                   searchAction={mobile ? <SearchTrigger open={openSearch} /> : undefined}
                   backLabel={
                     mobile

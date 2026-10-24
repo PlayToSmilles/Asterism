@@ -4,6 +4,20 @@
 
 Estado atualizado em 2026-10-23, na iteração ASTERISM — Worldbuilding for Anything. As etapas anteriores foram preservadas. Esta página distingue implementação, evidência anterior e verificações atuais; não é garantia de funcionamento em todos os navegadores.
 
+## Planejamento vivo — 2026-10-24
+
+O [ROADMAP](ROADMAP.md) centraliza os marcos, tarefas e progresso até v1.0.0. Consulte `npm run roadmap:status`; após editar os checkboxes, gere o resumo com `npm run roadmap:sync`. A fundação foi reconhecida como concluída pelo autor, sem revalidar a publicação nesta tarefa ou declarar uma release. A versão do pacote permanece 0.1.0; evidências técnicas anteriores continuam identificadas abaixo.
+
+Validação desta etapa: sete testes independentes do roadmap e lint aprovados, links locais conferidos e diff sem erros. Cobertos cálculo, estados, exemplos ignorados, preservação das notas/CRLF, idempotência e falhas de estrutura. Não foram repetidos build, suíte do aplicativo ou validação visual: somente documentação e scripts de desenvolvimento foram alterados nesta tarefa.
+
+## Composição espacial das Constelações — 2026-10-24
+
+Conexões agora verificam os círculos intermediários e desviam com margem de segurança. Os caminhos são recalculados somente quando a geometria muda, preservando pulsos e contagens. Validação desta correção: 169 testes, lint e build TypeScript/PWA aprovados; conferência visual no Chromium local com oito categorias e 28 ligações sintéticas, destacando Documento e Artefato. Testes geométricos cobrem obstáculos e três dimensões do mapa. Sem nova validação em Safari/iPhone. Captura local não versionada: `prints_test/constellation-routed-links.png`.
+
+Fundo estático em SVG/CSS com estrelas, névoas discretas e arcos decorativos; composição assimétrica por categoria, com distribuição própria para uma a três categorias. Os mesmos pontos de apresentação alimentam círculos e conexões; não há alteração de entidades, relações ou posições persistidas. Órbitas, pulsos, estatísticas e transições WAAPI existentes mantidos. Sem dependências novas ou alterações nos sprites.
+
+165 testes, lint e build TypeScript/PWA aprovados; permanece o aviso conhecido do chunk acima de 500 kB. Conferência no navegador desktop em origem local isolada com duas e oito categorias sintéticas, seleção/foco por teclado e entrada/retorno de Personagem. O fundo não tem loop de animação. Mobile mantém a grade existente, mas não houve nova validação em Safari/iPhone, de toque ou de movimento reduzido nesta etapa. Captura de revisão local, não versionada: `prints_test/constellations-space.png`.
+
 
 ## Preparação da licença — 2026-10-23
 
@@ -227,17 +241,7 @@ Capturas preservadas: protótipo inicial (captura local: `prints_test/preview.pn
 
 ## Próximo marco: candidato v0.2.0
 
-Cards 0.2 é o marco de desenvolvimento atual, candidato à futura v0.2.0 por adicionar funcionalidade relevante. Inclui a preservação da correção de arrasto em Unreleased, sem release intermediária comprovada. O número dos manifestos continua 0.1.0; nenhuma tag, release ou publicação é criada por esta implementação. A política está em [CHANGELOG](CHANGELOG.md#política-de-versionamento).
-
-A Biblioteca de Referências foi implementada depois dessa validação e também permanece em Unreleased. Sua inclusão ou versão de entrega será decidida por autorização explícita; o alvo de release não é ampliado automaticamente. A compatibilidade visual PDF acima permanece pendente.
-
-Conexões flutuantes e Documento também estão em **Unreleased**, concluídos nesta implementação e ainda sem entrega/versionamento autorizado. O escopo final do candidato v0.2.0 precisa ser decidido explicitamente; não há promessa de inclusão automática dessas etapas. Próximas verificações recomendadas: leitor PDF em navegador compatível, acessibilidade e desempenho de textos/projetos grandes.
-
-Para promover o candidato: autorizar explicitamente a entrega e seu escopo, confirmar as verificações no estado final e aceitar os limites registrados; somente então atualizar os manifestos e promover as entradas aplicáveis de Unreleased. Novas funcionalidades exigem escopo próprio.
-
-Refinamento visual, tipos de relação e documentos vinculados também permanecem em Unreleased. Próximos refinamentos sugeridos: verificar acessibilidade/contraste e custo do blur em outros dispositivos, além da pendência PDF já registrada. Não foi ampliado automaticamente o escopo da futura entrega v0.2.0.
-
-Mobile/PWA também está em Unreleased, sem alteração dos manifestos de versão. Próximo passo de validação: iPhone físico em origem HTTPS autorizada, com instalação, modo avião, teclado, orientação, gestos, arquivos e atualização após escrita. Não implica autorização para publicar.
+O planejamento aprovado em 2026-10-24 está exclusivamente no [ROADMAP](ROADMAP.md), substituindo a antiga proposta informal Cards 0.2. A política de promoção de Unreleased está no [CHANGELOG](CHANGELOG.md#política-de-versionamento); planejar uma versão não autoriza alterar os manifestos nem publicar. As limitações e verificações pendentes registradas neste documento permanecem válidas.
 
 ## Verificação manual do fluxo principal
 

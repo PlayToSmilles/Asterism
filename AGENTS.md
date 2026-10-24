@@ -7,6 +7,7 @@
 - Trabalhar somente neste projeto. Ler `README.md`, `docs/PROJECT_STATUS.md`, `docs/ARCHITECTURE.md`, `docs/CHANGELOG.md` e `docs/DECISIONS.md`; conferir o código envolvido antes de concluir como funciona.
 - Investigar a causa de defeitos e o uso do código antes de modificá-lo ou apagá-lo. Não tratar hipóteses ou recursos não verificados como fatos.
 - Priorizar alterações pequenas e localizadas. Não adicionar funcionalidades fora do escopo, dependências desnecessárias ou abstrações para necessidades futuras.
+- Na evolução do produto, consultar `docs/ROADMAP.md`, identificar a fase e tarefas afetadas e respeitar seu escopo. O roadmap planeja; CHANGELOG, PROJECT_STATUS e DECISIONS mantêm suas funções próprias.
 
 ## Preservar
 
@@ -23,6 +24,7 @@
 - Evitar duplicação: README é a entrada; PROJECT_STATUS concentra estado/evidências/pendências; ARCHITECTURE descreve o funcionamento; CHANGELOG registra evolução e versionamento; DECISIONS explica escolhas e consequências. Preferir links entre eles.
 - Após mudanças funcionais, executar `npm test`, `npm run lint` e `npm run build`; verificar no navegador quando disponível e relevante. Para alterações apenas documentais, conferir conteúdo, links e escopo dos arquivos; executar verificações adicionais quando necessário para sustentar uma afirmação.
 - Não registrar testes como aprovados sem executá-los. Distinguir execução atual, evidência anterior e comportamento apenas inspecionado no código. Informar o que não foi verificado visualmente.
+- Atualizar checkboxes do roadmap somente com conclusão comprovada pelos critérios de aceitação, não apenas código escrito; registrar brevemente decisões que alterem o planejamento e executar `npm run roadmap:sync` após mudanças. Informar no relatório final quais itens avançaram. Documentação/scripts independentes do roadmap podem ser validados com seus testes específicos, sem repetir a suíte do aplicativo.
 
 ## Versionar somente com autorização
 
