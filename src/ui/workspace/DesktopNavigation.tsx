@@ -1,48 +1,17 @@
 // SPDX-License-Identifier: MPL-2.0
-import { useSelectionIndicator } from "../motion/useSelectionIndicator";
-
-export function DesktopNavigation({
-  area,
-  canvas,
-  documents,
-  references,
-}: {
-  area: "canvas" | "documents" | "references";
-  canvas: () => void;
-  documents: () => void;
-  references: () => void;
+export type DesktopArea = "explore" | "canvas" | "documents" | "references";
+export function DesktopNavigation({ area, navigate, disabled }: {
+  area: DesktopArea; navigate: (area: DesktopArea) => void; disabled: boolean;
 }) {
-  const navigation = useSelectionIndicator<HTMLElement>(area);
-  return (
-    <nav ref={navigation} className="workspace-navigation sliding-selection" aria-label="Áreas do workspace">
-      <span className="selection-indicator" aria-hidden="true" />
-      <button
-        aria-current={area === "canvas" ? "page" : undefined}
-        onClick={canvas}
-      >
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M8 6h8M6 8v8M18 8v8M8 18h8M3 3h5v5H3zM16 3h5v5h-5zM3 16h5v5H3zM16 16h5v5h-5z" />
-        </svg>
-        <span>Canvas</span>
-      </button>
-      <button
-        aria-current={area === "documents" ? "page" : undefined}
-        onClick={documents}
-      >
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M5 3h10l4 4v14H5V3Zm9 0v5h5M8 12h8M8 16h6" />
-        </svg>
-        <span>Escrita</span>
-      </button>
-      <button
-        aria-current={area === "references" ? "page" : undefined}
-        onClick={references}
-      >
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M4 4h12v16H4zM8 8h4M8 12h4M19 7h2v16H8" />
-        </svg>
-        <span>PDFs</span>
-      </button>
-    </nav>
-  );
+  const items: { id: DesktopArea; label: string; path: string }[] = [
+    { id: "explore", label: "Explorar", path: "M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8ZM6 6c-2 3-3 8-1 11s6 4 9 3M18 18c2-3 3-8 1-11s-6-4-9-3M5 4h2v2H5zM17 18h2v2h-2z" },
+    { id: "canvas", label: "Canvas", path: "M12 5v5M6 17l4-6M18 17l-4-6M10 3h4v3h-4zM4 17h4v3H4zM16 17h4v3h-4zM10 10h4v3h-4z" },
+    { id: "documents", label: "Escrita", path: "M12 6c-2-2-5-2-8-2v14c3 0 6 0 8 2m0-14c2-2 5-2 8-2v14c-3 0-6 0-8 2m0-14v14" },
+    { id: "references", label: "Referências", path: "M7 8h11v12H7zM4 16H3V5h11v1M10 3h10v12h-1" },
+  ];
+  return <nav className="studio-sidebar" aria-label="Áreas do workspace">
+    {items.map(item => <button key={item.id} onClick={() => navigate(item.id)} disabled={disabled} aria-current={area === item.id ? "page" : undefined}>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d={item.path} /></svg><span>{item.label}</span>
+    </button>)}
+  </nav>;
 }

@@ -27,6 +27,36 @@ Cada checkbox tem o mesmo peso; o percentual não estima esforço, prazo ou matu
 **Na sequência:** v0.3.0 → v0.4.0 → v0.5.0 → v0.6.0 → v0.9.0 → v1.0.0.
 <!-- roadmap:summary:end -->
 
+## Fluxos de desenvolvimento
+
+Organização local definida em 2026-10-30. As duas experiências pertencem ao mesmo aplicativo, com modelo, persistência e arquitetura compartilhados. Os marcos e critérios até v1.0.0 continuam os mesmos; esta separação não conclui tarefas.
+
+| Branch | Pasta local | Escopo | Porta |
+| --- | --- | --- | --- |
+| `main` | Sem checkout dedicado neste arranjo | Base estável destinada à produção Cloudflare | — |
+| `feat/primeira-faisca` | `C:\dev\Worldbuilding` | Onboarding criativo e Constelação de Possibilidades | 5173 |
+| `feat/fluxo-experiente` | `C:\dev\Worldbuilding-experiente` | Fluxo direto, canvas, constelações, escrita, PDFs, busca e produtividade | 5174 |
+
+As branches de funcionalidades partiram da main `0089e128b277b821e692b60dd94d85d8b4a8d4e3`. As alterações locais da Primeira Faísca permanecem sem commit somente na primeira pasta; não foram copiadas para o fluxo experiente. Cada worktree tem seu próprio staging e arquivos de trabalho, mas compartilha objetos Git, branches e remotes. Alterações sem commit não estão salvas no histórico da branch: não trocar branches nessas pastas sem conferir o estado.
+
+Em terminais PowerShell separados:
+
+```powershell
+Set-Location C:\dev\Worldbuilding
+npm run dev -- --port 5173 --strictPort
+```
+
+```powershell
+Set-Location C:\dev\Worldbuilding-experiente
+npm run dev -- --port 5174 --strictPort
+```
+
+Use `npm ci` na respectiva pasta quando precisar preparar as dependências do lockfile; não compartilhar node_modules por links. strictPort impede que o Vite escolha silenciosamente outra porta.
+
+Os endereços são `http://127.0.0.1:5173` e `http://127.0.0.1:5174`. LocalStorage, IndexedDB, rascunhos e caches do navegador não são versionados pelo Git. As portas diferentes isolam as origens e seus dados; trocar de branch na mesma origem não os isola. Usar projetos sintéticos ou cópias exportadas para testar, lembrando que o JSON atual não inclui PDFs.
+
+Fluxo futuro: desenvolver na branch correspondente; revisar diff e executar testes, lint e build antes de propor integração por Pull Request para main. Manter main utilizável; integrar experimentos somente após aprovação. Consultar frequentemente as mudanças da main e trazer atualizações em pequenos lotes após autorização, com worktree segura e revisão de conflitos. Mudanças compartilhadas devem ser coordenadas entre os dois fluxos, sem duplicar arquitetura. Esta organização não autoriza commit, push, merge, deploy ou mudança na Cloudflare; as branches ainda são locais.
+
 ## Como acompanhar
 
 ```sh
@@ -87,6 +117,8 @@ Use títulos `## vMAJOR.MINOR.PATCH — Nome` (com `Beta` ou `Release Candidate`
 ## v0.4.0 — Liberdade de Modelar
 
 **Propósito e experiência:** permitir que cada usuário organize o mundo à sua maneira.
+
+Em 2026-10-30, o fluxo experiente recebeu uma primeira apresentação de acervo nas categorias existentes e navegação desktop organizada por ambientes. Elas melhoram a consulta sem criar categorias personalizadas nem concluir os critérios deste marco; integração entre branches e avaliação humana continuam futuras.
 
 - [ ] Permitir categorias personalizadas.
 - [ ] Permitir registrar ideias ainda não classificadas.

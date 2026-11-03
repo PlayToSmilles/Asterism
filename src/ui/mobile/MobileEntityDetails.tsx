@@ -11,6 +11,8 @@ export function MobileEntityDetails({
   close,
   edit,
   locate,
+  exploreNeighborhood,
+  showCategoryRelations,
   select,
   write,
 }: {
@@ -19,6 +21,8 @@ export function MobileEntityDetails({
   close: () => void;
   edit: () => void;
   locate: () => void;
+  exploreNeighborhood: () => void;
+  showCategoryRelations?: () => void;
   select: (id: string) => void;
   write: (id: string) => void;
 }) {
@@ -60,6 +64,7 @@ export function MobileEntityDetails({
             </button>
           )}
           <button onClick={locate}>Ver no canvas ↗</button>
+          {showCategoryRelations && <button onClick={showCategoryRelations}>Ver relações da categoria ↗</button>}
         </div>
         <span className="eyebrow">
           {entity.category === "Documento" ? "RESUMO" : "SOBRE ESTE ELEMENTO"}
@@ -72,6 +77,7 @@ export function MobileEntityDetails({
           <h2>Conexões</h2>
           <span>{relations.length}</span>
         </div>
+        <button className="primary" onClick={exploreNeighborhood}>Visualizar conexões no mapa</button>
         {!relations.length && (
           <p className="muted">
             No canvas, toque no ponto de um elemento e depois no ponto de outro

@@ -45,6 +45,9 @@ export function Inspector({
     "information",
   );
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [imageExpanded, setImageExpanded] = useState(false);
+  const [failedThumbnailUrl, setFailedThumbnailUrl] = useState<string | null>(null);
   const [imageError, setImageError] = useState("");
   const entity = project.entities.find((e) => e.id === selected);
   const relation = project.relations.find((r) => r.id === selected);
@@ -56,7 +59,7 @@ export function Inspector({
   return (
     <aside
       className="inspector"
-      aria-label="Painel de edição"
+      aria-label="Detalhes do elemento ou conexão"
       data-section={section}
     >
       <header>
@@ -71,11 +74,21 @@ export function Inspector({
           ×
         </button>
       </header>
-      <h2>{entity ? entity.title : "Tudo tem uma ligação."}</h2>
-      {entity && (
-        <span className="eyebrow inspector-category">{entity.category}</span>
-      )}
-      {entity && <button className="explore-neighborhood" disabled={locked} onClick={() => exploreNeighborhood(entity.id)}>✧ Explorar vizinhança</button>}
+      {entity ? (
+        <>
+          <div className="inspector-profile">
+            <button className="inspector-thumbnail" type="button" disabled={!entity.imageUrl || failedThumbnailUrl === entity.imageUrl} aria-label={`Ampliar imagem de ${entity.title}`} onClick={() => setImageExpanded(true)}>
+              <EntityArtwork key={entity.imageUrl ?? entity.category} entity={entity} />
+              {entity.imageUrl && failedThumbnailUrl !== entity.imageUrl && <img src={entity.imageUrl} alt="" referrerPolicy="no-referrer" onError={() => setFailedThumbnailUrl(entity.imageUrl ?? null)} />}
+            </button>
+            <div><h2>{entity.title}</h2><span className="inspector-profile-category">{entity.category}</span><span className="inspector-profile-count">{related.length} {related.length === 1 ? "conexão" : "conexões"}</span></div>
+          </div>
+          <div className="inspector-primary-actions">
+            <button className="primary" disabled={locked} onClick={() => { if (!imageError) { setEditing(!editing); setSection("information"); } }}>{editing ? "Concluir edição" : "✎ Editar"}</button>
+          </div>
+          {imageExpanded && entity.imageUrl && <div className="inspector-image-overlay" role="dialog" aria-modal="true" aria-label={`Imagem de ${entity.title}`} onKeyDown={(event) => { if (event.key === "Escape") setImageExpanded(false); }}><button autoFocus onClick={() => setImageExpanded(false)} aria-label="Fechar imagem">×</button><img src={entity.imageUrl} alt={`Imagem de ${entity.title}`} referrerPolicy="no-referrer" /></div>}
+        </>
+      ) : <h2>Tudo tem uma ligação.</h2>}
       {entity && (
         <div
           className="inspector-switch"
@@ -139,7 +152,11 @@ export function Inspector({
               ))
             )}
           </section>
-          <div className="inspector-information" id={panelId + "-information"}>
+          {!editing && <section className="inspector-information inspector-reading" id={panelId + "-information"}>
+            <h3>Sobre {entity.title}</h3>
+            {entity.description ? <p>{entity.description}</p> : <p className="inspector-empty">Ainda não há descrição. <button onClick={() => setEditing(true)}>Adicionar descrição</button></p>}
+          </section>}
+          {editing && <div className="inspector-information" id={panelId + "-information"}>
             <label className="inspector-title-field">
               Título
               <input
@@ -243,7 +260,7 @@ export function Inspector({
             <span className="field-note">
               {entity.description.length}/4000 caracteres
             </span>
-          </div>
+          </div>}
           <section
             className="relation-list inspector-connections"
             id={panelId + "-relations"}
@@ -267,6 +284,7 @@ export function Inspector({
                     )?.title
                   }
                 </span>
+                <small>{project.entities.find(e => e.id === (r.sourceId === selected ? r.targetId : r.sourceId))?.category}</small>
                 <small>
                   {getRelationKind(r) === "directional"
                     ? r.sourceId === selected
@@ -275,13 +293,14 @@ export function Inspector({
                     : getRelationKind(r) === "reciprocal"
                       ? "↔"
                       : "•—•"}{" "}
-                  {r.label}
+                  {relationLabels[getRelationKind(r)]} · {r.label}
                 </small>
                 <span className="relation-action-caption">Enquadrar conexão ↗</span>
                 </button>
                 <button className="relation-visit-action" onClick={() => visitEntity(r.sourceId === selected ? r.targetId : r.sourceId)}>Abrir elemento →</button>
               </div>
             ))}
+            <button className="primary inspector-map-action" disabled={locked} onClick={() => exploreNeighborhood(entity.id)}>Visualizar conexões no mapa</button>
           </section>
         </>
       ) : (
