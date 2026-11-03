@@ -2,7 +2,33 @@
 
 > Prosa original: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), com [escopo e exclusões](DOCUMENTATION_LICENSE.md).
 
-Estado atualizado em 2026-10-23, na iteração ASTERISM — Worldbuilding for Anything. As etapas anteriores foram preservadas. Esta página distingue implementação, evidência anterior e verificações atuais; não é garantia de funcionamento em todos os navegadores.
+Estado atualizado em 2026-10-30, na iteração ASTERISM — Worldbuilding for Anything. As etapas anteriores foram preservadas. Esta página distingue implementação, evidência anterior e verificações atuais; não é garantia de funcionamento em todos os navegadores.
+
+Polimento na branch de fluxo experiente: o Acervo usa áreas de mídia compactas e estáveis, e a visão geral elimina 12 px de rolagem excedente observados em 1440 × 900. No Chromium com dados sintéticos foram verificados seis personagens, 15 documentos, abertura do Inspector, mapa, troca de ambientes e ausência de rolagem horizontal em mobile emulado; outras dimensões e dispositivos reais continuam sujeitos a verificação. PDFs ficam no IndexedDB e não integram a exportação JSON; referências de imagens externas dependem da disponibilidade da URL.
+
+Integração futura: as três branches apontam ao mesmo commit, mas as worktrees das duas funcionalidades contêm alterações ainda não commitadas. Revisar primeiro o estado e a persistência em `App.tsx`, depois a navegação e estilos do fluxo experiente e o onboarding da Primeira Faísca; validar os dois percursos e somente então propor PRs para `main`. Nenhuma integração foi executada.
+
+Na branch de fluxo experiente, o Inspector desktop abre em modo de leitura, com edição explícita, miniatura ampliável quando disponível e conexões existentes. A largura não é redimensionável. Verificação em Chromium isolado com dados sintéticos cobriu leitura, edição, troca de elemento e persistência após recarga; Safari/iPhone físico e leitor de tela não foram verificados nesta alteração.
+
+A aba Conexões oferece acesso ao mapa radial temporário; o Inspector é recolhido na entrada e pode ser reaberto. Em Chromium isolado, dados sintéticos verificaram a lista, entrada, reabertura e retorno ao Acervo sem alteração das posições ou relações salvas. Casos com muitas conexões e dispositivos móveis reais ainda precisam de validação.
+
+## Navegação por ambientes — 2026-10-30
+
+Revisão posterior: o desktop usa uma grade explícita com sidebar fixa de 80 px, área principal e coluna própria para o Inspector. A navegação antiga dentro do canvas foi substituída no desktop; os controles de categoria continuam contextuais. A verificação visual e geométrica cobriu os cinco ambientes, o Inspector e larguras de 901 a 1440 px. No momento da investigação, a aba informada apontava à porta 4175, sem servidor ativo; a worktree experiente era servida na 5174.
+
+O desktop usa barra lateral global para Explorar, Canvas, Escrita e Referências, com controles de categoria e canvas no contexto. Escrita e Referências ocupam a área principal usando componentes existentes; o canvas permanece montado e inerte, e o Inspector continua à direita. O cabeçalho do Acervo mantém sua posição vertical ao abrir o Inspector. Mobile preserva o dock e os controles existentes.
+
+Verificação atual: 170 testes em 26 arquivos, lint, TypeScript/build e sete testes do roadmap aprovados. No Edge/Chromium isolado com universo sintético: alternância dos quatro ambientes, entrada/retorno de categoria e vizinhança, Acervo/Relações, Inspector, edição e salvamento de Documento após recarga, busca, anexo PDF em IndexedDB, zoom/pan e posições/relações preservadas. Desktop de 901 a 1440 px com Inspector, transição circular e movimento reduzido emulado; mobile 390×844 com toque emulado e sem rolagem horizontal. Capturas locais ignoradas: `prints_test/nav-explorar.png`, `nav-canvas.png`, `nav-escrita.png`, `nav-referencias.png`, `nav-inspector.png`, `nav-mobile.png` e `nav-transicao.png`.
+
+Limitações: o PDF sintético confirmou armazenamento e abertura do objeto, mas o visualizador do navegador headless não demonstrou a renderização das páginas. Não houve validação em Safari/iPhone físico, leitor de tela ou teclado virtual real. O build continua avisando sobre chunk acima de 500 kB. Nenhum checkbox do roadmap foi marcado.
+
+## Acervo Vivo — 2026-10-30
+
+Na branch de fluxo experiente, categorias abrem uma grade responsiva e ordenada com conteúdo real, imagem ou fallback e prévia da descrição. Acervo e Relações alternam sem mudar a seleção; o grafo e suas posições de leitura continuam disponíveis, assim como Inspector, documentos e exploração de vizinhança. O detalhe mobile também oferece acesso à vizinhança. O modelo, JSON e posições salvas continuam os mesmos. A visão geral preserva suas categorias, animações e transição existentes.
+
+Verificações nesta iteração: 170 testes em 26 arquivos, lint e build TypeScript/Vite/PWA aprovados; o build mantém o aviso de chunk acima de 500 kB. Teste de projeção cobre ordenação, categoria vazia, referências e ordem original. No Edge/Chromium isolado, dados sintéticos exercitaram 15 documentos, três facções sem relações internas, quatro personagens com conexões, imagem/fallback, título longo, seleção, edição, abertura de documento, alternância, retorno e vizinhança entre categorias; posições e relações originais conferidas. O estado vazio foi verificado ao excluir os três elementos sintéticos da categoria. Mobile 390×844 com toque e movimento reduzido emulados foi verificado sem rolagem horizontal, incluindo acesso às Relações com seleção preservada. Capturas locais ignoradas: `prints_test/acervo-documentos.png`, `relacoes-documentos.png`, `acervo-faccoes.png`, `relacoes-faccoes.png` e `acervo-mobile.png`.
+
+Limitações: categoria vazia não aparece na visão geral atual; o estado vazio da grade existe para quando a categoria fica sem elementos enquanto aberta. Sem teste de iPhone/Safari físico, leitor de tela ou benchmark de bibliotecas muito grandes; não há paginação/virtualização. O projeto sintético não altera universos pessoais.
 
 ## Planejamento vivo — 2026-10-24
 

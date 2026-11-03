@@ -6,6 +6,28 @@ Registra somente evolução comprovada. Datas de lançamento, tags e versões an
 
 ## Unreleased
 
+- Cards do Acervo usam mídia compacta de altura estável; a visão geral reduz rolagem causada por espaço excedente.
+
+- Exploração de conexões acessível pela aba do Inspector, com lista contextual e mapa radial que libera o espaço do painel ao abrir.
+
+- Inspector de elementos prioriza leitura, com miniatura, descrição e acesso explícito à edição existente e às conexões.
+
+- Menu de categorias simplificado: relações externas abrem abaixo do botão sem deslocar os demais controles.
+
+- A abertura do Inspector desktop ajusta suavemente a largura da área principal, respeitando movimento reduzido.
+
+- Inspector desktop alinhado às demais áreas do workspace, com barra de rolagem discreta nas cores da interface.
+
+- Sidebar desktop refinada com superfície arredondada e destaque lilás concentrado no ícone ativo, conforme referência visual fornecida.
+
+- Shell desktop com colunas reais para sidebar, conteúdo e Inspector; controles de categoria permanecem na área principal e o menu global antigo não aparece no desktop.
+
+- Navegação desktop reorganizada em Explorar, Canvas, Escrita e Referências. Ferramentas contextuais permanecem no ambiente ativo; escrita e PDFs ocupam a área principal, e o Inspector divide o espaço visual do Acervo sem deslocar seu cabeçalho.
+
+- Acervo Vivo alinhado ao topo, com cabeçalho plural e grade responsiva. Cards sem imagem usam ícones compactos; imagens próprias mantêm proporção e tratamento de falhas. Textos têm limites visuais e o espaço do menu e do Inspector é respeitado.
+
+- Acervo Vivo como apresentação inicial das categorias nas Constelações: grade responsiva com elementos existentes, ordenação de leitura, imagens/fallback e acesso ao Inspector. Alternância transitória para o grafo de Relações preserva seleção e posições do Canvas livre; categorias sem conexões internas oferecem aviso e exploração de vizinhança, também acessível no detalhe mobile.
+
 - Roadmap vivo até v1.0.0 em ROADMAP, com checkboxes como fonte única, resumo calculado e comandos Node `roadmap:status`/`roadmap:sync`, sem dependências. Integração nas regras dos agentes, README e estado do projeto; fundação reconhecida por decisão do autor, sem criar release ou alterar a versão.
 
 - Conexões das Constelações detectam círculos intermediários e escolhem curvas com desvio e margem de segurança. Rotas calculadas somente quando a geometria muda; pulsos e contagens seguem o mesmo caminho, sem alterar relações ou mover categorias.

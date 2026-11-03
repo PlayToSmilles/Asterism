@@ -2,6 +2,22 @@
 
 > Prosa original: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), com [escopo e exclusões](DOCUMENTATION_LICENSE.md).
 
+## D25 — Ambientes desktop com navegação global e contexto local
+
+**Problema:** o menu embutido no canvas misturava destinos do aplicativo e ferramentas contextuais; painéis de escrita/PDF sobrepunham o Acervo.
+
+**Escolha:** barra lateral desktop com quatro destinos como primeira coluna fixa do shell; a área principal é a segunda, e o Inspector ocupa uma terceira coluna quando necessário. Escrita e Referências ocupam a área principal; canvas permanece montado e inerte fora dos ambientes espaciais. Categoria e canvas mantêm controles contextuais; mobile preserva o dock existente. Inspector segue como editor único.
+
+**Consequências:** sem novo modelo, persistência ou dependências. Trocas confirmam a sessão existente e podem fechar a seleção/documento ao mudar de ambiente. A transição das Constelações continua coordenada pela camada real e pelas medidas do canvas, agora com a barra fora dela. Visualização PDF e acessibilidade dependem das limitações dos ambientes testados.
+
+## D24 — Acervo derivado e grafo por perspectiva
+
+**Problema:** enquadrar todos os elementos de uma categoria como grafo reduz a legibilidade de acervos grandes ou com poucas relações internas.
+
+**Escolha:** apresentar uma grade CSS derivada dos elementos existentes e manter o React Flow como perspectiva opcional de Relações, montado na camada da transição existente. A seleção e edição continuam nos componentes existentes; a preferência é transitória. Categoria sem relação interna mantém acesso ao grafo e à vizinhança externa.
+
+**Consequências:** sem nova fonte de dados, migração ou alteração de posições do Canvas livre. A ordenação é apenas visual e a grade não é virtualizada; bibliotecas próximas do limite de importação ainda exigem avaliação de desempenho. Uma categoria vazia pode ser mostrada quando seu último elemento é removido durante a navegação; a visão geral atual lista somente categorias não vazias. Acessibilidade completa e compatibilidade em dispositivos reais continuam pendentes.
+
 ## D22 — Roadmap derivado de checkboxes
 
 **Problema:** acompanhar marcos sem duplicar tarefas em JSON ou manter percentuais manualmente.

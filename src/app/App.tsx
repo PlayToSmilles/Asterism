@@ -48,7 +48,7 @@ import {
   type StudioTab,
 } from "../ui/mobile/MobileStudio";
 import { MobileEntityDetails } from "../ui/mobile/MobileEntityDetails";
-import { DesktopNavigation } from "../ui/workspace/DesktopNavigation";
+import { DesktopNavigation, type DesktopArea } from "../ui/workspace/DesktopNavigation";
 import { DesktopDocuments } from "../ui/workspace/DesktopDocuments";
 const DocumentEditor = lazy(() => import("../ui/documents/DocumentEditor"));
 
@@ -77,7 +77,10 @@ export default function App() {
   const [layoutState, setLayoutState] = useState<LayoutActivity>("idle");
   const layoutPending = layoutState !== "idle";
   const [exploration, setExploration] = useState<Exploration>({ kind: "all" });
+  const [categoryPerspective, setCategoryPerspective] = useState<"collection" | "relations">("collection");
   const [mobileExploring, setMobileExploring] = useState(false);
+  const [inspectorCollapsed, setInspectorCollapsed] = useState(false);
+  const focusOrigin = useRef<string | null>(null);
   const [focusedRelation, setFocusedRelation] = useState<string | null>(null);
   const [referencesOpen, setReferencesOpen] = useState(false);
   const [documentsOpen, setDocumentsOpen] = useState(false);
@@ -159,18 +162,22 @@ export default function App() {
     setReferencesOpen(false);
     setDocumentId(null);
     setFocusedRelation(null);
+    if (mode.kind === "focus" && exploration.kind !== "focus") {
+      focusOrigin.current = selected;
+      setInspectorCollapsed(true);
+    } else if (mode.kind !== "focus") {
+      setInspectorCollapsed(false);
+    }
     setExploration(mode);
     setMobileExploring(mobile && mode.kind === "focus");
     setMobileTab("canvas");
-    if (mode.kind !== "focus") setSelected(null);
+    if (mode.kind !== "focus") setSelected(exploration.kind === "focus" && mode.kind === "category" ? focusOrigin.current : null);
   }
   function selectItem(id: string | null) {
     if (layoutState === "preview") return;
     setMobileExploring(false);
     if (id && exploration.kind === "universe") setExploration({ kind: "all" });
-    if (id && exploration.kind === "focus" && project?.entities.some((e) => e.id === id)) {
-      setExploration({ kind: "focus", id });
-    }
+    setInspectorCollapsed(false);
     setFocusedRelation(null);
     session.flush();
     setEditingDetails(false);
@@ -188,6 +195,18 @@ export default function App() {
     if (tab !== "references") setMobileTab(tab);
     setReferencesOpen(tab === "references");
   }
+  function navigateDesktop(area: DesktopArea) {
+    if (layoutPending) return;
+    session.flush();
+    setDocumentId(null);
+    setDocumentsOpen(area === "documents");
+    setReferencesOpen(area === "references");
+    setFocusedRelation(null);
+    if (area === "canvas" || area === "explore") {
+      setSelected(null);
+      setExploration({ kind: area === "canvas" ? "all" : "universe" });
+    }
+  }
   function beginCreating() {
     if (layoutPending) return;
     session.flush();
@@ -196,6 +215,7 @@ export default function App() {
   }
   function write(id: string) {
     session.flush();
+    if (referencesOpen) { setReferencesOpen(false); if (!mobile) setDocumentsOpen(true); }
     setDocumentId(id);
   }
   function openSearchResult(result: SearchResult): string | null {
@@ -449,7 +469,7 @@ export default function App() {
             </div>
             <div className="toolbar-actions">
               <SearchTrigger open={openSearch} />
-              <button
+              {mobile && <button
                 aria-pressed={referencesOpen}
                 aria-controls="reference-library"
                 onClick={() => {
@@ -459,7 +479,7 @@ export default function App() {
                 }}
               >
                 Referências
-              </button>
+              </button>}
               {!mobile && <div className="header-settings-slot" ref={setSettingsHost} />}
               <ProjectFileActions
                 importFile={() => input.current?.click()}
@@ -484,11 +504,12 @@ export default function App() {
             </div>
           </header>
           <div className="editor-body">
+            {!mobile && <DesktopNavigation disabled={layoutPending} area={referencesOpen ? "references" : documentsOpen || documentEntity ? "documents" : exploration.kind === "all" ? "canvas" : "explore"} navigate={navigateDesktop} />}
             <main
-              className={`canvas${mobileOverlay ? " studio-canvas-covered" : ""}`}
+              className={`canvas${mobileOverlay ? " studio-canvas-covered" : ""}${!mobile && (referencesOpen || documentsOpen) ? " is-workspace-hidden" : ""}`}
               ref={canvas}
               aria-label="Canvas do universo"
-              inert={!!documentEntity || mobileOverlay}
+              inert={!!documentEntity || mobileOverlay || (!mobile && (referencesOpen || documentsOpen))}
             >
               <div className="canvas-heading">
                 <span className="eyebrow">
@@ -509,38 +530,11 @@ export default function App() {
                 key={project.id}
                 desktop={!mobile}
                 settingsHost={settingsHost}
-                navigation={!mobile && (
-                  <DesktopNavigation
-                    area={
-                      referencesOpen
-                        ? "references"
-                        : documentsOpen || documentEntity
-                          ? "documents"
-                          : "canvas"
-                    }
-                    canvas={() => {
-                      session.flush();
-                      setDocumentsOpen(false);
-                      setReferencesOpen(false);
-                      setDocumentId(null);
-                    }}
-                    documents={() => {
-                      session.flush();
-                      setDocumentId(null);
-                      setReferencesOpen(false);
-                      setDocumentsOpen((value) => !value);
-                    }}
-                    references={() => {
-                      session.flush();
-                      setDocumentsOpen(false);
-                      setDocumentId(null);
-                      setReferencesOpen((value) => !value);
-                    }}
-                  />
-                )}
                 layoutActivity={setLayoutState}
-                active={!searchOpen && !documentEntity && !mobileOverlay}
+                active={!searchOpen && !documentEntity && !mobileOverlay && !referencesOpen && !documentsOpen}
                 exploration={exploration}
+                categoryPerspective={categoryPerspective}
+                setCategoryPerspective={setCategoryPerspective}
                 explore={explore}
                 focusedRelation={focusedRelation}
                 clearFocus={() => {
@@ -620,6 +614,8 @@ export default function App() {
                 project={project}
                 close={() => selectItem(null)}
                 edit={() => setEditingDetails(true)}
+                exploreNeighborhood={() => explore({ kind: "focus", id: selectedEntity.id })}
+                showCategoryRelations={exploration.kind === "category" ? () => { setCategoryPerspective("relations"); setMobileExploring(true); } : undefined}
                 select={selectItem}
                 write={write}
                 locate={() => {
@@ -633,7 +629,7 @@ export default function App() {
                 }}
               />
             ) : (
-              selected &&
+              selected && !inspectorCollapsed &&
               (!mobile || (!focusedRelation && !mobileExploring)) &&
               (mobile || !documentsOpen) &&
               !referencesOpen &&
@@ -659,7 +655,8 @@ export default function App() {
                     ) {
                       session.flush();
                       setEditingDetails(false);
-                    } else selectItem(null);
+                    } else if (exploration.kind === "focus") setInspectorCollapsed(true);
+                    else selectItem(null);
                   }}
                   change={change}
                   openDocument={write}

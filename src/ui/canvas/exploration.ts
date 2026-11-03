@@ -32,7 +32,7 @@ export function neighborhoodPositions(project: Project, id: string) {
   const ids = visibleElements(project, { kind: "focus", id }, null);
   const neighbors = project.entities.filter((e) => e.id !== id && ids.has(e.id));
   const result = new Map<string, Position>([[id, { x: 0, y: 0 }]]);
-  const radius = Math.max(500, neighbors.length * 370 / (2 * Math.PI));
+  const radius = Math.max(320, neighbors.length * 390 / (2 * Math.PI));
   neighbors.forEach((entity, index) => {
     const angle = index * 2 * Math.PI / neighbors.length - Math.PI / 2;
     result.set(entity.id, { x: Math.cos(angle) * radius, y: Math.sin(angle) * radius });
