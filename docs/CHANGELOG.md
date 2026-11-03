@@ -6,7 +6,9 @@ Registra somente evolução comprovada. Datas de lançamento, tags e versões an
 
 ## Unreleased
 
-- Integração local da Primeira Faísca com a navegação desktop e o Acervo Vivo, pendente de revisão manual antes de qualquer entrega.
+- Atualizada a dependência transitiva de build `serialize-javascript` de 7.1.2 para 7.1.4, corrigindo o aviso GHSA-m5mm-p8h7-m29v sem alterar a estratégia da PWA.
+
+- Integração da Primeira Faísca com a navegação desktop e o Acervo Vivo, revisada pelo responsável e pendente de aprovação para publicação.
 
 - Cards do Acervo usam mídia compacta de altura estável; a visão geral reduz rolagem causada por espaço excedente.
 

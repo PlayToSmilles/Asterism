@@ -2,11 +2,19 @@
 
 > Prosa original: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), com [escopo e exclusões](DOCUMENTATION_LICENSE.md).
 
+## Segurança e estabilidade da integração — 2026-11-03
+
+`serialize-javascript` transitivo de build foi atualizado de 7.1.2 para 7.1.4 no lockfile. O `npm audit` passou de 22 entradas (19 moderadas, três baixas) para 21 (19 moderadas, duas baixas); em ambos, zero altas ou críticas. `npm audit --omit=dev` permaneceu com zero entradas. A contagem inclui pacotes dependentes afetados pelo mesmo aviso.
+
+Restam avisos na cadeia de desenvolvimento do ESLint/TypeScript ESLint e de build da PWA/Workbox, incluindo `minimatch`, `glob` e `deepmerge`. A exposição por essas ferramentas depende das entradas e condições descritas nos avisos; não foi demonstrada exploração pelo uso normal do aplicativo. O npm sugere mudanças de versão principal ou downgrades para parte da árvore, e o aviso de `deepmerge` não apresentava correção publicada nesta verificação. Essas mudanças não foram aplicadas. `typescript-eslint` permaneceu em 8.72.0: a atualização compatível 8.72.1 não foi identificada como correção dos avisos residuais.
+
+Validados 197 testes do aplicativo, sete do roadmap, lint e build TypeScript/Vite. No preview de produção, Chromium isolado com dados sintéticos cobriu criação, acolhimento opcional, ideia e possibilidades, Canvas, Acervo, Inspector, mapa, Escrita, Referências, salvamento/reabertura e importação/exportação JSON. Service worker ativo, precache, manifesto standalone e recarga offline após visita inicial foram confirmados sem erros de console no teste específico. O hash do service worker gerado mudou; a configuração de cache e registro não foi modificada e não houve comparação integral dos artefatos. Safari/iPhone físico, leitor de tela e renderização real de PDF não foram validados. O build mantém aviso de chunk acima de 500 kB.
+
 Estado atualizado em 2026-10-30, na iteração ASTERISM — Worldbuilding for Anything. As etapas anteriores foram preservadas. Esta página distingue implementação, evidência anterior e verificações atuais; não é garantia de funcionamento em todos os navegadores.
 
 ## Integração local — 2026-11-03
 
-`integration/asterism-next` reúne os commits locais dos fluxos experiente e Primeira Faísca, aguardando revisão manual; não representa uma entrega publicada. A navegação desktop e o acolhimento compartilham o workspace: o canvas fica inerte durante o acolhimento ou quando outro ambiente o cobre, e navegar diretamente para Canvas ou Explorar dispensa a orientação. Os registros de validações anteriores abaixo continuam históricos.
+`integration/asterism-next` reúne os commits dos fluxos experiente e Primeira Faísca. A revisão manual foi aprovada pelo responsável; a integração ainda não representa uma entrega publicada. A navegação desktop e o acolhimento compartilham o workspace: o canvas fica inerte durante o acolhimento ou quando outro ambiente o cobre, e navegar diretamente para Canvas ou Explorar dispensa a orientação. Os registros de validações anteriores abaixo continuam históricos.
 
 Na integração, 197 testes em 28 arquivos, sete testes do roadmap, lint e build TypeScript/Vite passaram. Chromium isolado com dados sintéticos verificou a criação, ideia e mapa de possibilidades, exploração livre, projeto existente, Acervo, Inspector, mapa de conexões, Escrita, Referências e importação/exportação JSON. Não foram revalidados Safari/iPhone físico, acessibilidade com leitor de tela ou visualização real de PDFs. A instalação das dependências existentes apontou 22 vulnerabilidades no audit do npm; não houve atualização de pacotes nesta tarefa.
 
