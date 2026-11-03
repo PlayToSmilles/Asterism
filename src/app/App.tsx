@@ -13,6 +13,7 @@ import type { Exploration, LayoutActivity } from "../ui/canvas/exploration";
 import { focusViewport } from "../ui/canvas/canvasFocus";
 import {
   addEntity,
+  updateEntity,
   createProject,
   type Entity,
   type Project,
@@ -33,6 +34,10 @@ import { Inspector } from "../ui/Inspector";
 import { ReferenceLibrary } from "../ui/references/ReferenceLibrary";
 import { createLibrarySession } from "../persistence/librarySession";
 import { NewElement } from "../ui/NewElement";
+import { UniverseWelcome } from "../ui/onboarding/UniverseWelcome";
+import { saveSparkIdea, shouldWelcome, type SparkSaveResult, type SparkSaveOptions } from "../ui/onboarding/firstSpark";
+import { isValidImageUrl } from "../domain/imageUrl";
+import { createSparkDraftStore } from "../ui/onboarding/sparkDraft";
 import type { FloatingRelation } from "../ui/canvas/FloatingEdge";
 import { ProjectHome } from "../ui/home/ProjectHome";
 import { AsterismMark } from "../ui/home/AsterismMark";
@@ -92,6 +97,18 @@ export default function App() {
   );
   const library = useSyncExternalStore(session.subscribe, session.getSnapshot);
   const [creating, setCreating] = useState(false);
+  const [welcomeId, setWelcomeId] = useState<string | null>(null);
+  const [sparkDrafts] = useState(() => {
+    try { return createSparkDraftStore(sessionStorage); }
+    catch { return createSparkDraftStore(null); }
+  });
+  useEffect(() => {
+    const protect = (event: BeforeUnloadEvent) => {
+      if (sparkDrafts.needsUnloadWarning()) { event.preventDefault(); event.returnValue = ""; }
+    };
+    window.addEventListener("beforeunload", protect);
+    return () => window.removeEventListener("beforeunload", protect);
+  }, [sparkDrafts]);
   const [documentId, setDocumentId] = useState<string | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [referenceRequest, setReferenceRequest] = useState<{ id: string; token: number } | null>(null);
@@ -133,6 +150,8 @@ export default function App() {
       !!documentEntity ||
       referencesOpen ||
       (mobileTab !== "canvas" && !focusedRelation && !mobileExploring));
+  const showingSpark = !!project && welcomeId === project.id && !selected && !documentEntity && !referencesOpen &&
+    !documentsOpen && !searchOpen && !creating && (!mobile || mobileTab === "universe" || mobileTab === "canvas");
   function frameElements(ids: string[]) {
     requestAnimationFrame(() => {
       const instance = flow.current;
@@ -186,6 +205,7 @@ export default function App() {
     if (id) setReferencesOpen(false);
   }
   function navigate(tab: StudioTab) {
+    if (tab === "canvas") setWelcomeId(null);
     setMobileExploring(false);
     setFocusedRelation(null);
     session.flush();
@@ -197,6 +217,7 @@ export default function App() {
   }
   function navigateDesktop(area: DesktopArea) {
     if (layoutPending) return;
+    if (area === "canvas" || area === "explore") setWelcomeId(null);
     session.flush();
     setDocumentId(null);
     setDocumentsOpen(area === "documents");
@@ -275,7 +296,9 @@ export default function App() {
         : { projects: next };
     }, deferred);
   }
-  function open(p: Project, isNew = false) {
+  function open(p: Project, isNew = false, source: "created" | "opened" | "imported" = "opened") {
+    setWelcomeId(shouldWelcome(p, source) ? p.id : null);
+    setCreating(false);
     setSearchOpen(false);
     setReferenceRequest(null);
     searchGeneration.current++;
@@ -293,6 +316,47 @@ export default function App() {
     setEditingDetails(false);
     flow.current = null;
   }
+  function newElementPosition() {
+    const bounds = canvas.current?.getBoundingClientRect();
+    return (
+      flow.current && bounds
+        ? flow.current.screenToFlowPosition({
+            x: bounds.left + bounds.width / 2 - 130,
+            y: bounds.top + bounds.height / 2 - 110,
+          })
+        : { x: 100, y: 100 });
+  }
+  function saveIdea(text: string, action: "create" | "deepen", currentId: string | null, nextNumber: number, operationId: string, options?: SparkSaveOptions): SparkSaveResult {
+    if (!activeId || layoutPending) return { ok: false, error: "Conclua a organização do canvas antes de guardar." };
+    try {
+      let outcome: SparkSaveResult = { ok: false, error: "O universo não está mais disponível." };
+      session.commit(library => {
+        const current = library.projects.find(p => p.id === activeId);
+        if (!current) throw new Error("O universo não está mais disponível.");
+        const base = newElementPosition();
+        const position = { x: base.x + current.entities.length % 3 * 300, y: base.y + Math.floor(current.entities.length / 3) * 310 };
+        const result = saveSparkIdea(current, text, action, currentId, nextNumber, position, operationId, options);
+        outcome = { ok: true, entityId: result.entityId, nextNumber: result.nextNumber,
+          title: result.project.entities.find(e => e.id === result.entityId)!.title };
+        return { projects: library.projects.map(p => p.id === activeId ? result.project : p) };
+      });
+      return outcome;
+    } catch (error) {
+      return { ok: false, error: error instanceof Error && !(error instanceof DOMException)
+        ? error.message : "Não foi possível guardar no navegador. Seu texto continua aqui; libere espaço e tente novamente." };
+    }
+  }
+  function saveSparkReference(id: string, url: string): string | null {
+    if (url && !isValidImageUrl(url)) return "Use uma URL HTTP ou HTTPS válida.";
+    try {
+      session.commit(library => ({ projects: library.projects.map(p => {
+        if (p.id !== activeId) return p;
+        if (!p.entities.some(e => e.id === id)) throw new Error("A ideia central foi removida.");
+        return updateEntity(p, id, { imageUrl: url || undefined });
+      }) }));
+      return null;
+    } catch { return "Não foi possível guardar a referência visual. A imagem anterior foi mantida."; }
+  }
   function newCard(category: Category, title: string) {
     if (!project || layoutPending) return;
     setFocusedRelation(null);
@@ -300,14 +364,7 @@ export default function App() {
     setMobileExploring(false);
     setReferencesOpen(false);
     setDocumentsOpen(false);
-    const bounds = canvas.current?.getBoundingClientRect();
-    const position =
-      flow.current && bounds
-        ? flow.current.screenToFlowPosition({
-            x: bounds.left + bounds.width / 2 - 130,
-            y: bounds.top + bounds.height / 2 - 110,
-          })
-        : { x: 100, y: 100 };
+    const position = newElementPosition();
     const current = session
       .getSnapshot()
       .projects.find((p) => p.id === activeId)!;
@@ -316,6 +373,7 @@ export default function App() {
     setSelected(next.entities.at(-1)?.id ?? null);
     setEditingDetails(true);
     setCreating(false);
+    setWelcomeId(null);
     if (category === "Documento") setDocumentId(next.entities.at(-1)!.id);
   }
   async function readFile(file?: File) {
@@ -330,7 +388,7 @@ export default function App() {
         id: crypto.randomUUID(),
         kind: "user" as const,
       };
-      open(copy, true);
+      open(copy, true, "imported");
       setMessage("Projeto importado como uma cópia independente.");
     } catch (error) {
       setMessage(
@@ -409,7 +467,7 @@ export default function App() {
           active={!project}
           projects={library.projects}
           open={(p) => { void projectTransition.start(p.id, "enter", () => open(p)); }}
-          create={(title) => open(createProject(title), true)}
+          create={(title) => open(createProject(title), true, "created")}
           demo={() => {
             const demo = library.projects.find((p) => p.kind === "demo");
             open(demo ?? createDemo(), !demo);
@@ -425,7 +483,7 @@ export default function App() {
           className="project-workspace-layer"
         >
         <div
-          className={`editor${mobile ? " mobile-studio" : ""}${documentEntity ? " is-writing" : ""}`}
+          className={`editor${mobile ? " mobile-studio" : ""}${documentEntity ? " is-writing" : ""}${showingSpark ? " is-starting" : ""}`}
         >
           <header className="toolbar">
             <button
@@ -451,9 +509,11 @@ export default function App() {
             <div className="project-heading">
               <input
                 aria-label="Nome do universo"
+                title="Renomear universo · clique para editar"
                 key={project.id}
                 defaultValue={project.name}
                 maxLength={120}
+                onKeyDown={event => { if (event.key === "Enter") event.currentTarget.blur(); }}
                 onBlur={(e) => {
                   const next = e.target.value.trim() || "Meu universo";
                   e.target.value = next;
@@ -493,11 +553,7 @@ export default function App() {
               <button
                 className="primary"
                 disabled={layoutPending}
-                onClick={() => {
-                  session.flush();
-                  setDocumentId(null);
-                  setCreating(true);
-                }}
+                onClick={beginCreating}
               >
                 ＋ Novo elemento
               </button>
@@ -509,7 +565,7 @@ export default function App() {
               className={`canvas${mobileOverlay ? " studio-canvas-covered" : ""}${!mobile && (referencesOpen || documentsOpen) ? " is-workspace-hidden" : ""}`}
               ref={canvas}
               aria-label="Canvas do universo"
-              inert={!!documentEntity || mobileOverlay || (!mobile && (referencesOpen || documentsOpen))}
+              inert={!!documentEntity || mobileOverlay || showingSpark || (!mobile && (referencesOpen || documentsOpen))}
             >
               <div className="canvas-heading">
                 <span className="eyebrow">
@@ -531,7 +587,7 @@ export default function App() {
                 desktop={!mobile}
                 settingsHost={settingsHost}
                 layoutActivity={setLayoutState}
-                active={!searchOpen && !documentEntity && !mobileOverlay && !referencesOpen && !documentsOpen}
+                active={!searchOpen && !documentEntity && !mobileOverlay && !referencesOpen && !documentsOpen && !showingSpark}
                 exploration={exploration}
                 categoryPerspective={categoryPerspective}
                 setCategoryPerspective={setCategoryPerspective}
@@ -549,18 +605,6 @@ export default function App() {
                   flow.current = instance;
                 }}
               />
-              {!project.entities.length && (
-                <div className="canvas-empty">
-                  <span className="workspace-empty-mark">
-                    {mobile ? "✧" : <AsterismMark />}
-                  </span>
-                  <h2>Toda história começa em algum lugar.</h2>
-                  <p>Adicione seu primeiro personagem, lugar ou ideia.</p>
-                  <button className="primary" onClick={() => setCreating(true)}>
-                    ＋ Criar primeiro elemento
-                  </button>
-                </div>
-              )}
               <div className="canvas-hint">
                 Arraste para explorar <span>·</span> Role para zoom{" "}
                 <span>·</span> Conecte os pontos dos elementos
@@ -569,8 +613,8 @@ export default function App() {
             {mobile &&
               (mobileTab === "universe" || mobileTab === "writing") && (
                 <div
-                  className={`studio-browser-layer${referencesOpen || selected || documentEntity ? " studio-layer-hidden" : ""}`}
-                  inert={!!(referencesOpen || selected || documentEntity)}
+                  className={`studio-browser-layer${referencesOpen || selected || documentEntity || (welcomeId === project.id && mobileTab === "universe") ? " studio-layer-hidden" : ""}`}
+                  inert={!!(referencesOpen || selected || documentEntity || (welcomeId === project.id && mobileTab === "universe"))}
                 >
                   <MobileStudio
                     key={`${project.id}-${mobileTab}`}
@@ -692,6 +736,18 @@ export default function App() {
                 />
               </Suspense>
             )}
+            {project.kind === "user" && <UniverseWelcome key={project.id} project={project} store={sparkDrafts}
+              open={welcomeId === project.id} locked={layoutPending}
+              visible={!selected && !documentEntity && !referencesOpen && !documentsOpen && !searchOpen && !creating &&
+                (!mobile || mobileTab === "universe" || mobileTab === "canvas")}
+              show={() => setWelcomeId(project.id)}
+              dismiss={() => { setWelcomeId(null); if (mobile) navigate("canvas"); }}
+              finish={() => {
+                setWelcomeId(null); explore({ kind: "all" });
+                frameElements(project.entities.map(e => e.id));
+              }}
+              create={beginCreating}
+              save={saveIdea} saveReference={saveSparkReference} />}
           </div>
           {mobile && !documentEntity && !selected && (
             <MobileNavigation

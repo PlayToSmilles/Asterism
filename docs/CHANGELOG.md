@@ -6,6 +6,8 @@ Registra somente evolução comprovada. Datas de lançamento, tags e versões an
 
 ## Unreleased
 
+- Integração local da Primeira Faísca com a navegação desktop e o Acervo Vivo, pendente de revisão manual antes de qualquer entrega.
+
 - Cards do Acervo usam mídia compacta de altura estável; a visão geral reduz rolagem causada por espaço excedente.
 
 - Exploração de conexões acessível pela aba do Inspector, com lista contextual e mapa radial que libera o espaço do painel ao abrir.
@@ -27,6 +29,18 @@ Registra somente evolução comprovada. Datas de lançamento, tags e versões an
 - Acervo Vivo alinhado ao topo, com cabeçalho plural e grade responsiva. Cards sem imagem usam ícones compactos; imagens próprias mantêm proporção e tratamento de falhas. Textos têm limites visuais e o espaço do menu e do Inspector é respeitado.
 
 - Acervo Vivo como apresentação inicial das categorias nas Constelações: grade responsiva com elementos existentes, ordenação de leitura, imagens/fallback e acesso ao Inspector. Alternância transitória para o grafo de Relações preserva seleção e posições do Canvas livre; categorias sem conexões internas oferecem aviso e exploração de vizinhança, também acessível no detalhe mobile.
+
+- Núcleo inicial dimensionado pelo conteúdo, com limites e rolagem para textos extensos. Conexões recortadas no contorno arredondado medido e atualizadas quando o núcleo muda de tamanho, eliminando lacunas nas bordas.
+
+- Núcleo da Primeira Faísca sem círculo interno: ideia centralizada no retângulo, referência opcional em miniatura arredondada e brilho de borda com pulsação lenta, desativada para movimento reduzido. Círculos e órbitas permanecem nas possibilidades.
+
+- Núcleo da Constelação de Possibilidades reúne símbolo/imagem, título e texto dentro de um painel arredondado. Linhas partem de seu contorno; disposição mobile ganha espaço para leitura e textos extensos têm rolagem acessível por teclado.
+
+- Constelação de Possibilidades substitui as perspectivas da Primeira Faísca: uma ideia central e três caminhos temporários (Origens, Habitantes, Consequências), com anéis/partículas reutilizados e passagem circular WAAPI para escrita focada. Confirmação contextual permite aprofundar ou criar uma ideia, com relação somente por escolha explícita. Rascunhos separados por caminho, migração do registro temporário anterior, referência HTTP/HTTPS na ideia central e saída para o canvas normal. Placeholders com arte existente; três artes oficiais 256×144 ainda pendentes. Nova avaliação humana da v0.2.0 permanece aberta; sem mudança de schema, versão ou dependências.
+
+- Continuidade Criativa da Primeira Faísca, motivada pelo primeiro teste real de usabilidade: Guardar minha ideia cria diretamente Ideia 01 e mantém o espaço aberto; aprofundamento preserva o texto e criação independente não acrescenta relações. Perguntas opcionais por perspectiva, escrita livre, edição pelo Inspector e retomada com rascunho/contexto temporários na aba. Confirmação durável, erros recuperáveis, proteção contra duplicação e sequência de títulos conhecidos. JSON, versão e dependências preservados; nova validação com usuário continua pendente.
+
+- A Primeira Faísca: acolhimento opcional em universos recém-criados, com inspiração por uma pergunta aberta, criação direta e exploração livre. Resposta temporária revisada no formulário existente e persistida apenas ao confirmar a criação; orientação pode ser dispensada/reaberta, sem interromper importações. Nome provisório e renomeação existente mais descobríveis. Sem alteração de schema, dependências ou versão.
 
 - Roadmap vivo até v1.0.0 em ROADMAP, com checkboxes como fonte única, resumo calculado e comandos Node `roadmap:status`/`roadmap:sync`, sem dependências. Integração nas regras dos agentes, README e estado do projeto; fundação reconhecida por decisão do autor, sem criar release ou alterar a versão.
 

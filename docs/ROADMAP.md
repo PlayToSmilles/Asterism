@@ -12,7 +12,7 @@ Resumo gerado por `npm run roadmap:sync`; edite as tarefas abaixo, não esta tab
 | Marco | Estado | Tarefas | Progresso |
 | --- | --- | ---: | --- |
 | v0.1.0 Beta — Fundação | concluída | 10/10 | ■■■■■■■■■■ 100% |
-| v0.2.0 — A Primeira Faísca | planejada | 0/5 | □□□□□□□□□□ 0% |
+| v0.2.0 — A Primeira Faísca | em andamento | 4/5 | ■■■■■■■■□□ 80% |
 | v0.3.0 — Descoberta Criativa | planejada | 0/6 | □□□□□□□□□□ 0% |
 | v0.4.0 — Liberdade de Modelar | planejada | 0/5 | □□□□□□□□□□ 0% |
 | v0.5.0 — Criar sem Medo | planejada | 0/5 | □□□□□□□□□□ 0% |
@@ -20,10 +20,10 @@ Resumo gerado por `npm run roadmap:sync`; edite as tarefas abaixo, não esta tab
 | v0.9.0 Release Candidate — Estabilização | planejada | 0/7 | □□□□□□□□□□ 0% |
 | v1.0.0 — O Estúdio de Universos | planejada | 0/5 | □□□□□□□□□□ 0% |
 
-**Geral até a v1.0.0:** 10/49 tarefas (20%).
+**Geral até a v1.0.0:** 14/49 tarefas (28%).
 Cada checkbox tem o mesmo peso; o percentual não estima esforço, prazo ou maturidade.
 
-**Fase atual / próxima a iniciar:** v0.2.0 — A Primeira Faísca (planejada).
+**Fase atual / próxima a iniciar:** v0.2.0 — A Primeira Faísca (em andamento).
 **Na sequência:** v0.3.0 → v0.4.0 → v0.5.0 → v0.6.0 → v0.9.0 → v1.0.0.
 <!-- roadmap:summary:end -->
 
@@ -93,13 +93,15 @@ Use títulos `## vMAJOR.MINOR.PATCH — Nome` (com `Beta` ou `Release Candidate`
 
 **Propósito e experiência:** tornar intuitivo começar um universo vazio, oferecendo ajuda sem exigir familiaridade com grafos.
 
-- [ ] Oferecer acolhimento criativo opcional e dispensável.
-- [ ] Oferecer caminhos para inspiração, criação direta e exploração livre.
-- [ ] Permitir nomes provisórios e renomeação no fluxo inicial.
-- [ ] Ajudar a criar o primeiro conteúdo sem exigir conhecimento de grafos.
-- [ ] Validar os caminhos de entrada e preservar integralmente o fluxo livre existente.
+- [x] Oferecer acolhimento criativo opcional e dispensável.
+- [x] Oferecer caminhos para inspiração, criação direta e exploração livre.
+- [x] Permitir nomes provisórios e renomeação no fluxo inicial.
+- [x] Ajudar a criar o primeiro conteúdo sem exigir conhecimento de grafos.
+- [ ] Validar a continuidade criativa em nova avaliação com usuário, preservando o fluxo livre existente.
 
 **Critério de conclusão:** é possível começar com ou sem orientação, dispensá-la e criar/renomear o universo sem bloqueios ou perda de dados. A validação deve cobrir desktop e mobile. **Nota:** a renomeação já existente é base a reutilizar, não comprovação de que o novo fluxo está concluído. Este marco substitui a antiga proposta informal “Cards 0.2” como planejamento da próxima versão; não renumera entregas passadas.
+
+Primeira implementação conferida tecnicamente em 2026-10-24. O primeiro teste real relatado pelo autor identificou ruptura entre a resposta inicial, o formulário e o canvas. Marco reaberto em 2026-10-26: guardar diretamente e continuar criando foram implementados; a nova avaliação com usuário permanece pendente. A revisão visual seguinte substitui perspectivas por uma Constelação de Possibilidades temporária, com três caminhos, escrita focada e referência por URL. Não cria aba permanente nem conclui a biblioteca contextual da v0.3.0. Artes oficiais 256×144 aguardam fornecimento; uploads portáveis dependem do backup completo previsto na v0.6.0. Evidências técnicas e limitações em [PROJECT_STATUS](PROJECT_STATUS.md). Não equivale a release ou autorização de publicação.
 
 ## v0.3.0 — Descoberta Criativa
 
@@ -196,5 +198,7 @@ Somente uma decisão explícita futura altera este escopo: sincronização em nu
 ## Registro de planejamento
 
 - 2026-10-24: marcos aprovados pelo autor incorporados. Fundação reconhecida como concluída; v0.2.0 é a próxima fase, ainda não iniciada. Nenhuma tarefa futura foi marcada apenas por já existir uma função parcial semelhante. Não há marcos v0.7.0/v0.8.0 definidos; nenhum foi inventado.
+- 2026-10-24: cinco tarefas da Primeira Faísca verificadas nesta implementação; próximo marco planejado passa a ser v0.3.0, sem implementá-lo nesta entrega. Uma pergunta inicial isolada pertence à v0.2.0; biblioteca e sugestões contextuais continuam fora do escopo atual.
+- 2026-10-26: retorno do primeiro teste real motivou Continuidade Criativa. Reaberta a validação do marco v0.2.0 até uma nova avaliação com usuário; avanço técnico não é confirmação definitiva da experiência. Escopo ampliado por solicitação expressa para perguntas neutras por perspectiva e contexto temporário, sem IA ou biblioteca contextual completa.
 
 Crédito público: **Projeto ASTERISM**. Este novo documento de planejamento não amplia automaticamente a lista de obras sob CC BY 4.0 em [DOCUMENTATION_LICENSE](DOCUMENTATION_LICENSE.md); preservam-se o escopo e as exclusões existentes.
