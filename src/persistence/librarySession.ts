@@ -43,6 +43,23 @@ export function createLibrarySession(
       } else flush();
       listeners.forEach((listener) => listener());
     },
+    // Explicit saves (First Spark) must not report success or consume a draft
+    // until durable. On failure retain the snapshot and any pending autosave.
+    commit(operation: (library: Library) => Library) {
+      const next = operation(snapshot);
+      try {
+        saveLibrary(storage, next);
+      } catch (error) {
+        status("Falha ao salvar · exporte um backup");
+        throw error;
+      }
+      clearTimeout(timer);
+      timer = undefined;
+      dirty = false;
+      snapshot = next;
+      status("Salvo neste navegador");
+      listeners.forEach((listener) => listener());
+    },
     removeProject(id: string) {
       const projects = snapshot.projects.filter((project) => project.id !== id);
       if (projects.length === snapshot.projects.length) return;

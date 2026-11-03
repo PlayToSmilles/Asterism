@@ -4,6 +4,46 @@ import { createLibrarySession } from "./librarySession";
 import { addEntity, createProject, updateEntity } from "../domain/model";
 import { loadLibrary } from "./persistence";
 describe("sessão e autosave", () => {
+  it("commit confirma no disco antes de publicar e cancela o autosave pendente", () => {
+    vi.useFakeTimers();
+    const original = { projects: [createProject()] }, listener = vi.fn();
+    const session = createLibrarySession(original, { setItem: () => {
+      expect(session.getSnapshot().projects[0].entities).toHaveLength(0);
+    } }, vi.fn());
+    session.subscribe(listener);
+    session.commit(library => ({ projects: [addEntity(library.projects[0], { x: 1, y: 2 }, "Ideia", "Ideia 01", "Resposta")] }));
+    expect(session.getSnapshot().projects[0].entities).toHaveLength(1);
+    expect(listener).toHaveBeenCalledOnce();
+    vi.runAllTimers();
+    expect(listener).toHaveBeenCalledOnce();
+  });
+  it("commit com falha não publica; repetir depois da recuperação cria somente uma ideia", () => {
+    let failing = true;
+    const original = { projects: [createProject()] }, listener = vi.fn();
+    const session = createLibrarySession(original, { setItem: () => { if (failing) throw new Error("Quota"); } }, vi.fn());
+    session.subscribe(listener);
+    const operation = (library: typeof original) => ({ projects: [addEntity(library.projects[0], { x: 1, y: 2 }, "Ideia", "Ideia 01", "Resposta")] });
+    expect(() => session.commit(operation)).toThrow("Quota");
+    expect(session.getSnapshot()).toBe(original);
+    expect(listener).not.toHaveBeenCalled();
+    failing = false;
+    session.commit(operation);
+    expect(session.getSnapshot().projects[0].entities).toHaveLength(1);
+  });
+  it("commit malsucedido preserva edição pendente e seu timer de gravação", () => {
+    vi.useFakeTimers();
+    let failing = true, saved = "";
+    const session = createLibrarySession({ projects: [createProject()] }, { setItem: (_key, value) => {
+      if (failing) throw new Error("Quota"); saved = value;
+    } }, vi.fn());
+    session.update(library => ({ projects: library.projects.map(p => ({ ...p, name: "Nome editado" })) }), true);
+    const pending = session.getSnapshot();
+    expect(() => session.commit(library => ({ projects: [addEntity(library.projects[0], { x: 0, y: 0 })] }))).toThrow();
+    expect(session.getSnapshot()).toBe(pending);
+    failing = false;
+    vi.runAllTimers();
+    expect(JSON.parse(saved).projects[0]).toMatchObject({ name: "Nome editado", entities: [] });
+  });
   afterEach(() => vi.useRealTimers());
   const initial = () => ({
     projects: [addEntity(createProject(), { x: 0, y: 0 }, "Documento")],

@@ -2,6 +2,16 @@
 
 > Prosa original: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), com [escopo e exclusões](DOCUMENTATION_LICENSE.md).
 
+## D23 — Primeira Faísca opcional e transitória
+
+**Problema:** a primeira implementação ajudava a iniciar, mas o primeiro teste real relatado pelo autor identificou uma ruptura: responder levava a uma ficha e depois ao canvas com um único elemento, sem continuidade criativa.
+
+**Escolha revista em 2026-10-26:** guardar diretamente como Ideia com título provisório; apresentar um mapa temporário com Origens, Habitantes e Consequências ao redor da ideia central. Cada caminho abre escrita focada; confirmar permite aprofundar ou criar outra ideia e, somente por checkbox inicialmente desmarcado, conectá-la ao núcleo. Perguntas genéricas, sem interpretação semântica. Criação tradicional e exploração livre continuam disponíveis. Orientação automática só em novos universos vazios; conclusão não reabre automaticamente e rascunhos pendentes oferecem retomada manual.
+
+**Consequências:** registro temporário v2 por universo, com rascunhos independentes por caminho e migração do v1, separado do JSON. Falha usa memória e aviso de risco ao fechar/recarregar. Números excluídos são lembrados somente enquanto conhecidos pela aba, pois o modelo não tem tombstones. Gravação explícita usa confirmação durável antes de consumir o rascunho; autosave comum não muda. ID de operação e atualização idempotente evitam duplicação. As possibilidades não são entidades/categorias e não entram na persistência do domínio.
+
+**Reuso e limites visuais:** reutilizar OrbitalParticles, orbitalLink, estilos dos anéis e a técnica de duas camadas/abertura circular WAAPI. A passagem foi isolada num controlador pequeno porque a navegação existente depende de categorias e prontidão do React Flow, ausentes no espaço de escrita. Não duplicar o sistema de navegação das constelações. Referência usa imageUrl já existente; sem upload nem novos binários. Slots de artes 256×144 usam placeholder com a árvore autoral até fornecimento, sem presumir licenças de obras futuras. A experiência continua no escopo v0.2.0; biblioteca contextual v0.3.0 e backup completo v0.6.0 permanecem futuros. Validação técnica não substitui nova avaliação humana.
+
 ## D22 — Roadmap derivado de checkboxes
 
 **Problema:** acompanhar marcos sem duplicar tarefas em JSON ou manter percentuais manualmente.

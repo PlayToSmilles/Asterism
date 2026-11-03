@@ -26,6 +26,12 @@
 - Não registrar testes como aprovados sem executá-los. Distinguir execução atual, evidência anterior e comportamento apenas inspecionado no código. Informar o que não foi verificado visualmente.
 - Atualizar checkboxes do roadmap somente com conclusão comprovada pelos critérios de aceitação, não apenas código escrito; registrar brevemente decisões que alterem o planejamento e executar `npm run roadmap:sync` após mudanças. Informar no relatório final quais itens avançaram. Documentação/scripts independentes do roadmap podem ser validados com seus testes específicos, sem repetir a suíte do aplicativo.
 
+## Branches e ambientes
+
+- `main` é a base estável destinada à produção. Desenvolver onboarding/Constelação de Possibilidades em `feat/primeira-faisca` e o fluxo direto/ferramentas em `feat/fluxo-experiente`, nas worktrees e portas descritas em [ROADMAP](docs/ROADMAP.md#fluxos-de-desenvolvimento).
+- As duas experiências compartilham o mesmo aplicativo; não duplicar modelo, persistência ou arquitetura. Conferir branch, worktree e alterações locais antes de trabalhar. Não mover alterações entre fluxos nem trocar branches com trabalho pendente sem investigar.
+- Propor integração por Pull Request após revisão e verificações; atualizar a partir da main em lotes pequenos somente com autorização para as operações Git envolvidas. Não enviar experimentos à produção sem aprovação.
+
 ## Versionar somente com autorização
 
 - Seguir a política em `docs/CHANGELOG.md`. Não aumentar a versão automaticamente; documentação por si só não exige nova versão.

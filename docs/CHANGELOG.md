@@ -6,6 +6,18 @@ Registra somente evolução comprovada. Datas de lançamento, tags e versões an
 
 ## Unreleased
 
+- Núcleo inicial dimensionado pelo conteúdo, com limites e rolagem para textos extensos. Conexões recortadas no contorno arredondado medido e atualizadas quando o núcleo muda de tamanho, eliminando lacunas nas bordas.
+
+- Núcleo da Primeira Faísca sem círculo interno: ideia centralizada no retângulo, referência opcional em miniatura arredondada e brilho de borda com pulsação lenta, desativada para movimento reduzido. Círculos e órbitas permanecem nas possibilidades.
+
+- Núcleo da Constelação de Possibilidades reúne símbolo/imagem, título e texto dentro de um painel arredondado. Linhas partem de seu contorno; disposição mobile ganha espaço para leitura e textos extensos têm rolagem acessível por teclado.
+
+- Constelação de Possibilidades substitui as perspectivas da Primeira Faísca: uma ideia central e três caminhos temporários (Origens, Habitantes, Consequências), com anéis/partículas reutilizados e passagem circular WAAPI para escrita focada. Confirmação contextual permite aprofundar ou criar uma ideia, com relação somente por escolha explícita. Rascunhos separados por caminho, migração do registro temporário anterior, referência HTTP/HTTPS na ideia central e saída para o canvas normal. Placeholders com arte existente; três artes oficiais 256×144 ainda pendentes. Nova avaliação humana da v0.2.0 permanece aberta; sem mudança de schema, versão ou dependências.
+
+- Continuidade Criativa da Primeira Faísca, motivada pelo primeiro teste real de usabilidade: Guardar minha ideia cria diretamente Ideia 01 e mantém o espaço aberto; aprofundamento preserva o texto e criação independente não acrescenta relações. Perguntas opcionais por perspectiva, escrita livre, edição pelo Inspector e retomada com rascunho/contexto temporários na aba. Confirmação durável, erros recuperáveis, proteção contra duplicação e sequência de títulos conhecidos. JSON, versão e dependências preservados; nova validação com usuário continua pendente.
+
+- A Primeira Faísca: acolhimento opcional em universos recém-criados, com inspiração por uma pergunta aberta, criação direta e exploração livre. Resposta temporária revisada no formulário existente e persistida apenas ao confirmar a criação; orientação pode ser dispensada/reaberta, sem interromper importações. Nome provisório e renomeação existente mais descobríveis. Sem alteração de schema, dependências ou versão.
+
 - Roadmap vivo até v1.0.0 em ROADMAP, com checkboxes como fonte única, resumo calculado e comandos Node `roadmap:status`/`roadmap:sync`, sem dependências. Integração nas regras dos agentes, README e estado do projeto; fundação reconhecida por decisão do autor, sem criar release ou alterar a versão.
 
 - Conexões das Constelações detectam círculos intermediários e escolhem curvas com desvio e margem de segurança. Rotas calculadas somente quando a geometria muda; pulsos e contagens seguem o mesmo caminho, sem alterar relações ou mover categorias.

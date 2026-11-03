@@ -66,6 +66,7 @@ export function addEntity(
   position: Position,
   category: Category = "Ideia",
   title?: string,
+  description = "",
 ): Project {
   return {
     ...project,
@@ -77,7 +78,7 @@ export function addEntity(
           title?.trim() ||
           (category === "Documento" ? "Novo documento" : "Nova ideia"),
         category,
-        description: "",
+        description,
         ...(category === "Documento" ? { document: emptyDocument() } : {}),
         position,
       },
