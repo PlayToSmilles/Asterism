@@ -2,11 +2,107 @@
 
 > Prosa original: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), com [escopo e exclusões](DOCUMENTATION_LICENSE.md).
 
-Estado atualizado em 2026-10-23, na iteração ASTERISM — Worldbuilding for Anything. As etapas anteriores foram preservadas. Esta página distingue implementação, evidência anterior e verificações atuais; não é garantia de funcionamento em todos os navegadores.
+## Identidade visual Rustic Riverbed
+
+Na branch de integração, a identidade visual aprovada usa superfícies petróleo e iluminação esmeralda, dourada e terracota. Uma camada CSS centraliza a paleta; as categorias têm acentos próprios e os sprites originais são preservados. A integração segue sujeita às verificações de publicação.
+
+## Leitura de referências
+
+O seletor e as ações dos PDFs foram reunidos numa barra contextual, deixando o visualizador ocupar a área principal. A inclusão, troca, substituição e cancelamento de remoção foram exercitados em Chromium isolado com arquivos sintéticos; a geometria desktop e a apresentação mobile foram conferidas. O responsável relatou que os PDFs estão funcionando, sem especificar navegador ou dispositivo. Os controles de página/zoom continuam a cargo do navegador; Safari/iPhone físico continua pendente.
+
+## Preparação da v0.2.0 — não publicada
+
+A branch de integração prepara o pacote `0.2.0`; o responsável aprovou a revisão visual e funcional da experiência integrada. Isso não representa release nem publicação e não comprova automaticamente o último critério de continuidade criativa do roadmap da Primeira Faísca. A versão em produção permanece sujeita ao deploy anterior até autorização de merge e publicação.
+
+## Carregamento inicial
+
+Canvas e painéis de detalhes foram divididos por carregamento sob demanda; a configuração da PWA continua incluindo os módulos gerados no precache. Na build local, o arquivo JavaScript de entrada passou de aproximadamente 552 kB (178 kB gzip) para 319 kB (103 kB gzip); a diferença não mede tempo real de carregamento e o service worker ainda baixa arquivos adicionais para uso offline. Em Chromium isolado, foram conferidos onboarding, canvas, Acervo, Inspector, escrita, referências e reabertura offline; em mobile emulado, Constelações, Acervo e detalhes. iPhone físico, rede real lenta e benchmarks de desempenho continuam pendentes.
+
+## Backup de universo — ciclo manual aprovado
+
+Implementado backup `.ast` v1 com projeto e PDFs, verificações SHA-256 e restauração como cópia independente. O responsável confirmou o teste manual completo com universo real: exportação, restauração independente, integridade do conteúdo, abertura dos PDFs e preservação do original. JSON continua compatível e não inclui PDFs; imagens por URL continuam externas. Limites: 200 MiB no total, 200 PDFs, 20 MiB por PDF. Os armazenamentos não são transacionais entre si e uma interrupção pode deixar PDFs órfãos. iPhone físico e volumes próximos do limite permanecem pendentes; o marco v0.6.0 não está concluído.
+
+Verificação desta etapa: 202 testes em 29 arquivos, lint e build aprovados. Em Chromium isolado, dados sintéticos confirmaram exportação e restauração de PDF, conteúdo e cópia independente; uma falha simulada de gravação da biblioteca confirmou a limpeza dos PDFs recém-restaurados. O arquivo não é criptografado nem um ZIP; os hashes não verificam autoria.
+
+## Segurança e estabilidade da integração — 2026-11-03
+
+Atualização da auditoria em 2026-11-06: o npm agora aponta 12 entradas (10 moderadas e duas baixas), zero altas/críticas e zero com `--omit=dev`. O responsável aceita esses riscos provisoriamente, com acompanhamento. O lockfile não mudou: o aviso de `minimatch` passou a abranger versões a partir da 7.0.0, retirando versões antigas do alcance e reduzindo as entradas transitivas. As versões corrigidas indicadas para `minimatch` e `glob` exigem versões principais fora das faixas atuais; `deepmerge` continua sem versão corrigida indicada. A simulação de `npm audit fix` não apresentou correção compatível comprovada para esses avisos. Nenhuma dependência foi atualizada nesta revisão.
+
+`serialize-javascript` transitivo de build foi atualizado de 7.1.2 para 7.1.4 no lockfile. O `npm audit` passou de 22 entradas (19 moderadas, três baixas) para 21 (19 moderadas, duas baixas); em ambos, zero altas ou críticas. `npm audit --omit=dev` permaneceu com zero entradas. A contagem inclui pacotes dependentes afetados pelo mesmo aviso.
+
+Restam avisos na cadeia de desenvolvimento do ESLint/TypeScript ESLint e de build da PWA/Workbox, incluindo `minimatch`, `glob` e `deepmerge`. A exposição por essas ferramentas depende das entradas e condições descritas nos avisos; não foi demonstrada exploração pelo uso normal do aplicativo. O npm sugere mudanças de versão principal ou downgrades para parte da árvore, e o aviso de `deepmerge` não apresentava correção publicada nesta verificação. Essas mudanças não foram aplicadas. `typescript-eslint` permaneceu em 8.72.0: a atualização compatível 8.72.1 não foi identificada como correção dos avisos residuais.
+
+Validados 197 testes do aplicativo, sete do roadmap, lint e build TypeScript/Vite. No preview de produção, Chromium isolado com dados sintéticos cobriu criação, acolhimento opcional, ideia e possibilidades, Canvas, Acervo, Inspector, mapa, Escrita, Referências, salvamento/reabertura e importação/exportação JSON. Service worker ativo, precache, manifesto standalone e recarga offline após visita inicial foram confirmados sem erros de console no teste específico. O hash do service worker gerado mudou; a configuração de cache e registro não foi modificada e não houve comparação integral dos artefatos. Safari/iPhone físico, leitor de tela e renderização real de PDF não foram validados. O build mantém aviso de chunk acima de 500 kB.
+
+Estado atualizado em 2026-10-30, na iteração ASTERISM — Worldbuilding for Anything. As etapas anteriores foram preservadas. Esta página distingue implementação, evidência anterior e verificações atuais; não é garantia de funcionamento em todos os navegadores.
+
+## Integração local — 2026-11-03
+
+`integration/asterism-next` reúne os commits dos fluxos experiente e Primeira Faísca. A revisão manual foi aprovada pelo responsável; a integração ainda não representa uma entrega publicada. A navegação desktop e o acolhimento compartilham o workspace: o canvas fica inerte durante o acolhimento ou quando outro ambiente o cobre, e navegar diretamente para Canvas ou Explorar dispensa a orientação. Os registros de validações anteriores abaixo continuam históricos.
+
+Na integração, 197 testes em 28 arquivos, sete testes do roadmap, lint e build TypeScript/Vite passaram. Chromium isolado com dados sintéticos verificou a criação, ideia e mapa de possibilidades, exploração livre, projeto existente, Acervo, Inspector, mapa de conexões, Escrita, Referências e importação/exportação JSON. Não foram revalidados Safari/iPhone físico, acessibilidade com leitor de tela ou visualização real de PDFs. A instalação das dependências existentes apontou 22 vulnerabilidades no audit do npm; não houve atualização de pacotes nesta tarefa.
+
+Polimento na branch de fluxo experiente: o Acervo usa áreas de mídia compactas e estáveis, e a visão geral elimina 12 px de rolagem excedente observados em 1440 × 900. No Chromium com dados sintéticos foram verificados seis personagens, 15 documentos, abertura do Inspector, mapa, troca de ambientes e ausência de rolagem horizontal em mobile emulado; outras dimensões e dispositivos reais continuam sujeitos a verificação. PDFs ficam no IndexedDB e não integram a exportação JSON; referências de imagens externas dependem da disponibilidade da URL.
+
+Na branch de fluxo experiente, o Inspector desktop abre em modo de leitura, com edição explícita, miniatura ampliável quando disponível e conexões existentes. A largura não é redimensionável. Verificação em Chromium isolado com dados sintéticos cobriu leitura, edição, troca de elemento e persistência após recarga; Safari/iPhone físico e leitor de tela não foram verificados nesta alteração.
+
+A aba Conexões oferece acesso ao mapa radial temporário; o Inspector é recolhido na entrada e pode ser reaberto. Em Chromium isolado, dados sintéticos verificaram a lista, entrada, reabertura e retorno ao Acervo sem alteração das posições ou relações salvas. Casos com muitas conexões e dispositivos móveis reais ainda precisam de validação.
+
+## Navegação por ambientes — 2026-10-30
+
+Revisão posterior: o desktop usa uma grade explícita com sidebar fixa de 80 px, área principal e coluna própria para o Inspector. A navegação antiga dentro do canvas foi substituída no desktop; os controles de categoria continuam contextuais. A verificação visual e geométrica cobriu os cinco ambientes, o Inspector e larguras de 901 a 1440 px. No momento da investigação, a aba informada apontava à porta 4175, sem servidor ativo; a worktree experiente era servida na 5174.
+
+O desktop usa barra lateral global para Explorar, Canvas, Escrita e Referências, com controles de categoria e canvas no contexto. Escrita e Referências ocupam a área principal usando componentes existentes; o canvas permanece montado e inerte, e o Inspector continua à direita. O cabeçalho do Acervo mantém sua posição vertical ao abrir o Inspector. Mobile preserva o dock e os controles existentes.
+
+Verificação atual: 170 testes em 26 arquivos, lint, TypeScript/build e sete testes do roadmap aprovados. No Edge/Chromium isolado com universo sintético: alternância dos quatro ambientes, entrada/retorno de categoria e vizinhança, Acervo/Relações, Inspector, edição e salvamento de Documento após recarga, busca, anexo PDF em IndexedDB, zoom/pan e posições/relações preservadas. Desktop de 901 a 1440 px com Inspector, transição circular e movimento reduzido emulado; mobile 390×844 com toque emulado e sem rolagem horizontal. Capturas locais ignoradas: `prints_test/nav-explorar.png`, `nav-canvas.png`, `nav-escrita.png`, `nav-referencias.png`, `nav-inspector.png`, `nav-mobile.png` e `nav-transicao.png`.
+
+Limitações: o PDF sintético confirmou armazenamento e abertura do objeto, mas o visualizador do navegador headless não demonstrou a renderização das páginas. Não houve validação em Safari/iPhone físico, leitor de tela ou teclado virtual real. O build continua avisando sobre chunk acima de 500 kB. Nenhum checkbox do roadmap foi marcado.
+
+## Acervo Vivo — 2026-10-30
+
+Na branch de fluxo experiente, categorias abrem uma grade responsiva e ordenada com conteúdo real, imagem ou fallback e prévia da descrição. Acervo e Relações alternam sem mudar a seleção; o grafo e suas posições de leitura continuam disponíveis, assim como Inspector, documentos e exploração de vizinhança. O detalhe mobile também oferece acesso à vizinhança. O modelo, JSON e posições salvas continuam os mesmos. A visão geral preserva suas categorias, animações e transição existentes.
+
+Verificações nesta iteração: 170 testes em 26 arquivos, lint e build TypeScript/Vite/PWA aprovados; o build mantém o aviso de chunk acima de 500 kB. Teste de projeção cobre ordenação, categoria vazia, referências e ordem original. No Edge/Chromium isolado, dados sintéticos exercitaram 15 documentos, três facções sem relações internas, quatro personagens com conexões, imagem/fallback, título longo, seleção, edição, abertura de documento, alternância, retorno e vizinhança entre categorias; posições e relações originais conferidas. O estado vazio foi verificado ao excluir os três elementos sintéticos da categoria. Mobile 390×844 com toque e movimento reduzido emulados foi verificado sem rolagem horizontal, incluindo acesso às Relações com seleção preservada. Capturas locais ignoradas: `prints_test/acervo-documentos.png`, `relacoes-documentos.png`, `acervo-faccoes.png`, `relacoes-faccoes.png` e `acervo-mobile.png`.
+
+Limitações: categoria vazia não aparece na visão geral atual; o estado vazio da grade existe para quando a categoria fica sem elementos enquanto aberta. Sem teste de iPhone/Safari físico, leitor de tela ou benchmark de bibliotecas muito grandes; não há paginação/virtualização. O projeto sintético não altera universos pessoais.
+
+## Constelação de Possibilidades — 2026-10-26
+
+Primeira Faísca reformulada em três cenas: uma pergunta inicial, mapa temporário com a ideia central e Origens/Habitantes/Consequências, e escrita focada por caminho. Anéis, partículas e geometria orbital existentes são reutilizados; entrada/retorno usam abertura circular WAAPI entre duas camadas reais. Possibilidades e linhas decorativas não viram entidades/categorias/relações. Confirmar resposta permite aprofundar sem substituir texto ou criar outra ideia, com conexão associativa apenas por checkbox inicialmente desmarcado. Explorar meu universo restaura o canvas e encerra a introdução; rascunhos pendentes oferecem retomada manual, sem aba permanente.
+
+Rascunhos independentes por caminho, conclusão e cena ficam no registro temporário v2 por universo, com migração do v1 e fallback em memória. Elementos reais continuam no mesmo schema JSON e armazenamento. Referência HTTP/HTTPS é salva no imageUrl da ideia central e aparece no mapa/escrita; JSON mantém somente URL. Slots 16:9 aguardam três artes autorais 256×144; por enquanto usam placeholder com a árvore existente, sem novos arquivos artísticos. Upload portátil continua dependente do backup completo previsto na v0.6.0.
+
+Verificações atuais: **196 testes em 27 arquivos**, lint e build TypeScript/Vite/PWA aprovados; sete testes do roadmap aprovados e resumo sincronizado. Permanece aviso conhecido de chunk acima de 500 kB. Testes acrescentados protegem conexão explicitamente solicitada, referência/roundtrip JSON, falhas sem mutação, idempotência e migração/rascunhos por caminho. No Edge/Chromium isolado (1440×1000 e toque emulado 390×844, mais viewport curto 390×520), reproduzido Marte/“Humanos conseguem viver em Marte”: confirmação sem duplicação, aprofundamento, ideias independentes, checkbox de conexão, referência por URL, retorno, rascunhos separados, saída para canvas e recarga com conteúdo preservado. Conferidos teclado Enter/Esc e movimento reduzido emulado, sem erros JavaScript/console observados. Inspecionadas capturas dos estados e de quadros intermediários da entrada/retorno; o círculo amplia enquanto a escrita real é revelada, sem tela intermediária vazia. Evidências locais não versionadas em `prints_test/possibilities-*.png`.
+
+Conferidas também interrupções por duplo clique, Esc durante entrada, resize durante retorno e desmontagem durante animação, sem interface presa ou erros observados.
+
+**Pendências:** nova avaliação humana mantém v0.2.0 em validação (4/5 no roadmap); artes oficiais de Origens, Habitantes e Consequências ainda devem ser fornecidas. Sem Safari/iPhone físico, leitor de tela, teclado virtual real ou nova rodada offline. Rascunhos são da aba, não backup permanente; fechar a aba pode removê-los. URLs externas dependem da origem/rede. Versão continua 0.1.0; nenhuma dependência, commit ou publicação realizada.
+
+## Continuidade Criativa — 2026-10-26 (registro da iteração anterior)
+
+As perspectivas e a interface descritas abaixo foram substituídas pela Constelação de Possibilidades. Evidências anteriores permanecem históricas; as limitações de armazenamento/numeração continuam aplicáveis.
+
+Revisão da v0.2.0 motivada pelo primeiro teste real de usabilidade relatado pelo autor: a passagem da resposta para o formulário e depois para o canvas interrompia a criação. Agora Guardar minha ideia confirma diretamente uma Ideia com título provisório e mantém o espaço aberto. O texto exato permanece na descrição; aprofundar acrescenta um parágrafo, criar outra ideia preserva a anterior e nenhuma relação é criada automaticamente. O Inspector existente permite renomear/reclassificar. Sete perguntas iniciais/neutras (primeiro olhar e seis perspectivas) podem ser trocadas ou ignoradas em favor da escrita livre, sem IA ou interpretação semântica.
+
+Rascunho, foco, perspectiva e sequência conhecida ficam separados do universo em sessionStorage, associados ao ID. Retomar/recarregar não cria conteúdo; o contexto consulta a entidade atual. Falha de gravação do universo não publica a mudança nem consome o texto. Falha do armazenamento temporário mantém memória/aviso e proteção de saída quando há rascunho em risco, inclusive a partir da biblioteca. Exclusões e reclassificações não recriam o alvo nem alteram automaticamente sua categoria. Repetições rápidas e recuperação de uma criação já confirmada são idempotentes. O JSON conserva apenas os elementos reais e o formato anterior; não inclui rascunhos. A descrição mantém o limite de 4.000 caracteres, com erro sem truncamento se o aprofundamento o exceder.
+
+Validação técnica desta revisão: 191 testes em 27 arquivos, lint e build TypeScript/Vite/PWA aprovados; permanece o aviso conhecido de chunk acima de 500 kB. Testes novos cobrem criação direta, preservação/continuação do texto, independência das ideias, sequência/colisões, limites, idempotência, validação e recuperação do rascunho e confirmação durável com rollback/autosave pendente preservados. No Edge/Chromium local isolado (desktop 1440×1000 e mobile com toque emulado 390×844), reproduzido World/Marte/cidades subterrâneas nas duas alternativas e após recarga. Conferidos também cliques rápidos, campo vazio, troca/dispensa de pergunta, rascunho/reabertura, teclado Esc/Enter, edição/reclassificação/exclusão, importação com títulos repetidos, quota do LocalStorage, sessionStorage bloqueado e falha na limpeza do rascunho após gravação confirmada. Sem erros JavaScript observados. Preferência reduzida emulada desativa animação do painel. Capturas locais não versionadas: `prints_test/spark-continuity-desktop.png` e `prints_test/spark-continuity-mobile.png`.
+
+**Pendências e limites:** nova avaliação real com usuário ainda não realizada; reaberta a validação da v0.2.0 no [ROADMAP](ROADMAP.md). Sem Safari/iPhone físico, leitor de tela, teclado virtual real ou nova rodada offline. Rascunhos não são backup: fechar a aba pode apagá-los, e a confirmação de saída depende do navegador. A sequência lembra exclusões observadas nesta aba; números de elementos apagados antes desse acompanhamento não podem ser inferidos do modelo, que não guarda histórico/tombstones. A biblioteca contextual completa da v0.3.0 não foi implementada. Versão, dependências e publicação não mudaram.
+
+## A Primeira Faísca — 2026-10-24
+
+Registro histórico da primeira implementação; o fluxo de revisão por formulário e o descarte ao recarregar foram substituídos pela revisão de 2026-10-26 acima. A aprovação técnica anterior não constitui validação definitiva da continuidade criativa.
+
+Acolhimento compacto e não modal no workspace de universos criados vazios nesta sessão. Três caminhos funcionais: pergunta aberta com resposta temporária, criação direta no formulário existente e exploração livre do canvas. A resposta só é incluída na descrição ao confirmar Criar elemento; cancelar não cria conteúdo. É possível fechar/reabrir e trocar de área, mantendo o rascunho enquanto esse universo permanece aberto. Sair do universo/recarregar descarta o rascunho, conforme aviso na interface. Projetos abertos ou importados não recebem acolhimento automático; universos vazios oferecem acesso manual. Após criar um elemento, a experiência normal assume. Nomes em branco continuam usando Meu universo, com indicação de nome provisório; cabeçalho existente renomeia sem trocar IDs e agora também confirma com Enter.
+
+Validação atual: 173 testes em 26 arquivos, sete testes do roadmap, lint e build TypeScript/Vite/PWA aprovados; permanece o aviso de chunk acima de 500 kB. Quatro novos testes protegem elegibilidade, ausência de mutação, descrição inicial no JSON e renomeação/persistência de IDs/relações/posições. Conferência automatizada no Edge/Chromium em contexto isolado, com capturas: desktop 1440×900 e mobile com toque emulado 390×844, além de 844×390. Verificados os três caminhos, cancelamento, reabertura, primeira criação, menus sem bloqueio, recarga de universo existente, importação vazia sem interrupção e renomeação. Sem erros de JavaScript observados. Preferência de movimento reduzido emulada desativa a animação do painel. Capturas locais não versionadas: `prints_test/first-spark-desktop.png` e `prints_test/first-spark-mobile-review.png`.
+
+Limites: não há biblioteca de perguntas/contextualização da v0.3.0; somente uma pergunta inicial. Não houve teste com iniciante real, Safari/iPhone físico, teclado virtual real ou nova validação offline. Esses pontos não são apresentados como aprovados. Os itens implementados do marco v0.2.0 estão no [ROADMAP](ROADMAP.md); não houve aumento de versão nem publicação.
 
 ## Planejamento vivo — 2026-10-24
 
-O [ROADMAP](ROADMAP.md) centraliza os marcos, tarefas e progresso até v1.0.0. Consulte `npm run roadmap:status`; após editar os checkboxes, gere o resumo com `npm run roadmap:sync`. A fundação foi reconhecida como concluída pelo autor, sem revalidar a publicação nesta tarefa ou declarar uma release. A versão do pacote permanece 0.1.0; evidências técnicas anteriores continuam identificadas abaixo.
+O [ROADMAP](ROADMAP.md) centraliza os marcos, tarefas e progresso até v1.0.0. Consulte `npm run roadmap:status`; após editar os checkboxes, gere o resumo com `npm run roadmap:sync`. A fundação foi reconhecida como concluída pelo autor, sem revalidar a publicação nessa etapa ou declarar uma release. À época o pacote declarava 0.1.0; evidências técnicas anteriores continuam identificadas abaixo.
 
 Validação desta etapa: sete testes independentes do roadmap e lint aprovados, links locais conferidos e diff sem erros. Cobertos cálculo, estados, exemplos ignorados, preservação das notas/CRLF, idempotência e falhas de estrutura. Não foram repetidos build, suíte do aplicativo ou validação visual: somente documentação e scripts de desenvolvimento foram alterados nesta tarefa.
 
@@ -61,9 +157,9 @@ Conferidos no Chromium em origem isolada: biblioteca com 1, 2, 6 e 7 projetos, c
 
 Dois universos (captura local: `prints_test/home10-two.png`) · Biblioteca (captura local: `prints_test/home10-library.png`) · Mobile (captura local: `prints_test/home10-mobile.png`) · Expansão (captura local: `prints_test/home10-entry-3.png`) · Revelação (captura local: `prints_test/home10-entry-5.png`) · Retorno (captura local: `prints_test/home10-leave-frame3.png`).
 
-## Versão identificada
+## Versão identificada na inspeção inicial — registro histórico
 
-`package.json` e `package-lock.json` declaram **0.1.0**, apresentada na documentação como **v0.1.0**. Git inicializado localmente na branch `main`, sem commits, tags ou remote; não existe histórico anterior a comprovar nesta cópia. A versão foi preservada; sua declaração não comprova publicação. O schema JSON `version: 1` é independente da versão do produto.
+Na inspeção inicial, `package.json` e `package-lock.json` declaravam **0.1.0**. O Git havia sido inicializado localmente, ainda sem commits, tags ou remote; aquela declaração não comprovava publicação. O schema JSON `version: 1` é independente da versão do produto.
 
 ## Transições de navegação — 2026-10-21
 

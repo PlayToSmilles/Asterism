@@ -211,3 +211,12 @@ export function removeProjectReferences(projectId: string): Promise<void> {
     };
   });
 }
+
+// The whole restored set commits together; IDs are new so existing PDFs cannot be overwritten.
+export function restoreReferences(documents: ReferenceDocument[]): Promise<void> {
+  if (!documents.length) return Promise.resolve();
+  return transaction("readwrite", (store, done) => {
+    for (const document of documents) store.add(document);
+    done(undefined);
+  });
+}

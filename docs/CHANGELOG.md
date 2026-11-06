@@ -6,6 +6,61 @@ Registra somente evolução comprovada. Datas de lançamento, tags e versões an
 
 ## Unreleased
 
+- Identidade visual Rustic Riverbed: superfícies petróleo, iluminação esmeralda e quente e tokens CSS próprios, sem alteração dos dados ou das funcionalidades.
+- Acentos das categorias, relações e superfícies do experimento foram ajustados à paleta petróleo, esmeralda e quente, preservando as artes originais.
+
+### Preparado para v0.2.0 — não publicado
+
+O código da branch de integração prepara a entrega abaixo; não há data de lançamento, tag ou release. A decisão de publicar permanece separada do preparo.
+
+- Escrita e Referências integradas à navegação do workspace, com acesso ao editor existente e leitura de PDFs.
+
+- Referências usam barra contextual compacta com seletor de PDF e ações agrupadas, ampliando a área de leitura em desktop e mobile.
+
+- Canvas e painéis de detalhes passam a carregar sob demanda, reduzindo o JavaScript inicial; os módulos continuam no precache da PWA.
+
+- Backup `.ast` de um universo com seus PDFs, verificação de integridade e restauração como cópia independente; JSON permanece disponível.
+
+- Atualizada a dependência transitiva de build `serialize-javascript` de 7.1.2 para 7.1.4, corrigindo o aviso GHSA-m5mm-p8h7-m29v sem alterar a estratégia da PWA.
+
+- Integração da Primeira Faísca com a navegação desktop e o Acervo Vivo, revisada pelo responsável e pendente de aprovação para publicação.
+
+- Cards do Acervo usam mídia compacta de altura estável; a visão geral reduz rolagem causada por espaço excedente.
+
+- Exploração de conexões acessível pela aba do Inspector, com lista contextual e mapa radial que libera o espaço do painel ao abrir.
+
+- Inspector de elementos prioriza leitura, com miniatura, descrição e acesso explícito à edição existente e às conexões.
+
+- Menu de categorias simplificado: relações externas abrem abaixo do botão sem deslocar os demais controles.
+
+- A abertura do Inspector desktop ajusta suavemente a largura da área principal, respeitando movimento reduzido.
+
+- Inspector desktop alinhado às demais áreas do workspace, com barra de rolagem discreta nas cores da interface.
+
+- Sidebar desktop refinada com superfície arredondada e destaque lilás concentrado no ícone ativo, conforme referência visual fornecida.
+
+- Shell desktop com colunas reais para sidebar, conteúdo e Inspector; controles de categoria permanecem na área principal e o menu global antigo não aparece no desktop.
+
+- Navegação desktop reorganizada em Explorar, Canvas, Escrita e Referências. Ferramentas contextuais permanecem no ambiente ativo; escrita e PDFs ocupam a área principal, e o Inspector divide o espaço visual do Acervo sem deslocar seu cabeçalho.
+
+- Acervo Vivo alinhado ao topo, com cabeçalho plural e grade responsiva. Cards sem imagem usam ícones compactos; imagens próprias mantêm proporção e tratamento de falhas. Textos têm limites visuais e o espaço do menu e do Inspector é respeitado.
+
+- Acervo Vivo como apresentação inicial das categorias nas Constelações: grade responsiva com elementos existentes, ordenação de leitura, imagens/fallback e acesso ao Inspector. Alternância transitória para o grafo de Relações preserva seleção e posições do Canvas livre; categorias sem conexões internas oferecem aviso e exploração de vizinhança, também acessível no detalhe mobile.
+
+- Núcleo inicial dimensionado pelo conteúdo, com limites e rolagem para textos extensos. Conexões recortadas no contorno arredondado medido e atualizadas quando o núcleo muda de tamanho, eliminando lacunas nas bordas.
+
+- Núcleo da Primeira Faísca sem círculo interno: ideia centralizada no retângulo, referência opcional em miniatura arredondada e brilho de borda com pulsação lenta, desativada para movimento reduzido. Círculos e órbitas permanecem nas possibilidades.
+
+- Núcleo da Constelação de Possibilidades reúne símbolo/imagem, título e texto dentro de um painel arredondado. Linhas partem de seu contorno; disposição mobile ganha espaço para leitura e textos extensos têm rolagem acessível por teclado.
+
+- Constelação de Possibilidades substitui as perspectivas da Primeira Faísca: uma ideia central e três caminhos temporários (Origens, Habitantes, Consequências), com anéis/partículas reutilizados e passagem circular WAAPI para escrita focada. Confirmação contextual permite aprofundar ou criar uma ideia, com relação somente por escolha explícita. Rascunhos separados por caminho, migração do registro temporário anterior, referência HTTP/HTTPS na ideia central e saída para o canvas normal. Placeholders com arte existente; três artes oficiais 256×144 ainda pendentes. Nova avaliação humana da v0.2.0 permanece aberta; sem mudança de schema, versão ou dependências.
+
+- Continuidade Criativa da Primeira Faísca, motivada pelo primeiro teste real de usabilidade: Guardar minha ideia cria diretamente Ideia 01 e mantém o espaço aberto; aprofundamento preserva o texto e criação independente não acrescenta relações. Perguntas opcionais por perspectiva, escrita livre, edição pelo Inspector e retomada com rascunho/contexto temporários na aba. Confirmação durável, erros recuperáveis, proteção contra duplicação e sequência de títulos conhecidos. JSON, versão e dependências preservados; nova validação com usuário continua pendente.
+
+- A Primeira Faísca: acolhimento opcional em universos recém-criados, com inspiração por uma pergunta aberta, criação direta e exploração livre. Resposta temporária revisada no formulário existente e persistida apenas ao confirmar a criação; orientação pode ser dispensada/reaberta, sem interromper importações. Nome provisório e renomeação existente mais descobríveis. Sem alteração de schema, dependências ou versão.
+
+### Histórico anterior ainda sem atribuição comprovada a lançamento
+
 - Roadmap vivo até v1.0.0 em ROADMAP, com checkboxes como fonte única, resumo calculado e comandos Node `roadmap:status`/`roadmap:sync`, sem dependências. Integração nas regras dos agentes, README e estado do projeto; fundação reconhecida por decisão do autor, sem criar release ou alterar a versão.
 
 - Conexões das Constelações detectam círculos intermediários e escolhem curvas com desvio e margem de segurança. Rotas calculadas somente quando a geometria muda; pulsos e contagens seguem o mesmo caminho, sem alterar relações ou mover categorias.
@@ -155,7 +210,7 @@ Registra somente evolução comprovada. Datas de lançamento, tags e versões an
 
 ## v0.1.0 — referência declarada, lançamento não comprovado
 
-`package.json` e `package-lock.json` contêm `0.1.0`. A implementação inicial registrada nesta conversa já declarava esse número e entregou o protótipo local com canvas, cards, relações, persistência, JSON e demonstração separada. Não há evidência de data de release ou tag nesta cópia. A correção posterior está em Unreleased; não se presume que tenha sido lançada como parte de v0.1.0.
+Na implementação inicial, `package.json` e `package-lock.json` declaravam `0.1.0`, com canvas, cards, relações, persistência, JSON e demonstração separada. Não há evidência de data de release ou tag para essa versão. A versão preparada atualmente está registrada em [PROJECT_STATUS](PROJECT_STATUS.md).
 
 ## Política de versionamento
 

@@ -81,7 +81,7 @@ export function UniverseSearch({ project, dismiss, open }: {
       {error && <p className="universe-search-error" role="alert">{error}</p>}
       <div id={listId} role="listbox" aria-label="Resultados da busca" className="universe-search-results">
         {results.map((result, i) => {
-          const appearance = result.category === "Relação" || result.category === "PDF" ? { symbol: result.category === "PDF" ? "▤" : "↔", color: "#c4b4e2" } : categoryPresentation[result.category];
+          const appearance = result.category === "Relação" || result.category === "PDF" ? { symbol: result.category === "PDF" ? "▤" : "↔", color: "var(--river-gold)" } : categoryPresentation[result.category];
           return <div key={`${result.kind}:${result.id}`} id={`${listId}-${i}`} data-result-index={i} role="option"
             aria-selected={i === current} className="universe-search-result" style={{ "--result-color": appearance.color } as CSSProperties}
             onPointerDown={event => event.preventDefault()} onMouseMove={() => setActive(i)} onClick={() => choose(result)}>

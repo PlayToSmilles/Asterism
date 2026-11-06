@@ -224,9 +224,10 @@ export function ProjectHome({
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 maxLength={120}
-                placeholder="Como se chama seu mundo?"
+                placeholder="Pode deixar em branco por enquanto"
               />
             </label>
+            <p className="muted">Ainda sem nome? Use um provisório e renomeie no cabeçalho quando quiser.</p>
             <div className="asterism-dialog-actions">
               <button type="button" onClick={() => setCreating(false)}>
                 Cancelar

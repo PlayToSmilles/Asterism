@@ -46,9 +46,9 @@ Desenvolva cenas, anotações e histórias no editor de Documentos, com títulos
 
 Comece sem criar conta. Os universos e seus Documentos são salvos no **LocalStorage do navegador**; os PDFs anexados ficam no **IndexedDB**. Não há backend de sincronização: outro navegador, perfil, endereço ou dispositivo terá um armazenamento separado.
 
-Exporte backups regulares em JSON. O arquivo preserva elementos, relações, posições e textos autorais; a importação cria uma cópia independente. **O JSON não inclui os PDFs nem seus metadados** — guarde os originais ou baixe-os separadamente. Limpar os dados do navegador pode apagar seus universos e anexos.
+Exporte regularmente um **Backup com PDFs** (`.ast`): ele reúne um universo e seus PDFs, e a importação cria uma cópia independente. A exportação JSON continua disponível e preserva elementos, relações, posições e textos, mas não inclui PDFs. Limpar os dados do navegador pode apagar seus universos e anexos.
 
-Imagens por URL dependem dos serviços externos que as hospedam. O JSON guarda a referência, não os arquivos das imagens.
+Imagens por URL dependem dos serviços externos que as hospedam; os dois formatos guardam a referência, não os arquivos das imagens. O backup aceita até 200 PDFs e 200 MiB no total; cada PDF mantém o limite de 20 MiB.
 
 ## Comece a usar
 

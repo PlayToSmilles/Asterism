@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MPL-2.0
 import { memo, createContext, useCallback, useContext, useEffect, useId, useMemo, useRef, useState } from "react";
-import type { ReactNode, RefObject } from "react";
+import type { RefObject } from "react";
 import { createPortal } from "react-dom";
 import { useSelectionIndicator } from "../motion/useSelectionIndicator";
 import { useConstellationTransition } from "../motion/useConstellationTransition";
@@ -30,6 +30,7 @@ import {
   type CardNode,
 } from "./canvasState";
 import { ConstellationOverview } from "./ConstellationOverview";
+import { CategoryCollection } from "./CategoryCollection";
 import { WorldCard } from "./WorldCard";
 import { zoomDetail } from "./cardPresentation";
 import { FloatingEdge, type FloatingRelation } from "./FloatingEdge";
@@ -75,11 +76,12 @@ export type CanvasNavigator = (mode: Exploration, complete: () => void) => boole
 interface Props {
   prepared?: () => void;
   navigateRef?: RefObject<CanvasNavigator | null>;
-  navigation?: ReactNode;
   settingsHost?: HTMLElement | null;
   active: boolean;
   layoutActivity: (state: LayoutActivity) => void;
   exploration: Exploration;
+  categoryPerspective: "collection" | "relations";
+  setCategoryPerspective: (value: "collection" | "relations") => void;
   explore: (mode: Exploration) => void;
   desktop?: boolean;
   focusedRelation: string | null;
@@ -93,9 +95,10 @@ interface Props {
 export function UniverseCanvas({
   prepared,
   navigateRef,
-  navigation,
   settingsHost,
   exploration,
+  categoryPerspective,
+  setCategoryPerspective,
   active,
   layoutActivity,
   explore,
@@ -259,6 +262,7 @@ export function UniverseCanvas({
     if (organizing || (preview && !interactivePreview)) return;
     if ((mode.kind === "all" || mode.kind === "universe") && mode.kind === exploration.kind) return;
     if (interactivePreview) cancelLayout(false);
+    if (mode.kind === "category" && exploration.kind !== "focus" && (exploration.kind !== "category" || exploration.category !== mode.category)) setCategoryPerspective("collection");
     if (mode.kind === "category" && exploration.kind === "universe") {
       void portal.start(mode.category, "enter", () => explore(mode)).then(() => completeNavigation(mode));
     } else if (mode.kind === "universe" && exploration.kind === "category") {
@@ -422,37 +426,47 @@ export function UniverseCanvas({
     <div className="exploration-chrome">
     <div className="workspace-command-bar">
     {desktop && settingsHost && createPortal(settingsControls, settingsHost)}
-    {navigation}
-    <div className="exploration-toolbar" role="group" aria-label="Exploração do canvas">
+    {(!desktop || exploration.kind !== "universe") && <div className="exploration-toolbar" role="group" aria-label="Exploração do canvas">
       {exploration.kind === "category" ? <button aria-label="Voltar às Constelações" disabled={blocked}
         onClick={() => switchExploration({ kind: "universe" })}><span aria-hidden="true">←</span> Constelações</button>
-      : <div ref={viewSwitch} className="canvas-view-switch sliding-selection" role="group" aria-label="Vista do canvas">
+      : !desktop && <div ref={viewSwitch} className="canvas-view-switch sliding-selection" role="group" aria-label="Vista do canvas">
         <span className="selection-indicator" aria-hidden="true" />
         <button aria-pressed={exploration.kind === "all"} disabled={organizing || (!!preview && !interactivePreview)} onClick={() => switchExploration({ kind: "all" })}>Canvas livre</button>
         <button aria-pressed={exploration.kind !== "all"} disabled={organizing || (!!preview && !interactivePreview)} onClick={() => switchExploration({ kind: "universe" })}>✦ Constelações</button>
       </div>}
-      {(exploration.kind === "focus" || exploration.kind === "category") && <span className="exploration-title">{exploration.kind === "focus" ? "✧ Vizinhança" : exploration.category}</span>}
-      {exploration.kind === "focus" ? <><button disabled={organizing || (!!preview && !interactivePreview)} onClick={leaveNeighborhood}>← Voltar à disposição anterior</button><button onClick={() => select(exploration.id)}>Detalhes</button></> : selected && project.entities.some((e) => e.id === selected) && <button disabled={organizing || (!!preview && !interactivePreview)} onClick={() => switchExploration({ kind: "focus", id: selected })}>✧ Explorar vizinhança</button>}
+      {exploration.kind === "focus" && <span className="exploration-title">✧ Mapa de conexões</span>}
+      {exploration.kind === "focus" && <><button disabled={organizing || (!!preview && !interactivePreview)} onClick={leaveNeighborhood}>{returnView.current?.mode.kind === "category" ? "← Voltar ao Acervo" : "← Voltar à visualização anterior"}</button><button onClick={() => select(exploration.id)}>Detalhes de {project.entities.find(entity => entity.id === exploration.id)?.title ?? "elemento"}</button></>}
       {exploration.kind === "all" && <button onClick={() => void organize()} disabled={!project.entities.length || organizing || !!preview}>↔ Organizar automaticamente</button>}
       {!desktop && settingsControls}
-    </div>
+    </div>}
+    {exploration.kind === "category" && <div className="category-perspectives" role="group" aria-label="Perspectiva da categoria">
+      <button aria-pressed={categoryPerspective === "collection"} onClick={() => setCategoryPerspective("collection")}>Acervo</button>
+      <button aria-pressed={categoryPerspective === "relations"} onClick={() => { setCategoryPerspective("relations"); requestAnimationFrame(() => void frameVisible(0)); }}>Relações</button>
+    </div>}
     {(organizing || (preview && !interactivePreview)) && <div className="layout-preview-bar" role="region" aria-label="Organização automática">
       <div role="status"><strong>{organizing ? "Organizando seu universo…" : "Prévia da organização"}</strong><span>As posições só serão salvas ao aplicar.</span></div>
       {preview && <button className="primary" onClick={applyLayout}>Aplicar organização</button>}
       <button onClick={() => cancelLayout()}>Cancelar organização</button>
     </div>}
     {layoutError && <p className="layout-error" role="alert">{layoutError}</p>}
-    {exploration.kind === "category" && <details className="external-constellations"><summary>Relações com outras categorias</summary>
+    {exploration.kind === "category" && <details className="external-constellations"><summary>{desktop ? "Relações externas" : "Relações com outras categorias"}</summary>
+      <div className="external-constellations-list">
       {aggregation.links.filter(link => link.source === exploration.category || link.target === exploration.category).map(link => {
         const category = link.source === exploration.category ? link.target : link.source;
-        return <button key={category} onClick={() => explore({ kind: "category", category })}>{category}<span>{link.count} relações ↗</span></button>;
+        return <button key={category} onClick={() => switchExploration({ kind: "category", category })}>{category}<span>{link.count} relações ↗</span></button>;
       })}
       <p>Todas as relações individuais continuam disponíveis no Inspector.</p>
+      </div>
     </details>}
     </div>
     </div>
     {(exploration.kind === "universe" || retainOverview) && <ConstellationOverview project={project} prepared={initialized ? prepared : undefined} enter={(category) => switchExploration({ kind: "category", category })} />}
     <div className={`flow-layer${concealed ? " flow-concealed" : ""}${exploration.kind === "category" || retainOverview ? " portal-managed" : ""}`} inert={concealed} tabIndex={-1} role="region" aria-label="Elementos do canvas">
+    {exploration.kind === "category" && categoryPerspective === "collection" && <CategoryCollection category={exploration.category} entities={project.entities} selected={selected} select={select} />}
+    {exploration.kind === "category" && categoryPerspective === "relations" && !aggregation.groups.find(group => group.category === exploration.category)?.internal &&
+      <p className="category-no-relations" role="status">Ainda não há relações internas nesta categoria. Explore a vizinhança de um elemento para ver relações externas.</p>}
+    <div className={`category-graph${exploration.kind === "category" && categoryPerspective === "collection" ? " is-hidden" : ""}`}
+      inert={exploration.kind === "category" && categoryPerspective === "collection"}>
     <FocusContext.Provider value={cardContext}>
     <ReactFlow<CardNode, FloatingRelation>
       nodes={nodes}
@@ -566,6 +580,7 @@ export function UniverseCanvas({
       />
     </ReactFlow>
     </FocusContext.Provider>
+    </div>
     </div>
     </div>
   );

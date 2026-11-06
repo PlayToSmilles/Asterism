@@ -2,6 +2,40 @@
 
 > Prosa original: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), com [escopo e exclusões](DOCUMENTATION_LICENSE.md).
 
+## D26 — Backup de universo com PDFs
+
+**Problema:** o JSON preserva o universo, mas não os PDFs guardados em IndexedDB.
+
+**Escolha:** oferecer `.ast` v1 com manifesto validado, projeto JSON, PDFs e hashes SHA-256; preservar a importação/exportação JSON. Não usar base64 no LocalStorage nem adicionar biblioteca de arquivos. A restauração cria uma cópia com IDs novos de universo e PDFs.
+
+**Consequências:** arquivos externos por URL não são copiados; há limite de 200 MiB, 200 PDFs e 20 MiB por PDF. SHA-256 detecta corrupção acidental, mas não autentica o autor. IndexedDB e LocalStorage não compartilham transação: falha de confirmação tenta limpar PDFs importados, mas interrupção pode deixar anexos órfãos. O formato é próprio e não compactado; iPhone físico e arquivos próximos ao limite ainda exigem validação.
+
+## D25 — Ambientes desktop com navegação global e contexto local
+
+**Problema:** o menu embutido no canvas misturava destinos do aplicativo e ferramentas contextuais; painéis de escrita/PDF sobrepunham o Acervo.
+
+**Escolha:** barra lateral desktop com quatro destinos como primeira coluna fixa do shell; a área principal é a segunda, e o Inspector ocupa uma terceira coluna quando necessário. Escrita e Referências ocupam a área principal; canvas permanece montado e inerte fora dos ambientes espaciais. Categoria e canvas mantêm controles contextuais; mobile preserva o dock existente. Inspector segue como editor único.
+
+**Consequências:** sem novo modelo, persistência ou dependências. Trocas confirmam a sessão existente e podem fechar a seleção/documento ao mudar de ambiente. A transição das Constelações continua coordenada pela camada real e pelas medidas do canvas, agora com a barra fora dela. Visualização PDF e acessibilidade dependem das limitações dos ambientes testados.
+
+## D24 — Acervo derivado e grafo por perspectiva
+
+**Problema:** enquadrar todos os elementos de uma categoria como grafo reduz a legibilidade de acervos grandes ou com poucas relações internas.
+
+**Escolha:** apresentar uma grade CSS derivada dos elementos existentes e manter o React Flow como perspectiva opcional de Relações, montado na camada da transição existente. A seleção e edição continuam nos componentes existentes; a preferência é transitória. Categoria sem relação interna mantém acesso ao grafo e à vizinhança externa.
+
+**Consequências:** sem nova fonte de dados, migração ou alteração de posições do Canvas livre. A ordenação é apenas visual e a grade não é virtualizada; bibliotecas próximas do limite de importação ainda exigem avaliação de desempenho. Uma categoria vazia pode ser mostrada quando seu último elemento é removido durante a navegação; a visão geral atual lista somente categorias não vazias. Acessibilidade completa e compatibilidade em dispositivos reais continuam pendentes.
+
+## D23 — Primeira Faísca opcional e transitória
+
+**Problema:** a primeira implementação ajudava a iniciar, mas o primeiro teste real relatado pelo autor identificou uma ruptura: responder levava a uma ficha e depois ao canvas com um único elemento, sem continuidade criativa.
+
+**Escolha revista em 2026-10-26:** guardar diretamente como Ideia com título provisório; apresentar um mapa temporário com Origens, Habitantes e Consequências ao redor da ideia central. Cada caminho abre escrita focada; confirmar permite aprofundar ou criar outra ideia e, somente por checkbox inicialmente desmarcado, conectá-la ao núcleo. Perguntas genéricas, sem interpretação semântica. Criação tradicional e exploração livre continuam disponíveis. Orientação automática só em novos universos vazios; conclusão não reabre automaticamente e rascunhos pendentes oferecem retomada manual.
+
+**Consequências:** registro temporário v2 por universo, com rascunhos independentes por caminho e migração do v1, separado do JSON. Falha usa memória e aviso de risco ao fechar/recarregar. Números excluídos são lembrados somente enquanto conhecidos pela aba, pois o modelo não tem tombstones. Gravação explícita usa confirmação durável antes de consumir o rascunho; autosave comum não muda. ID de operação e atualização idempotente evitam duplicação. As possibilidades não são entidades/categorias e não entram na persistência do domínio.
+
+**Reuso e limites visuais:** reutilizar OrbitalParticles, orbitalLink, estilos dos anéis e a técnica de duas camadas/abertura circular WAAPI. A passagem foi isolada num controlador pequeno porque a navegação existente depende de categorias e prontidão do React Flow, ausentes no espaço de escrita. Não duplicar o sistema de navegação das constelações. Referência usa imageUrl já existente; sem upload nem novos binários. Slots de artes 256×144 usam placeholder com a árvore autoral até fornecimento, sem presumir licenças de obras futuras. A experiência continua no escopo v0.2.0; biblioteca contextual v0.3.0 e backup completo v0.6.0 permanecem futuros. Validação técnica não substitui nova avaliação humana.
+
 ## D22 — Roadmap derivado de checkboxes
 
 **Problema:** acompanhar marcos sem duplicar tarefas em JSON ou manter percentuais manualmente.

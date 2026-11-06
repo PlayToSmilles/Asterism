@@ -2,7 +2,7 @@
 
 **O criador é o protagonista. O ASTERISM é sua massa de modelar.**
 
-Planejamento aprovado em 2026-10-24. Este arquivo reúne tarefas e progresso do produto; [PROJECT_STATUS](PROJECT_STATUS.md) concentra evidências e limitações, [CHANGELOG](CHANGELOG.md) registra mudanças e versões efetivamente entregues, e [DECISIONS](DECISIONS.md) explica decisões técnicas. Nenhum marco aqui cria uma release, tag ou autorização de publicação. O pacote continua em `0.1.0`.
+Planejamento aprovado em 2026-10-24. Este arquivo reúne tarefas e progresso do produto; [PROJECT_STATUS](PROJECT_STATUS.md) concentra evidências e limitações, [CHANGELOG](CHANGELOG.md) registra mudanças e versões efetivamente entregues, e [DECISIONS](DECISIONS.md) explica decisões técnicas. Nenhum marco aqui cria uma release, tag ou autorização de publicação. A branch de integração prepara o pacote `0.2.0`, ainda não publicado.
 
 ## Resumo automático
 
@@ -12,7 +12,7 @@ Resumo gerado por `npm run roadmap:sync`; edite as tarefas abaixo, não esta tab
 | Marco | Estado | Tarefas | Progresso |
 | --- | --- | ---: | --- |
 | v0.1.0 Beta — Fundação | concluída | 10/10 | ■■■■■■■■■■ 100% |
-| v0.2.0 — A Primeira Faísca | planejada | 0/5 | □□□□□□□□□□ 0% |
+| v0.2.0 — A Primeira Faísca | em andamento | 4/5 | ■■■■■■■■□□ 80% |
 | v0.3.0 — Descoberta Criativa | planejada | 0/6 | □□□□□□□□□□ 0% |
 | v0.4.0 — Liberdade de Modelar | planejada | 0/5 | □□□□□□□□□□ 0% |
 | v0.5.0 — Criar sem Medo | planejada | 0/5 | □□□□□□□□□□ 0% |
@@ -20,12 +20,42 @@ Resumo gerado por `npm run roadmap:sync`; edite as tarefas abaixo, não esta tab
 | v0.9.0 Release Candidate — Estabilização | planejada | 0/7 | □□□□□□□□□□ 0% |
 | v1.0.0 — O Estúdio de Universos | planejada | 0/5 | □□□□□□□□□□ 0% |
 
-**Geral até a v1.0.0:** 10/49 tarefas (20%).
+**Geral até a v1.0.0:** 14/49 tarefas (28%).
 Cada checkbox tem o mesmo peso; o percentual não estima esforço, prazo ou maturidade.
 
-**Fase atual / próxima a iniciar:** v0.2.0 — A Primeira Faísca (planejada).
+**Fase atual / próxima a iniciar:** v0.2.0 — A Primeira Faísca (em andamento).
 **Na sequência:** v0.3.0 → v0.4.0 → v0.5.0 → v0.6.0 → v0.9.0 → v1.0.0.
 <!-- roadmap:summary:end -->
+
+## Fluxos de desenvolvimento
+
+Organização local definida em 2026-10-30. As duas experiências pertencem ao mesmo aplicativo, com modelo, persistência e arquitetura compartilhados. Os marcos e critérios até v1.0.0 continuam os mesmos; esta separação não conclui tarefas.
+
+| Branch | Pasta local | Escopo | Porta |
+| --- | --- | --- | --- |
+| `main` | Sem checkout dedicado neste arranjo | Base estável destinada à produção Cloudflare | — |
+| `feat/primeira-faisca` | `C:\dev\Worldbuilding` | Onboarding criativo e Constelação de Possibilidades | 5173 |
+| `feat/fluxo-experiente` | `C:\dev\Worldbuilding-experiente` | Fluxo direto, canvas, constelações, escrita, PDFs, busca e produtividade | 5174 |
+
+As branches de funcionalidades partiram da main `0089e128b277b821e692b60dd94d85d8b4a8d4e3`. As alterações locais da Primeira Faísca permanecem sem commit somente na primeira pasta; não foram copiadas para o fluxo experiente. Cada worktree tem seu próprio staging e arquivos de trabalho, mas compartilha objetos Git, branches e remotes. Alterações sem commit não estão salvas no histórico da branch: não trocar branches nessas pastas sem conferir o estado.
+
+Em terminais PowerShell separados:
+
+```powershell
+Set-Location C:\dev\Worldbuilding
+npm run dev -- --port 5173 --strictPort
+```
+
+```powershell
+Set-Location C:\dev\Worldbuilding-experiente
+npm run dev -- --port 5174 --strictPort
+```
+
+Use `npm ci` na respectiva pasta quando precisar preparar as dependências do lockfile; não compartilhar node_modules por links. strictPort impede que o Vite escolha silenciosamente outra porta.
+
+Os endereços são `http://127.0.0.1:5173` e `http://127.0.0.1:5174`. LocalStorage, IndexedDB, rascunhos e caches do navegador não são versionados pelo Git. As portas diferentes isolam as origens e seus dados; trocar de branch na mesma origem não os isola. Usar projetos sintéticos ou cópias exportadas para testar, lembrando que o JSON atual não inclui PDFs.
+
+Fluxo futuro: desenvolver na branch correspondente; revisar diff e executar testes, lint e build antes de propor integração por Pull Request para main. Manter main utilizável; integrar experimentos somente após aprovação. Consultar frequentemente as mudanças da main e trazer atualizações em pequenos lotes após autorização, com worktree segura e revisão de conflitos. Mudanças compartilhadas devem ser coordenadas entre os dois fluxos, sem duplicar arquitetura. Esta organização não autoriza commit, push, merge, deploy ou mudança na Cloudflare; as branches ainda são locais.
 
 ## Como acompanhar
 
@@ -63,13 +93,15 @@ Use títulos `## vMAJOR.MINOR.PATCH — Nome` (com `Beta` ou `Release Candidate`
 
 **Propósito e experiência:** tornar intuitivo começar um universo vazio, oferecendo ajuda sem exigir familiaridade com grafos.
 
-- [ ] Oferecer acolhimento criativo opcional e dispensável.
-- [ ] Oferecer caminhos para inspiração, criação direta e exploração livre.
-- [ ] Permitir nomes provisórios e renomeação no fluxo inicial.
-- [ ] Ajudar a criar o primeiro conteúdo sem exigir conhecimento de grafos.
-- [ ] Validar os caminhos de entrada e preservar integralmente o fluxo livre existente.
+- [x] Oferecer acolhimento criativo opcional e dispensável.
+- [x] Oferecer caminhos para inspiração, criação direta e exploração livre.
+- [x] Permitir nomes provisórios e renomeação no fluxo inicial.
+- [x] Ajudar a criar o primeiro conteúdo sem exigir conhecimento de grafos.
+- [ ] Validar a continuidade criativa em nova avaliação com usuário, preservando o fluxo livre existente.
 
 **Critério de conclusão:** é possível começar com ou sem orientação, dispensá-la e criar/renomear o universo sem bloqueios ou perda de dados. A validação deve cobrir desktop e mobile. **Nota:** a renomeação já existente é base a reutilizar, não comprovação de que o novo fluxo está concluído. Este marco substitui a antiga proposta informal “Cards 0.2” como planejamento da próxima versão; não renumera entregas passadas.
+
+Primeira implementação conferida tecnicamente em 2026-10-24. O primeiro teste real relatado pelo autor identificou ruptura entre a resposta inicial, o formulário e o canvas. Marco reaberto em 2026-10-26: guardar diretamente e continuar criando foram implementados; a nova avaliação com usuário permanece pendente. A revisão visual seguinte substitui perspectivas por uma Constelação de Possibilidades temporária, com três caminhos, escrita focada e referência por URL. Não cria aba permanente nem conclui a biblioteca contextual da v0.3.0. Artes oficiais 256×144 aguardam fornecimento; uploads portáveis dependem do backup completo previsto na v0.6.0. Evidências técnicas e limitações em [PROJECT_STATUS](PROJECT_STATUS.md). Não equivale a release ou autorização de publicação.
 
 ## v0.3.0 — Descoberta Criativa
 
@@ -87,6 +119,8 @@ Use títulos `## vMAJOR.MINOR.PATCH — Nome` (com `Beta` ou `Release Candidate`
 ## v0.4.0 — Liberdade de Modelar
 
 **Propósito e experiência:** permitir que cada usuário organize o mundo à sua maneira.
+
+Em 2026-10-30, o fluxo experiente recebeu uma primeira apresentação de acervo nas categorias existentes e navegação desktop organizada por ambientes. Elas melhoram a consulta sem criar categorias personalizadas nem concluir os critérios deste marco; integração entre branches e avaliação humana continuam futuras.
 
 - [ ] Permitir categorias personalizadas.
 - [ ] Permitir registrar ideias ainda não classificadas.
@@ -109,6 +143,8 @@ Use títulos `## vMAJOR.MINOR.PATCH — Nome` (com `Beta` ou `Release Candidate`
 **Critério de conclusão:** a revisão identifica operações críticas e demonstra recuperação nos cenários acordados, com falhas de gravação visíveis e sem falsa confirmação de sucesso. **Nota:** histórico do editor de texto não equivale a desfazer/refazer do universo; a avaliação não promete uma implementação global antecipadamente.
 
 ## v0.6.0 — Seu Mundo é Seu
+
+Antecipação na integração: o backup `.ast` de universo com PDFs foi implementado e testado pelo responsável; isso não conclui automaticamente as demais tarefas ou o critério completo de portabilidade deste marco.
 
 **Propósito e experiência:** preservar e transportar o universo completo.
 
@@ -164,5 +200,7 @@ Somente uma decisão explícita futura altera este escopo: sincronização em nu
 ## Registro de planejamento
 
 - 2026-10-24: marcos aprovados pelo autor incorporados. Fundação reconhecida como concluída; v0.2.0 é a próxima fase, ainda não iniciada. Nenhuma tarefa futura foi marcada apenas por já existir uma função parcial semelhante. Não há marcos v0.7.0/v0.8.0 definidos; nenhum foi inventado.
+- 2026-10-24: cinco tarefas da Primeira Faísca verificadas nesta implementação; próximo marco planejado passa a ser v0.3.0, sem implementá-lo nesta entrega. Uma pergunta inicial isolada pertence à v0.2.0; biblioteca e sugestões contextuais continuam fora do escopo atual.
+- 2026-10-26: retorno do primeiro teste real motivou Continuidade Criativa. Reaberta a validação do marco v0.2.0 até uma nova avaliação com usuário; avanço técnico não é confirmação definitiva da experiência. Escopo ampliado por solicitação expressa para perguntas neutras por perspectiva e contexto temporário, sem IA ou biblioteca contextual completa.
 
 Crédito público: **Projeto ASTERISM**. Este novo documento de planejamento não amplia automaticamente a lista de obras sob CC BY 4.0 em [DOCUMENTATION_LICENSE](DOCUMENTATION_LICENSE.md); preservam-se o escopo e as exclusões existentes.
