@@ -7,12 +7,12 @@ import eventIcon from "../assets/icons/clock-sprite.png";
 import documentIcon from "../assets/icons/document-sprite.png";
 
 export const categoryPresentation: Record<Category, { symbol: ReactNode; color: string }> = {
-  Personagem: { symbol: createElement("img", { src: playerIcon, className: "category-pixel-icon", alt: "", "aria-hidden": true, draggable: false }), color: "#d1adff" },
-  Local: { symbol: createElement("img", { src: localIcon, className: "category-pixel-icon category-pixel-icon--local", alt: "", "aria-hidden": true, draggable: false }), color: "#80dfce" },
-  Facção: { symbol: "⚑", color: "#e8afd8" },
-  Magia: { symbol: "✧", color: "#b5a0ff" },
-  Evento: { symbol: createElement("img", { src: eventIcon, className: "category-pixel-icon category-pixel-icon--event", alt: "", "aria-hidden": true, draggable: false }), color: "#f3b898" },
-  Ideia: { symbol: "✦", color: "#c4c9ff" },
-  Artefato: { symbol: "⟡", color: "#efce80" },
-  Documento: { symbol: createElement("img", { src: documentIcon, className: "category-pixel-icon category-pixel-icon--document", alt: "", "aria-hidden": true, draggable: false }), color: "#9dcdf3" },
+  Personagem: { symbol: createElement("img", { src: playerIcon, className: "category-pixel-icon", alt: "", "aria-hidden": true, draggable: false }), color: "var(--category-character)" },
+  Local: { symbol: createElement("img", { src: localIcon, className: "category-pixel-icon category-pixel-icon--local", alt: "", "aria-hidden": true, draggable: false }), color: "var(--category-place)" },
+  Facção: { symbol: "⚑", color: "var(--category-faction)" },
+  Magia: { symbol: "✧", color: "var(--category-magic)" },
+  Evento: { symbol: createElement("img", { src: eventIcon, className: "category-pixel-icon category-pixel-icon--event", alt: "", "aria-hidden": true, draggable: false }), color: "var(--category-event)" },
+  Ideia: { symbol: "✦", color: "var(--category-idea)" },
+  Artefato: { symbol: "⟡", color: "var(--category-artifact)" },
+  Documento: { symbol: createElement("img", { src: documentIcon, className: "category-pixel-icon category-pixel-icon--document", alt: "", "aria-hidden": true, draggable: false }), color: "var(--category-document)" },
 };

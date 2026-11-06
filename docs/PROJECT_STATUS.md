@@ -2,6 +2,10 @@
 
 > Prosa original: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), com [escopo e exclusões](DOCUMENTATION_LICENSE.md).
 
+## Experimento visual Rustic Riverbed
+
+Na worktree e branch `experiment/rustic-riverbed`, uma camada CSS isolada explora superfícies petróleo e iluminação esmeralda, dourada e terracota. As categorias usam acentos próprios da nova paleta; os sprites originais são preservados. A proposta está sujeita à revisão visual e não faz parte do PR de integração.
+
 ## Leitura de referências
 
 O seletor e as ações dos PDFs foram reunidos numa barra contextual, deixando o visualizador ocupar a área principal. A inclusão, troca, substituição e cancelamento de remoção foram exercitados em Chromium isolado com arquivos sintéticos; a geometria desktop e a apresentação mobile foram conferidas. O responsável relatou que os PDFs estão funcionando, sem especificar navegador ou dispositivo. Os controles de página/zoom continuam a cargo do navegador; Safari/iPhone físico continua pendente.

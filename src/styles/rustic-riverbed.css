@@ -1,0 +1,181 @@
+/* SPDX-License-Identifier: MPL-2.0 */
+/* Isolated visual experiment: semantic surfaces are separate from category colors. */
+:root {
+  --river-depth: #0b191e;
+  --river-base: #10252b;
+  --river-panel: #142a30;
+  --river-raised: #1d393d;
+  --river-petroleum: #2b4d59;
+  --river-emerald: #39998e;
+  --river-gold: #ffdc7c;
+  --river-peach: #ffaa67;
+  --river-terracotta: #da674a;
+  --river-text: #eef6f2;
+  --river-muted: #bed0ca;
+  --river-border: #7faea447;
+  --river-dark-text: #10252b;
+  /* Accessible light accents on dark surfaces; each category retains its identity. */
+  --category-character: #ffd682;
+  --category-place: #86dfc8;
+  --category-faction: #f1a083;
+  --category-magic: #8ad9d2;
+  --category-event: #ffbd85;
+  --category-idea: #d7e69b;
+  --category-artifact: #f1c46d;
+  --category-document: #a7d5df;
+  --river-line: #a9c6bd;
+  --river-danger: #ffb8a7;
+  --river-glow: #39998e38;
+  --river-atmosphere: radial-gradient(ellipse at 20% 15%, #39998e38, transparent 45%), radial-gradient(ellipse at 82% 75%, #da674a24, transparent 46%), linear-gradient(145deg, #102c34, #0b191e 65%);
+  --muted: var(--river-muted);
+  --accent: var(--river-gold);
+  --border: var(--river-border);
+  --glass: #142a30ed;
+  color: var(--river-text);
+  background: var(--river-depth);
+}
+
+body { background: var(--river-depth); color: var(--river-text); }
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: 2px solid var(--river-gold);
+  outline-offset: 2px;
+}
+input, textarea, select { accent-color: var(--river-emerald); }
+input::placeholder, textarea::placeholder { color: var(--river-muted); opacity: .8; }
+
+/* The artwork stays untouched; ambient light is applied to its surroundings. */
+.asterism-home::after {
+  background: radial-gradient(ellipse at 18% 5%, #39998e54, transparent 53%), radial-gradient(ellipse at 80% 80%, #da674a38, transparent 48%), linear-gradient(145deg, #102b33b8, #0b191edb);
+}
+.asterism-window {
+  border-color: var(--river-border);
+  background: linear-gradient(145deg, #173c3ecc, #10252be8 52%, #352d29d9);
+}
+.asterism-window::before { background: linear-gradient(135deg, #39998e25, transparent 48%, #ffaa6714); }
+.asterism-header, .asterism-footer { border-color: var(--river-border); }
+.asterism-project { background: var(--river-panel); border-color: var(--river-border); }
+.asterism-project { --cover-color: var(--river-gold); --cover-bg: var(--river-petroleum); --cover-glow: var(--river-glow); }
+.asterism-tone-1 { --cover-color: var(--category-place); --cover-bg: var(--river-raised); --cover-glow: var(--river-glow); }
+.asterism-tone-2 { --cover-color: var(--river-peach); --cover-bg: #42352d; --cover-glow: #da674a38; }
+.asterism-project:hover, .asterism-project:focus-within { border-color: var(--river-emerald); }
+.asterism-logo, .asterism-toolbar-mark { background: linear-gradient(145deg, var(--river-petroleum), var(--river-panel)); border-color: var(--river-border); }
+.editor .asterism-toolbar-mark { background: linear-gradient(145deg, var(--river-petroleum), var(--river-panel)); border-color: var(--river-border); }
+.asterism-home .eyebrow { color: var(--river-gold); }
+
+.editor {
+  --workspace-border: var(--river-border);
+  --workspace-panel: #142a30ed;
+  background: var(--river-depth);
+  color: var(--river-text);
+}
+.editor > .toolbar, .studio-sidebar, .editor .inspector, .editor .reference-library, .editor .document-workspace {
+  background: var(--river-panel);
+  border-color: var(--river-border);
+}
+.editor .canvas { background: var(--river-depth); border-color: var(--river-border); }
+.constellation-overview { background: var(--river-atmosphere); }
+.constellation-overview .constellation-label { color: var(--river-muted); }
+.constellation-sky circle { fill: var(--river-gold); }
+.constellation-sky-orbits { stroke: var(--river-emerald); }
+.constellation-map { background: radial-gradient(ellipse at 48% 43%, var(--river-glow), transparent 65%); }
+.constellation-orb { background: radial-gradient(circle at 35% 22%, color-mix(in srgb, var(--category-color) 20%, var(--river-raised)), var(--river-depth) 78%); }
+.orbital-count rect { fill: var(--river-panel); }
+.constellation-reveal > .constellation-total, .constellation-stats, .constellation-stats b, .aggregate-counts, .aggregate-counts button small { color: var(--river-muted); }
+.external-constellations, .editor .exploration-chrome .external-constellations-list { background: var(--river-panel); border-color: var(--river-border); }
+.external-constellations button span, .external-constellations p { color: var(--river-muted); }
+.category-collection { background: radial-gradient(ellipse at 50% 0%, #39998e1e, transparent 55%), var(--river-depth); }
+.collection-card { background: var(--river-panel); border-color: var(--river-border); }
+.category-collection header p, .collection-card p { color: var(--river-muted); }
+.editor .inspector input, .editor .inspector select, .editor .inspector textarea,
+.editor input, .editor textarea, .editor select { background: var(--river-depth); color: var(--river-text); border-color: var(--river-border); }
+.editor .document-title { background: transparent; }
+.editor .document-header { background: var(--river-panel); border-color: var(--river-border); }
+.document-caption, .document-save { color: var(--river-muted); }
+.document-page .tiptap { color: var(--river-text); }
+.document-tools button[aria-pressed="true"] { background: var(--river-raised); border-color: var(--river-emerald); }
+.editor .inspector-switch, .editor .inspector-relation, .editor .inspector .relation-list > div { background: var(--river-base); border-color: var(--river-border); }
+.editor .inspector-switch button[aria-pressed="true"] { background: var(--river-raised); color: var(--river-text); }
+.editor .inspector > header { background: var(--river-panel); border-color: var(--river-border); }
+.editor .inspector > header .eyebrow, .editor .inspector .muted, .editor .inspector small { color: var(--river-muted); }
+.category-perspectives { background: var(--river-panel); border-color: var(--river-border); }
+.category-perspectives button { color: var(--river-muted); }
+.category-perspectives button[aria-pressed="true"] { background: var(--river-raised); color: var(--river-text); box-shadow: inset 0 0 0 1px var(--river-border); }
+.editor .workspace-documents, .editor .reference-library { background: var(--river-panel); border-color: var(--river-border); }
+.reference-menu-panel, .reference-info-panel { background: var(--river-panel); color: var(--river-text); border-color: var(--river-border); }
+.reference-menu summary { color: var(--river-text); border-color: var(--river-border); }
+.reference-menu summary:hover, .reference-menu[open] summary, .reference-menu-panel button:hover, .reference-menu-panel a:hover, .reference-menu-panel .reference-item.active { background: var(--river-raised); border-color: var(--river-emerald); }
+.reference-heading .eyebrow { color: var(--river-muted); }
+.editor .toolbar-actions .primary { background: var(--river-gold); color: var(--river-dark-text); border-color: var(--river-gold); }
+.editor .toolbar-actions .primary:hover { background: var(--river-peach); border-color: var(--river-peach); }
+
+/* Primary actions share one hierarchy; destructive controls retain their existing treatment. */
+.asterism-home button.primary, .editor button.primary { background: var(--river-gold); color: var(--river-dark-text); border-color: var(--river-gold); }
+.asterism-home button.primary:hover, .editor button.primary:hover { background: var(--river-peach); border-color: var(--river-peach); }
+.studio-sidebar button[aria-current="page"], .studio-sidebar button[aria-pressed="true"] { background: var(--river-raised); color: var(--river-gold); }
+.studio-sidebar button { color: var(--river-muted); }
+.studio-sidebar button[aria-current="page"] svg, .studio-sidebar button:hover svg { background: var(--river-petroleum); box-shadow: inset 0 0 0 1px var(--river-border); }
+.studio-sidebar button:focus-visible { outline-color: var(--river-gold); }
+.editor .react-flow__controls, .editor .react-flow__minimap, .canvas-hint { background: var(--river-panel); border-color: var(--river-border); color: var(--river-muted); }
+.react-flow__controls-button { background: var(--river-panel); color: var(--river-text); fill: var(--river-text); border-color: var(--river-border); }
+.editor .react-flow__edge-text { fill: var(--river-text); }
+.editor .react-flow__edge-textbg { fill: var(--river-panel); }
+.editor .react-flow__handle { background-color: var(--river-emerald); }
+.editor .react-flow__handle:hover { background-color: var(--river-gold); }
+.editor .universe-card .card-frame { background: var(--river-petroleum); }
+.editor .universe-card.selected .card-frame { background: var(--river-gold); }
+.react-flow__handle { background: var(--river-emerald); border-color: var(--river-text); }
+.entity-artwork { background: var(--river-panel); }
+.artwork-fallback, .artwork-Local .artwork-fallback, .artwork-Magia .artwork-fallback, .artwork-Evento .artwork-fallback, .artwork-Artefato .artwork-fallback, .artwork-Facção .artwork-fallback {
+  color: var(--category-color, var(--river-gold));
+  background: radial-gradient(ellipse at 30% 15%, color-mix(in srgb, var(--category-color, var(--river-emerald)) 23%, transparent), transparent 65%), linear-gradient(145deg, var(--river-petroleum), var(--river-depth));
+}
+.card-Documento .artwork-fallback { background: linear-gradient(120deg, var(--river-petroleum), var(--river-base)); }
+.editor .card-content .eyebrow { color: var(--river-text); background: var(--river-depth); border-color: var(--river-border); }
+.editor .card-surface { background-color: var(--river-panel); }
+.editor .universe-card:not([data-detail="full"]) .card-frame { background: var(--river-petroleum); }
+.editor .universe-card:not([data-detail="full"]) .card-surface { background: var(--river-panel); }
+.editor .field-error, .reference-menu-panel .danger { color: var(--river-danger); }
+.editor .danger, .editor .delete-area button { border-color: var(--river-terracotta); color: var(--river-danger); }
+.editor .creation-dialog, .canvas-settings-control .canvas-settings, .universe-search { background: var(--river-panel); color: var(--river-text); border-color: var(--river-border); }
+.universe-search-result[aria-selected='true'] { background: var(--river-raised); border-color: var(--river-emerald); }
+.universe-search mark { color: var(--river-gold); background: var(--river-raised); }
+.universe-search-field, .universe-search-status, .universe-search footer { color: var(--river-muted); border-color: var(--river-border); }
+.universe-search-field input { background: transparent; }
+.reference-library .pdf-placeholder { border-color: var(--river-border); color: var(--river-muted); }
+.canvas-settings input:checked { background: var(--river-emerald); }
+.canvas-settings p, .canvas-settings small { color: var(--river-muted); }
+.editor .inspector label { color: var(--river-muted); }
+.spark-ray { filter: drop-shadow(0 0 3px var(--river-glow)); }
+.first-spark-panel, .spark-writing, .spark-reference-fields { background: var(--river-panel); border-color: var(--river-border); }
+.first-spark-panel .eyebrow, .spark-map-label { color: var(--river-gold); }
+.first-spark-panel p, .spark-writing p, .first-spark-paths small { color: var(--river-muted); }
+.first-spark-paths button > span:first-child { color: var(--river-gold); }
+.spark-core { background: linear-gradient(145deg, var(--river-raised), var(--river-panel)); border-color: var(--river-emerald); }
+.spark-core { box-shadow: 0 0 35px var(--river-glow), inset 0 1px 0 #ffffff12; }
+.spark-core::before { border-color: var(--river-emerald); box-shadow: 0 0 20px var(--river-glow), inset 0 0 14px var(--river-glow); }
+
+@media (max-width: 900px) {
+  .mobile-studio { --studio-ink: var(--river-text); --studio-dim: var(--river-muted); --studio-line: var(--river-border); --studio-surface: var(--river-panel); background: var(--river-depth); }
+  .mobile-studio .editor-body { background: var(--river-depth); }
+  .studio-browser { background: var(--river-atmosphere); }
+  .studio-page-title .eyebrow, .studio-entry-copy small { color: var(--river-gold); }
+  .studio-map-preview { background: linear-gradient(120deg, var(--river-raised), var(--river-base)); border-color: var(--river-border); }
+  .studio-map-preview > span:last-child, .studio-map-copy small, .studio-constellation i { color: var(--river-gold); }
+  .studio-map-copy > span, .studio-entry-copy > span, .studio-chevron, .studio-local-note { color: var(--river-muted); }
+  .studio-constellation::before, .studio-constellation::after { border-color: var(--river-border); }
+  .studio-constellation i { background: var(--river-gold); border-color: var(--river-panel); }
+  .studio-search { background: var(--river-panel); border-color: var(--river-border); }
+  .mobile-studio .studio-search input { background: transparent; }
+  .studio-filters button { color: var(--river-muted); }
+  .studio-filters button[aria-pressed="true"] { background: var(--river-gold); border-color: var(--river-gold); color: var(--river-dark-text); }
+  .studio-entry { background: var(--river-panel); border-color: var(--river-border); }
+  .studio-dock { background: var(--river-panel); border-color: var(--river-border); }
+  .studio-dock button { color: var(--river-muted); }
+  .studio-dock button[aria-current="page"] { background: var(--river-raised); color: var(--river-gold); }
+  .studio-create { background: var(--river-gold); border-color: var(--river-gold); color: var(--river-dark-text); }
+  .mobile-studio .inspector, .mobile-studio .reference-library, .mobile-studio .file-menu { background: var(--river-panel); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .asterism-window::before { animation: none; }
+}

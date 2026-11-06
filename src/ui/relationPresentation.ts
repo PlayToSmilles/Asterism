@@ -18,12 +18,12 @@ export function relationAppearance(
   neutralMarkerId: string,
 ) {
   const color = selected
-    ? "#e2d5ff"
+    ? "var(--river-gold)"
     : kind === "reciprocal"
-      ? "#9fcbbf"
+      ? "var(--category-place)"
       : kind === "associative"
-        ? "#a6b9d2"
-        : "#a79bc7";
+        ? "var(--category-document)"
+        : "var(--river-line)";
   const arrow: EdgeMarker = {
     type: MarkerType.ArrowClosed,
     color,

@@ -12,6 +12,7 @@ import "./styles/workspace.css";
 import "./styles/canvas.css";
 import "./styles/pixel-art.css";
 import "./styles/first-spark.css";
+import "./styles/rustic-riverbed.css";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <App />
