@@ -6,6 +6,7 @@ import {
   referenceError,
   removeReference,
   removeProjectReferences,
+  restoreReferences,
   saveReference,
 } from "./referenceStore";
 import { prepareReference } from "../domain/reference";
@@ -24,6 +25,7 @@ function databaseBoundary() {
   const store = {
     get: vi.fn(() => request),
     put: vi.fn(() => request),
+    add: vi.fn(() => request),
     delete: vi.fn(() => request),
     index: vi.fn(() => ({
       getAll: vi.fn(() => request),
@@ -55,6 +57,19 @@ function databaseBoundary() {
 }
 
 describe("fronteira transacional das referências", () => {
+  it("restaura todos os PDFs na mesma transação e aguarda o commit", async () => {
+    const documents = [await prepareReference("copy", pdf()), await prepareReference("copy", pdf())];
+    const boundary = databaseBoundary();
+    const pending = restoreReferences(documents);
+    await vi.waitFor(() => expect(boundary.store.add).toHaveBeenCalledTimes(2));
+    const settled = vi.fn();
+    void pending.then(settled);
+    await Promise.resolve();
+    expect(settled).not.toHaveBeenCalled();
+    boundary.tx.oncomplete?.();
+    await pending;
+    expect(boundary.db.transaction).toHaveBeenCalledTimes(1);
+  });
   it("recupera o Blob do universo correto após concluir a leitura", async () => {
     const document = await prepareReference("world", pdf());
     const boundary = databaseBoundary();

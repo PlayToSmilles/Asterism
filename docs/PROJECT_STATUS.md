@@ -2,7 +2,23 @@
 
 > Prosa original: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), com [escopo e exclusões](DOCUMENTATION_LICENSE.md).
 
+## Leitura de referências
+
+O seletor e as ações dos PDFs foram reunidos numa barra contextual, deixando o visualizador ocupar a área principal. A inclusão, troca, substituição e cancelamento de remoção foram exercitados em Chromium isolado com arquivos sintéticos; a geometria desktop e a apresentação mobile foram conferidas. O responsável relatou que os PDFs estão funcionando, sem especificar navegador ou dispositivo. Os controles de página/zoom continuam a cargo do navegador; Safari/iPhone físico continua pendente.
+
+## Carregamento inicial — aguardando validação do responsável
+
+Canvas e painéis de detalhes foram divididos por carregamento sob demanda; a configuração da PWA continua incluindo os módulos gerados no precache. Na build local, o arquivo JavaScript de entrada passou de aproximadamente 552 kB (178 kB gzip) para 319 kB (103 kB gzip); a diferença não mede tempo real de carregamento e o service worker ainda baixa arquivos adicionais para uso offline. Em Chromium isolado, foram conferidos onboarding, canvas, Acervo, Inspector, escrita, referências e reabertura offline; em mobile emulado, Constelações, Acervo e detalhes. iPhone físico, rede real lenta e benchmarks de desempenho continuam pendentes.
+
+## Backup de universo — aguardando validação do responsável
+
+Implementado backup `.ast` v1 com projeto e PDFs, verificações SHA-256 e restauração como cópia independente. JSON continua compatível e não inclui PDFs; imagens por URL continuam externas. Limites: 200 MiB no total, 200 PDFs, 20 MiB por PDF. Os armazenamentos não são transacionais entre si e uma interrupção pode deixar PDFs órfãos. A validação manual do responsável, iPhone físico e volumes próximos do limite permanecem pendentes; o marco v0.6.0 não está concluído.
+
+Verificação desta etapa: 202 testes em 29 arquivos, lint e build aprovados. Em Chromium isolado, dados sintéticos confirmaram exportação e restauração de PDF, conteúdo e cópia independente; uma falha simulada de gravação da biblioteca confirmou a limpeza dos PDFs recém-restaurados. O arquivo não é criptografado nem um ZIP; os hashes não verificam autoria.
+
 ## Segurança e estabilidade da integração — 2026-11-03
+
+Atualização da auditoria em 2026-11-06: o npm agora aponta 12 entradas (10 moderadas e duas baixas), zero altas/críticas e zero com `--omit=dev`. O lockfile não mudou: o aviso de `minimatch` passou a abranger versões a partir da 7.0.0, retirando versões antigas do alcance e reduzindo as entradas transitivas. As versões corrigidas indicadas para `minimatch` e `glob` exigem versões principais fora das faixas atuais; `deepmerge` continua sem versão corrigida indicada. A simulação de `npm audit fix` não apresentou correção compatível comprovada para esses avisos. Nenhuma dependência foi atualizada nesta revisão.
 
 `serialize-javascript` transitivo de build foi atualizado de 7.1.2 para 7.1.4 no lockfile. O `npm audit` passou de 22 entradas (19 moderadas, três baixas) para 21 (19 moderadas, duas baixas); em ambos, zero altas ou críticas. `npm audit --omit=dev` permaneceu com zero entradas. A contagem inclui pacotes dependentes afetados pelo mesmo aviso.
 

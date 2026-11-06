@@ -2,6 +2,14 @@
 
 > Prosa original: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), com [escopo e exclusões](DOCUMENTATION_LICENSE.md).
 
+## D26 — Backup de universo com PDFs
+
+**Problema:** o JSON preserva o universo, mas não os PDFs guardados em IndexedDB.
+
+**Escolha:** oferecer `.ast` v1 com manifesto validado, projeto JSON, PDFs e hashes SHA-256; preservar a importação/exportação JSON. Não usar base64 no LocalStorage nem adicionar biblioteca de arquivos. A restauração cria uma cópia com IDs novos de universo e PDFs.
+
+**Consequências:** arquivos externos por URL não são copiados; há limite de 200 MiB, 200 PDFs e 20 MiB por PDF. SHA-256 detecta corrupção acidental, mas não autentica o autor. IndexedDB e LocalStorage não compartilham transação: falha de confirmação tenta limpar PDFs importados, mas interrupção pode deixar anexos órfãos. O formato é próprio e não compactado; iPhone físico e arquivos próximos ao limite ainda exigem validação.
+
 ## D25 — Ambientes desktop com navegação global e contexto local
 
 **Problema:** o menu embutido no canvas misturava destinos do aplicativo e ferramentas contextuais; painéis de escrita/PDF sobrepunham o Acervo.

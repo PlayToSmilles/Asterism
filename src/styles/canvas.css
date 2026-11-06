@@ -1,6 +1,7 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 /* Focus changes paint only: never transform, filter or resize moving nodes. */
 .canvas-explorer { position: relative; width: 100%; height: 100%; }
+.canvas-loading { display: grid; place-items: center; width: 100%; height: 100%; color: #b8aec8; font-size: 12px; }
 .exploration-chrome {
   position: absolute; z-index: 9; top: 18px; left: 112px; right: 24px;
   width: fit-content; max-width: calc(100% - 140px);
@@ -487,3 +488,46 @@
 .inspector-image-overlay img { max-width: 100%; max-height: 100%; object-fit: contain; }
 .inspector-image-overlay button { position: absolute; right: 24px; top: 20px; font-size: 24px; }
 @media (max-width: 900px) { .inspector-image-overlay { padding: 48px 16px; } }
+
+/* Leitura de PDFs: controles contextuais compactos e documento em destaque. */
+.editor .editor-body > .reference-library { gap: 0; padding: 12px; overflow: hidden; }
+.reference-topbar { position: relative; z-index: 4; display: flex; align-items: center; gap: 10px; flex: none; min-width: 0; padding: 4px 4px 12px; }
+.reference-heading { flex: none; padding: 0 6px; }
+.reference-heading .eyebrow { display: block; color: #aaa0ba; font-size: 8px; letter-spacing: .14em; }
+.reference-heading h2 { margin: 3px 0 0; font-size: 15px; line-height: 1.2; }
+.reference-menu { position: relative; flex: none; }
+.reference-menu summary { display: flex; align-items: center; justify-content: center; min-height: 40px; padding: 0 12px; border: 1px solid #d5c3ea2b; border-radius: 12px; background: #ffffff08; color: #ddd2ea; cursor: pointer; list-style: none; font-size: 12px; }
+.reference-menu summary::-webkit-details-marker { display: none; }
+.reference-menu summary:hover, .reference-menu[open] summary { background: #bda4df22; border-color: #d5c3ea55; }
+.reference-menu summary:focus-visible { outline: 2px solid #cbb4ef; outline-offset: 2px; }
+.reference-selector { flex: 1 1 260px; min-width: 0; max-width: 420px; }
+.reference-selector summary { justify-content: space-between; gap: 12px; }
+.reference-selector-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.reference-menu-panel { position: absolute; z-index: 8; top: calc(100% + 8px); right: 0; width: 220px; max-width: calc(100vw - 32px); padding: 7px; border: 1px solid #cdbce43b; border-radius: 14px; background: #252432fa; box-shadow: 0 14px 36px #0008; }
+.reference-selector .reference-menu-panel { left: 0; right: auto; width: max(100%, 260px); max-height: min(50vh, 350px); overflow-y: auto; }
+.reference-menu-panel button, .reference-menu-panel a { display: flex; width: 100%; padding: 10px 12px; border: 0; border-radius: 9px; background: transparent; color: #e8def2; text-align: left; text-decoration: none; font-size: 12px; }
+.reference-menu-panel button:hover, .reference-menu-panel a:hover, .reference-menu-panel .reference-item.active { background: #bba2db20; }
+.reference-menu-panel .danger { color: #efadb9; }
+.reference-menu-panel .reference-item { gap: 10px; }
+.reference-menu-panel .reference-item strong { font-size: 12px; }
+.reference-info-panel { width: 260px; color: #c9bfd5; font-size: 11px; line-height: 1.6; padding: 14px; }
+.reference-add { flex: none; min-height: 40px; font-size: 12px; }
+.reference-action-slot { margin-left: auto; }
+.reference-actions-menu summary, .reference-info summary { min-width: 40px; padding: 0 10px; }
+.editor .editor-body > .reference-library .pdf-preview { flex: 1 1 auto; min-height: 0; gap: 0; }
+.editor .editor-body > .reference-library .pdf-object { flex: 1 1 auto; min-height: 0; width: 100%; border-radius: 12px; }
+.editor .editor-body > .reference-library .pdf-placeholder { min-height: 0; }
+.reference-library > .reference-confirm, .reference-library > .reference-error { flex: none; margin: 0 0 10px; }
+@media (max-width: 900px) {
+  .editor .editor-body > .reference-library { padding: 10px 10px calc(96px + env(safe-area-inset-bottom)); }
+  .reference-topbar { gap: 6px; flex-wrap: wrap; }
+  .reference-heading { display: none; }
+  .reference-selector { flex: 1 1 140px; }
+  .reference-add { padding-inline: 9px; }
+  .reference-action-slot { margin-left: 0; }
+  .reference-close { flex: none; }
+}
+@media (max-width: 430px) {
+  .reference-add { font-size: 0; width: 40px; padding: 0; }
+  .reference-add::after { content: "+"; font-size: 20px; }
+}

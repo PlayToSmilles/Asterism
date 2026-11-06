@@ -3,10 +3,12 @@ import { useRef } from "react";
 export function ProjectFileActions({
   importFile,
   exportFile,
+  backupFile,
   shareFile,
 }: {
   importFile: () => void;
   exportFile: () => void;
+  backupFile: () => void;
   shareFile?: () => void;
 }) {
   const menu = useRef<HTMLDetailsElement>(null);
@@ -16,6 +18,7 @@ export function ProjectFileActions({
         Importar
       </button>
       <button onClick={exportFile}>Exportar JSON</button>
+      <button onClick={backupFile}>Backup com PDFs</button>
       {shareFile && (
         <button className="share-file" onClick={shareFile}>
           Compartilhar JSON

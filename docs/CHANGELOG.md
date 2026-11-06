@@ -6,6 +6,12 @@ Registra somente evolução comprovada. Datas de lançamento, tags e versões an
 
 ## Unreleased
 
+- Referências usam barra contextual compacta com seletor de PDF e ações agrupadas, ampliando a área de leitura em desktop e mobile.
+
+- Canvas e painéis de detalhes passam a carregar sob demanda, reduzindo o JavaScript inicial; os módulos continuam no precache da PWA.
+
+- Backup `.ast` de um universo com seus PDFs, verificação de integridade e restauração como cópia independente; JSON permanece disponível.
+
 - Atualizada a dependência transitiva de build `serialize-javascript` de 7.1.2 para 7.1.4, corrigindo o aviso GHSA-m5mm-p8h7-m29v sem alterar a estratégia da PWA.
 
 - Integração da Primeira Faísca com a navegação desktop e o Acervo Vivo, revisada pelo responsável e pendente de aprovação para publicação.

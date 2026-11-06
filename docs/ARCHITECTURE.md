@@ -4,6 +4,8 @@
 
 Aplicação cliente React + TypeScript strict, servida por Vite. React Flow (`@xyflow/react`) fornece o canvas; CSS e símbolos tipográficos compõem a interface. Não há servidor de aplicação ou banco remoto.
 
+O canvas, o Inspector e os detalhes mobile são carregados sob demanda com `React.lazy` e `Suspense`; o enquadramento importa seu módulo quando necessário. A PWA continua incluindo os arquivos JavaScript gerados no precache, inclusive os módulos divididos, para permitir uso offline após a primeira visita.
+
 ## Módulos reais
 
 O código é agrupado por responsabilidade em `app/`, `domain/`, `persistence/`, `ui/` (com `canvas/`) e `styles/`. Somente `main.tsx`, o ponto de entrada, fica na raiz de `src`. Testes permanecem ao lado dos módulos correspondentes; não há aliases ou arquivos de reexportação intermediários.
@@ -138,6 +140,8 @@ O visual usa um único `WorldCard` com variantes CSS e dimensões fixas por cate
 
 - Biblioteca: `{ projects: Project[] }`, em LocalStorage na chave `playtosmilles.worldbuilding.v1`. O carregamento valida todos os projetos; um erro impede o carregamento da biblioteca inteira. As consequências estão em [PROJECT_STATUS](PROJECT_STATUS.md#incompleto-e-limitações-conhecidas).
 - JSON exportado: um único projeto validado, formatado com indentação. Não inclui `measured`, `dragging`, seleção ou outros metadados dos nodes. O schema `version: 1` não é o SemVer do produto; não há migrações implementadas.
+- Backup `.ast` v1: arquivo binário com cabeçalho, manifesto JSON e bytes dos PDFs, sem dependência de compactação. `persistence/backup.ts` valida limites, schema, assinaturas PDF e hashes SHA-256 antes de importar; hashes detectam corrupção, não autenticam a origem. URLs de imagens continuam referências externas. Limites: 200 PDFs, 20 MiB por PDF e 200 MiB por arquivo.
+- Restauração: gera um novo ID de universo e IDs novos para PDFs. Grava todos os PDFs em uma transação IndexedDB e confirma a biblioteca no LocalStorage em seguida; falha nesta confirmação tenta limpar os PDFs recém-criados. Não há transação conjunta entre os armazenamentos: interrupção durante a operação ou falha de limpeza pode deixar PDFs órfãos, sem alterar projetos existentes.
 - Importação: valida o arquivo inteiro antes de modificar o estado. `App` cria uma cópia com novo ID de projeto e `kind: 'user'`; IDs internos, conteúdo e posições são preservados. Não substitui projetos existentes.
 - Validação: versão/tipos/categorias, campos obrigatórios, números finitos, IDs únicos de entidades e relações sem colisão entre essas coleções, endpoints existentes e zoom entre 0,05 e 2. Auto-relações e pares repetidos são aceitos. Campos desconhecidos são descartados ao reconstruir o projeto; Documentos também passam pela validação estrutural abaixo.
 - Imagem opcional: `imageUrl` é validada pela UI antes de confirmar e pela fronteira de importação/carregamento. Quando presente, deve ser uma URL absoluta HTTP/HTTPS válida, sem espaços e com até 2.048 caracteres. Remover a referência omite o campo no JSON. Projetos antigos sem o campo permanecem válidos no schema 1. Não há upload, cópia dos bytes da imagem ou garantia de disponibilidade da origem.

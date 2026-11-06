@@ -10,7 +10,6 @@ import {
 } from "react";
 import type { ReactFlowInstance, Node } from "@xyflow/react";
 import type { Exploration, LayoutActivity } from "../ui/canvas/exploration";
-import { focusViewport } from "../ui/canvas/canvasFocus";
 import {
   addEntity,
   updateEntity,
@@ -26,11 +25,10 @@ import {
   loadLibrary,
   type Library,
 } from "../persistence/persistence";
-import { UniverseCanvas, type CanvasNavigator } from "../ui/canvas/UniverseCanvas";
+import type { CanvasNavigator } from "../ui/canvas/UniverseCanvas";
 import { SearchTrigger, UniverseSearch } from "../ui/search/UniverseSearch";
 import type { SearchResult } from "../ui/search/search";
 import { searchDestination } from "../ui/search/searchNavigation";
-import { Inspector } from "../ui/Inspector";
 import { ReferenceLibrary } from "../ui/references/ReferenceLibrary";
 import { createLibrarySession } from "../persistence/librarySession";
 import { NewElement } from "../ui/NewElement";
@@ -41,7 +39,8 @@ import { createSparkDraftStore } from "../ui/onboarding/sparkDraft";
 import type { FloatingRelation } from "../ui/canvas/FloatingEdge";
 import { ProjectHome } from "../ui/home/ProjectHome";
 import { AsterismMark } from "../ui/home/AsterismMark";
-import { removeProjectReferences } from "../persistence/referenceStore";
+import { getReference, listReferences, removeProjectReferences, restoreReferences } from "../persistence/referenceStore";
+import { createBackup, MAX_BACKUP_SIZE, parseBackup } from "../persistence/backup";
 import { ProjectFileActions } from "../ui/ProjectFileActions";
 import { useVisualViewport } from "../ui/useVisualViewport";
 import { useMobile } from "../ui/mobile/useMobile";
@@ -52,10 +51,12 @@ import {
   MobileNavigation,
   type StudioTab,
 } from "../ui/mobile/MobileStudio";
-import { MobileEntityDetails } from "../ui/mobile/MobileEntityDetails";
 import { DesktopNavigation, type DesktopArea } from "../ui/workspace/DesktopNavigation";
 import { DesktopDocuments } from "../ui/workspace/DesktopDocuments";
 const DocumentEditor = lazy(() => import("../ui/documents/DocumentEditor"));
+const UniverseCanvas = lazy(() => import("../ui/canvas/UniverseCanvas").then(module => ({ default: module.UniverseCanvas })));
+const Inspector = lazy(() => import("../ui/Inspector").then(module => ({ default: module.Inspector })));
+const MobileEntityDetails = lazy(() => import("../ui/mobile/MobileEntityDetails").then(module => ({ default: module.MobileEntityDetails })));
 
 function initialState(): { library: Library; error: string } {
   try {
@@ -153,10 +154,13 @@ export default function App() {
   const showingSpark = !!project && welcomeId === project.id && !selected && !documentEntity && !referencesOpen &&
     !documentsOpen && !searchOpen && !creating && (!mobile || mobileTab === "universe" || mobileTab === "canvas");
   function frameElements(ids: string[]) {
-    requestAnimationFrame(() => {
+    requestAnimationFrame(async () => {
       const instance = flow.current;
+      if (!instance) return;
+      const { focusViewport } = await import("../ui/canvas/canvasFocus");
+      if (flow.current !== instance) return;
       const box = canvas.current?.getBoundingClientRect();
-      if (!instance || !box) return;
+      if (!box) return;
       const nodes = instance.getNodes().filter((node) => ids.includes(node.id));
       if (!nodes.length) return;
       const panel = canvas.current?.parentElement?.querySelector(".inspector")?.getBoundingClientRect();
@@ -379,6 +383,24 @@ export default function App() {
   async function readFile(file?: File) {
     if (!file) return;
     try {
+      if (/\.(?:ast|asterism)$/i.test(file.name)) {
+        if (file.size > MAX_BACKUP_SIZE) throw new Error("O backup excede o limite de 200 MiB.");
+        const projectId = crypto.randomUUID();
+        const restored = await parseBackup(file, projectId);
+        await restoreReferences(restored.documents);
+        try {
+          session.commit(library => ({ projects: [...library.projects, restored.project] }));
+        } catch (error) {
+          if (restored.documents.length) {
+            try { await removeProjectReferences(projectId); }
+            catch { throw new Error("Não foi possível salvar o universo nem limpar os PDFs temporários. O backup original permanece intacto."); }
+          }
+          throw error;
+        }
+        open(restored.project, false, "imported");
+        setMessage(`Backup restaurado como cópia independente com ${restored.documents.length} PDF(s). Imagens externas continuam por URL.`);
+        return;
+      }
       if (file.size > 5_000_000)
         throw new Error("Arquivo muito grande. O limite é 5 MB.");
       const imported = importProject(await file.text());
@@ -394,6 +416,26 @@ export default function App() {
       setMessage(
         error instanceof Error ? error.message : "Não foi possível importar.",
       );
+    }
+  }
+  async function downloadBackup() {
+    if (!project) return;
+    try {
+      session.flush();
+      const latest = session.getSnapshot().projects.find(p => p.id === project.id);
+      if (!latest) throw new Error("Universo não encontrado.");
+      const references = await listReferences(latest.id);
+      const documents = await Promise.all(references.map(reference => getReference(latest.id, reference.id)));
+      const blob = await createBackup(latest, documents);
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `${latest.name.replace(/[^\p{L}\p{N}_-]/gu, "-").slice(0, 80) || "universo"}.ast`;
+      document.body.append(link); link.click(); link.remove();
+      window.setTimeout(() => URL.revokeObjectURL(url), 60_000);
+      setMessage("Backup criado com o universo e seus PDFs. Imagens externas permanecem como URLs.");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Não foi possível criar o backup.");
     }
   }
   function download() {
@@ -447,8 +489,8 @@ export default function App() {
         ref={input}
         className="sr-only"
         type="file"
-        accept=".json,application/json"
-        aria-label="Importar projeto JSON"
+        accept=".json,application/json,.ast,.asterism,application/octet-stream"
+        aria-label="Importar projeto ou backup"
         onChange={(e) => {
           void readFile(e.target.files?.[0]);
           e.target.value = "";
@@ -544,6 +586,7 @@ export default function App() {
               <ProjectFileActions
                 importFile={() => input.current?.click()}
                 exportFile={download}
+                backupFile={() => void downloadBackup()}
                 shareFile={
                   typeof navigator.share === "function"
                     ? () => void share()
@@ -580,6 +623,7 @@ export default function App() {
                   conectar, toque nos dois pontos.
                 </span>
               </div>
+              <Suspense fallback={<div className="canvas-loading" role="status">Preparando o universo…</div>}>
               <UniverseCanvas
                 prepared={() => projectTransition.ready(project.id)}
                 navigateRef={canvasNavigate}
@@ -605,6 +649,7 @@ export default function App() {
                   flow.current = instance;
                 }}
               />
+              </Suspense>
               <div className="canvas-hint">
                 Arraste para explorar <span>·</span> Role para zoom{" "}
                 <span>·</span> Conecte os pontos dos elementos
@@ -645,6 +690,7 @@ export default function App() {
                 create={beginCreating}
               />
             )}
+            <Suspense fallback={null}>
             {mobile &&
             selectedEntity &&
             !focusedRelation &&
@@ -707,6 +753,7 @@ export default function App() {
                 />
               )
             )}
+            </Suspense>
             {documentEntity && (
               <Suspense
                 fallback={
