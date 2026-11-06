@@ -6,7 +6,7 @@ Registra somente evolução comprovada. Datas de lançamento, tags e versões an
 
 ## Unreleased
 
-- Experimento visual isolado Rustic Riverbed: superfícies petróleo, iluminação esmeralda e quente e tokens CSS próprios, sem alteração de dados ou funcionalidades. Não integra a preparação de lançamento.
+- Identidade visual Rustic Riverbed: superfícies petróleo, iluminação esmeralda e quente e tokens CSS próprios, sem alteração dos dados ou das funcionalidades.
 - Acentos das categorias, relações e superfícies do experimento foram ajustados à paleta petróleo, esmeralda e quente, preservando as artes originais.
 
 ### Preparado para v0.2.0 — não publicado

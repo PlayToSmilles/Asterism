@@ -2,9 +2,9 @@
 
 > Prosa original: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), com [escopo e exclusões](DOCUMENTATION_LICENSE.md).
 
-## Experimento visual Rustic Riverbed
+## Identidade visual Rustic Riverbed
 
-Na worktree e branch `experiment/rustic-riverbed`, uma camada CSS isolada explora superfícies petróleo e iluminação esmeralda, dourada e terracota. As categorias usam acentos próprios da nova paleta; os sprites originais são preservados. A proposta está sujeita à revisão visual e não faz parte do PR de integração.
+Na branch de integração, a identidade visual aprovada usa superfícies petróleo e iluminação esmeralda, dourada e terracota. Uma camada CSS centraliza a paleta; as categorias têm acentos próprios e os sprites originais são preservados. A integração segue sujeita às verificações de publicação.
 
 ## Leitura de referências
 
