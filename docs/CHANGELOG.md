@@ -6,6 +6,12 @@ Registra somente evolução comprovada. Datas de lançamento, tags e versões an
 
 ## Unreleased
 
+### Preparado para v0.2.0 — não publicado
+
+O código da branch de integração prepara a entrega abaixo; não há data de lançamento, tag ou release. A decisão de publicar permanece separada do preparo.
+
+- Escrita e Referências integradas à navegação do workspace, com acesso ao editor existente e leitura de PDFs.
+
 - Referências usam barra contextual compacta com seletor de PDF e ações agrupadas, ampliando a área de leitura em desktop e mobile.
 
 - Canvas e painéis de detalhes passam a carregar sob demanda, reduzindo o JavaScript inicial; os módulos continuam no precache da PWA.
@@ -49,6 +55,8 @@ Registra somente evolução comprovada. Datas de lançamento, tags e versões an
 - Continuidade Criativa da Primeira Faísca, motivada pelo primeiro teste real de usabilidade: Guardar minha ideia cria diretamente Ideia 01 e mantém o espaço aberto; aprofundamento preserva o texto e criação independente não acrescenta relações. Perguntas opcionais por perspectiva, escrita livre, edição pelo Inspector e retomada com rascunho/contexto temporários na aba. Confirmação durável, erros recuperáveis, proteção contra duplicação e sequência de títulos conhecidos. JSON, versão e dependências preservados; nova validação com usuário continua pendente.
 
 - A Primeira Faísca: acolhimento opcional em universos recém-criados, com inspiração por uma pergunta aberta, criação direta e exploração livre. Resposta temporária revisada no formulário existente e persistida apenas ao confirmar a criação; orientação pode ser dispensada/reaberta, sem interromper importações. Nome provisório e renomeação existente mais descobríveis. Sem alteração de schema, dependências ou versão.
+
+### Histórico anterior ainda sem atribuição comprovada a lançamento
 
 - Roadmap vivo até v1.0.0 em ROADMAP, com checkboxes como fonte única, resumo calculado e comandos Node `roadmap:status`/`roadmap:sync`, sem dependências. Integração nas regras dos agentes, README e estado do projeto; fundação reconhecida por decisão do autor, sem criar release ou alterar a versão.
 
@@ -199,7 +207,7 @@ Registra somente evolução comprovada. Datas de lançamento, tags e versões an
 
 ## v0.1.0 — referência declarada, lançamento não comprovado
 
-`package.json` e `package-lock.json` contêm `0.1.0`. A implementação inicial registrada nesta conversa já declarava esse número e entregou o protótipo local com canvas, cards, relações, persistência, JSON e demonstração separada. Não há evidência de data de release ou tag nesta cópia. A correção posterior está em Unreleased; não se presume que tenha sido lançada como parte de v0.1.0.
+Na implementação inicial, `package.json` e `package-lock.json` declaravam `0.1.0`, com canvas, cards, relações, persistência, JSON e demonstração separada. Não há evidência de data de release ou tag para essa versão. A versão preparada atualmente está registrada em [PROJECT_STATUS](PROJECT_STATUS.md).
 
 ## Política de versionamento
 

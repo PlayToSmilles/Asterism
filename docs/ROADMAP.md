@@ -2,7 +2,7 @@
 
 **O criador é o protagonista. O ASTERISM é sua massa de modelar.**
 
-Planejamento aprovado em 2026-10-24. Este arquivo reúne tarefas e progresso do produto; [PROJECT_STATUS](PROJECT_STATUS.md) concentra evidências e limitações, [CHANGELOG](CHANGELOG.md) registra mudanças e versões efetivamente entregues, e [DECISIONS](DECISIONS.md) explica decisões técnicas. Nenhum marco aqui cria uma release, tag ou autorização de publicação. O pacote continua em `0.1.0`.
+Planejamento aprovado em 2026-10-24. Este arquivo reúne tarefas e progresso do produto; [PROJECT_STATUS](PROJECT_STATUS.md) concentra evidências e limitações, [CHANGELOG](CHANGELOG.md) registra mudanças e versões efetivamente entregues, e [DECISIONS](DECISIONS.md) explica decisões técnicas. Nenhum marco aqui cria uma release, tag ou autorização de publicação. A branch de integração prepara o pacote `0.2.0`, ainda não publicado.
 
 ## Resumo automático
 
@@ -143,6 +143,8 @@ Em 2026-10-30, o fluxo experiente recebeu uma primeira apresentação de acervo 
 **Critério de conclusão:** a revisão identifica operações críticas e demonstra recuperação nos cenários acordados, com falhas de gravação visíveis e sem falsa confirmação de sucesso. **Nota:** histórico do editor de texto não equivale a desfazer/refazer do universo; a avaliação não promete uma implementação global antecipadamente.
 
 ## v0.6.0 — Seu Mundo é Seu
+
+Antecipação na integração: o backup `.ast` de universo com PDFs foi implementado e testado pelo responsável; isso não conclui automaticamente as demais tarefas ou o critério completo de portabilidade deste marco.
 
 **Propósito e experiência:** preservar e transportar o universo completo.
 
